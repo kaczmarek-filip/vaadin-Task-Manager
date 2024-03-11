@@ -1,0 +1,35 @@
+.navAvatar{
+    position: absolute;
+    right: 10px;
+}
+.siteMainDiv{
+    width: 85% !important;
+    height: 100%;
+    padding: 1%;
+    background-color: blue;
+    margin-top: 5%;
+}
+/*.mainblabla{*/
+/*    padding: 2%;*/
+/*}*/
+.deadlineElement {
+    width: 80%;
+    /*width: fit-content;*/
+    text-align: left;
+    padding: 2%;
+    background-color: #ffa96e;
+    border-radius: 15px 15px 5px 5px;
+    opacity: 0.9;
+}
+.deadlineSpan{
+    margin-left: 10%;
+}
+.toDoDoneLabel{
+    font-weight: bold;
+    padding-left: 5%;
+}
+.taskDialogTime{
+    font-size: 1.5rem;
+    align-items: center;
+    margin: auto;
+}
