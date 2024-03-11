@@ -6,6 +6,12 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import jakarta.annotation.security.PermitAll;
+import jakarta.servlet.ServletContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 @PageTitle("Main")
 @Route(value = "")
@@ -14,7 +20,6 @@ public class MainView extends Navigation {
     private HorizontalLayout mainLayout = new HorizontalLayout();
     private VerticalLayout verticalLeftLayout = new VerticalLayout();
     private VerticalLayout verticalRightLayout = new VerticalLayout();
-
     public MainView() {
         super("Main");
 
