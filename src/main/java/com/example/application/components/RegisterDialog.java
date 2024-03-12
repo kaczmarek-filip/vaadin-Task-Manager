@@ -12,6 +12,9 @@ import com.vaadin.flow.component.textfield.TextField;
 
 import java.sql.SQLException;
 
+/**
+ * Register dialog with user
+ */
 public class RegisterDialog extends Dialog {
     private Button cancelButton;
     private Button registerButton;
@@ -52,6 +55,9 @@ public class RegisterDialog extends Dialog {
         return formLayout;
     }
 
+    /**
+     * Validation of registration data
+     */
     private void beforeRegister() {
 
         String displayNameValue = displayName.getValue();

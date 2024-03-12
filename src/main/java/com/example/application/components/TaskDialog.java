@@ -15,6 +15,9 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
 
+/**
+ * More informations about {@link TaskElement}
+ */
 public class TaskDialog extends Dialog {
     private Button cancelButton;
     private String informations = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum";
@@ -32,6 +35,10 @@ public class TaskDialog extends Dialog {
         setMinWidth("500");
         getHeader().add(cancelButton);
     }
+
+    /**
+     * @return {@link VerticalLayout}
+     */
     private VerticalLayout setLayout(){
 
         Span date = new Span("21.12.2002");

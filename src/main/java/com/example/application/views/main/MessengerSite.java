@@ -9,6 +9,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.springframework.context.annotation.Bean;
 
+/**
+ * Messenger site
+ * @see Navigation
+ */
 @Route("messenger")
 public class MessengerSite extends Navigation {
     public MessengerSite(){

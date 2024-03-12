@@ -12,7 +12,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 
-public class LoginDialog extends Dialog {
+/**
+ * Loggin dialog with user
+ */
+public final class LoginDialog extends Dialog {
 
     private Button loginButton;
     private Button cancelButton;
@@ -22,6 +25,9 @@ public class LoginDialog extends Dialog {
     private EmailField emailField = new EmailField("Email");
     private PasswordField passwordField = new PasswordField("Password");
 
+    /**
+     * No args constructor
+     */
     public LoginDialog() {
         setCloseOnOutsideClick(false);
         setCloseOnEsc(false);
@@ -53,6 +59,10 @@ public class LoginDialog extends Dialog {
         getFooter().add(loginButton);
     }
 
+    /**
+     * @return layout
+     * @see VerticalLayout
+     */
     private VerticalLayout setLayout() {
 
         VerticalLayout verticalLayout = new VerticalLayout(emailField, passwordField);
@@ -64,6 +74,11 @@ public class LoginDialog extends Dialog {
         return verticalLayout;
     }
 
+    /**
+     * Checking for correct login data
+     * @see DatabaseConnection
+     * @see User
+     */
     private void beforeLogin() {
         String email = emailField.getValue();
         String password = passwordField.getValue();

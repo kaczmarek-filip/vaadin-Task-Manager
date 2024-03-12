@@ -17,6 +17,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
+/**
+ * Main view
+ * @see Navigation
+ */
 @PageTitle("Main")
 @Route(value = "")
 public class MainView extends Navigation {

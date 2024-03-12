@@ -3,6 +3,10 @@ package com.example.application.components;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Singleton
+ * User class
+ */
 @Getter @Setter
 public class User {
     private int id;
@@ -14,6 +18,12 @@ public class User {
 
     private User() {}
 
+    /**
+     * @param id
+     * @param displayName
+     * @param email
+     * @param password
+     */
     public User(int id, String displayName, String email, String password) {
         this.id = id;
         this.displayName = displayName;
@@ -27,6 +37,10 @@ public class User {
         }
         return instance;
     }
+
+    /**
+     * @return Singleton {@link User}
+     */
     public static User getLoggedInUser(){
         return User.getInstance();
     }

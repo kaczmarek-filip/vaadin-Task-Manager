@@ -7,6 +7,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
+
+/**
+ * Database connection
+ * @see SQLParser
+ */
 public class DatabaseConnection {
     private final static String DbUrl = "jdbc:mysql://localhost/taskmanager";
     private final static String DbUser = "root";
@@ -18,6 +23,10 @@ public class DatabaseConnection {
     private String query;
     private SQLParser sqlUserParser = new SQLParser();
 
+    /**
+     * Method to register user in database
+     * @param user User to register in database
+     */
     public void registerUser(User user) {
         query = sqlUserParser.createUser(user);
 
@@ -33,6 +42,11 @@ public class DatabaseConnection {
             Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
         }
     }
+
+    /**
+     * @param user User to check is email already exists in DB
+     * @return true if email already exists | otherwise false
+     */
     public boolean isEmailExists(User user){
         query = sqlUserParser.isEmailExists(user);
 
@@ -61,6 +75,11 @@ public class DatabaseConnection {
         return false;
     }
 
+    /**
+     * @param email Email from {@link LoginDialog}
+     * @param password Password from {@link LoginDialog}
+     * @return {@link User} object
+     */
     public User loginUser(String email, String password){
         query = sqlUserParser.loginUser(email, password);
 
@@ -91,7 +110,4 @@ public class DatabaseConnection {
 
         return null;
     }
-//    public User getLoggedInUser(){
-//        return User.getInstance();
-//    }
 }

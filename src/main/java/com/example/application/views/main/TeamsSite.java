@@ -5,6 +5,10 @@ import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.router.Route;
 
+/**
+ * Teams management site
+ * @see Navigation
+ */
 @Route("team")
 public class TeamsSite extends Navigation {
     public TeamsSite() {

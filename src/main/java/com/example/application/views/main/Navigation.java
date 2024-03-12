@@ -21,9 +21,17 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.Nullable;
 
 
+/**
+ * Navigation
+ * @see AppLayout
+ */
 public class Navigation extends AppLayout {
     private Button avatar = new Button();
 
+    /**
+     * Default constructor
+     * @param siteName Name displayed in upper left corner
+     */
     public Navigation(String siteName) {
         DrawerToggle toggle = new DrawerToggle();
 
