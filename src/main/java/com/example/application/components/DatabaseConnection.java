@@ -1,12 +1,9 @@
 package com.example.application.components;
 
 import com.vaadin.flow.component.notification.Notification;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Database connection
@@ -21,14 +18,14 @@ public class DatabaseConnection {
     private Connection connection;
     private Statement statement;
     private String query;
-    private SQLParser sqlUserParser = new SQLParser();
+    private SQLParser sqlParser = new SQLParser();
 
     /**
      * Method to register user in database
      * @param user User to register in database
      */
     public void registerUser(User user) {
-        query = sqlUserParser.createUser(user);
+        query = sqlParser.createUser(user);
 
         try {
             Class.forName(DbDriver).newInstance();
@@ -48,7 +45,7 @@ public class DatabaseConnection {
      * @return true if email already exists | otherwise false
      */
     public boolean isEmailExists(User user){
-        query = sqlUserParser.isEmailExists(user);
+        query = sqlParser.isEmailExists(user);
 
         try {
             Class.forName(DbDriver).newInstance();
@@ -81,7 +78,7 @@ public class DatabaseConnection {
      * @return {@link User} object
      */
     public User loginUser(String email, String password){
-        query = sqlUserParser.loginUser(email, password);
+        query = sqlParser.loginUser(email, password);
 
         try {
             Class.forName(DbDriver).newInstance();
@@ -110,4 +107,37 @@ public class DatabaseConnection {
 
         return null;
     }
+
+    public ArrayList<Teams> findTeamsByUser(User user){
+        query = sqlParser.findTeamsByUser(user);
+        ArrayList<Teams> teamsArrayList = new ArrayList<>();
+
+        try {
+            Class.forName(DbDriver).newInstance();
+            connection = DriverManager.getConnection(DbUrl, DbUser, DbPassword);
+            statement = connection.createStatement();
+            try (ResultSet resultSet = statement.executeQuery(query)) {
+
+
+
+                while (resultSet.next()){
+                    String DbName = resultSet.getString("name");
+                    TeamRoles DbRole = TeamRoles.valueOf(resultSet.getString("role"));
+
+                    teamsArrayList.add(new Teams(DbName, DbRole));
+                }
+                statement.close();
+                connection.close();
+            } catch (Exception e) {
+                Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+            }
+        } catch (Exception e){
+            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+        }
+
+
+
+        return teamsArrayList;
+    }
+
 }

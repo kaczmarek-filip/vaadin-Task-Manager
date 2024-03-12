@@ -1,7 +1,7 @@
 package com.example.application.views.main;
 
-import com.example.application.components.LoginDialog;
 import com.example.application.components.User;
+import com.example.application.components.dialogs.LoginDialog;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -12,13 +12,6 @@ import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.theme.lumo.LumoUtility;
-import jakarta.servlet.ServletContext;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-
-import javax.annotation.Nullable;
 
 
 /**
@@ -39,8 +32,9 @@ public class Navigation extends AppLayout {
         title.getStyle().set("font-size", "var(--lumo-font-size-l)")
                 .set("margin", "0");
 
-        avatar.setText("Sign in");
 
+        if(User.getLoggedInUser().getDisplayName() == null) avatar.setText("Sign in");
+        else avatar.setText(User.getLoggedInUser().getDisplayName());
 
         avatar.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
         avatar.addClassName("navAvatar");
@@ -51,12 +45,13 @@ public class Navigation extends AppLayout {
 
         SideNav nav = new SideNav();
         SideNavItem mainSiteLink = new SideNavItem("Main", MainView.class, VaadinIcon.MENU.create());
+        SideNavItem taskLink = new SideNavItem("Tasks", TasksSite.class, VaadinIcon.TASKS.create());
 //        SideNavItem dashboardLink = new SideNavItem("Dashboard", DashboardSite.class, VaadinIcon.DASHBOARD.create());
         SideNavItem messengerLink = new SideNavItem("Messages", MessengerSite.class, VaadinIcon.COMMENT_ELLIPSIS.create());
         SideNavItem teamLink = new SideNavItem("Team", TeamsSite.class, VaadinIcon.MALE.create());
         SideNavItem userLink = new SideNavItem("User", UserSite.class, VaadinIcon.USER_CARD.create());
 
-        nav.addItem(mainSiteLink, messengerLink, teamLink, userLink);
+        nav.addItem(mainSiteLink,taskLink, messengerLink, teamLink, userLink);
 
         Scroller scroller = new Scroller(nav);
         scroller.setClassName(LumoUtility.Padding.SMALL);

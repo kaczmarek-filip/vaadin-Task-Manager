@@ -22,12 +22,17 @@ public class SQLParser {
     }
 
     /**
-     * @param email from {@link LoginDialog}
-     * @param password from {@link LoginDialog}
+     * @param email from {@link com.example.application.components.dialogs.LoginDialog}
+     * @param password from {@link com.example.application.components.dialogs.LoginDialog}
      * @return query
      */
     public String loginUser(String email, String password) {
         String query = "SELECT * FROM `users` WHERE email = '" + email + "' AND password = '" + password + "'";
+        return query;
+    }
+
+    public String findTeamsByUser(User user){
+        String query = "SELECT * FROM `teams` JOIN team_member JOIN users ON users.ID = team_member.user_ID WHERE users.ID = " + user.getId();
         return query;
     }
 

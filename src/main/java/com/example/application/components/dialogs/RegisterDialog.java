@@ -1,5 +1,7 @@
-package com.example.application.components;
+package com.example.application.components.dialogs;
 
+import com.example.application.components.DatabaseConnection;
+import com.example.application.components.User;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;

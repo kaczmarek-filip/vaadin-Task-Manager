@@ -1,5 +1,6 @@
-package com.example.application.components;
+package com.example.application.components.elements;
 
+import com.example.application.components.dialogs.TaskDialog;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 
@@ -9,19 +10,13 @@ import com.vaadin.flow.component.html.Span;
 /**
  * Displayed element with Tasks
  */
-public class TaskElement extends Div{
+public class TaskElement extends Element {
 
-    private boolean isPressed = false;
-    public TaskElement() {
-        primaryInfo();
+    @Override
+    public void layout() {
 
-        addClickListener(e -> {
-            new TaskDialog().open();
-        });
+        cssSelector = "deadlineElement";
 
-    }
-    private void primaryInfo(){
-        addClassName("deadlineElement");
         setText("Betlejemskie Światło Pokoju");
 
 
@@ -35,6 +30,12 @@ public class TaskElement extends Div{
 
 
         add(date, time);
+    }
 
+    @Override
+    public void listenerAction() {
+        addClickListener(e -> {
+            new TaskDialog().open();
+        });
     }
 }

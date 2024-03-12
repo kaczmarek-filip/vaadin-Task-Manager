@@ -1,5 +1,7 @@
-package com.example.application.components;//package com.vaadin.demo.component.dialog;
+package com.example.application.components.dialogs;
 
+import com.example.application.components.DatabaseConnection;
+import com.example.application.components.User;
 import com.example.application.views.main.MainView;
 import com.example.application.views.main.Navigation;
 import com.vaadin.flow.component.button.Button;

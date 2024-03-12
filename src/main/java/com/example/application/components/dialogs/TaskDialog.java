@@ -1,4 +1,4 @@
-package com.example.application.components;
+package com.example.application.components.dialogs;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -16,7 +16,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 
 
 /**
- * More informations about {@link TaskElement}
+ *
  */
 public class TaskDialog extends Dialog {
     private Button cancelButton;

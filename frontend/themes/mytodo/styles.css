@@ -33,3 +33,61 @@
     align-items: center;
     margin: auto;
 }
+
+/*-----------------------------------------------------------*/
+/* Teams */
+/*-----------------------------------------------------------*/
+
+.teamsHorizontalLayout{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+.teamsElement{
+    width: 25vw;
+    height: 40vh;
+    /*background: #34568B;*/
+    background: #88B04B;
+    margin: 1%;
+    border-radius: 10px;
+    box-shadow: 8px 8px 28px -14px rgba(66, 68, 90, 1);
+    padding: 2%;
+    box-sizing: border-box;
+    position: relative;
+}
+.teamsMembersDiv{
+    width: 100%;
+    height: fit-content;
+    margin-top: 5%;
+    /*background: blue;*/
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+.TeamsMemberElement{
+    padding: 1% 3% 1% 3%;
+    background-color: whitesmoke;
+    border-radius: 15px;
+    margin: 1%;
+    font-weight: bold;
+    box-shadow: 8px 8px 28px -14px rgba(66, 68, 90, 1);
+}
+.TeamsUserRole {
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
+    margin: 2%;
+    padding: 1% 3% 1% 3%;
+
+    background-color: whitesmoke;
+    box-shadow: -10px 15px 9px -18px rgba(66, 68, 90, 1);
+    border-radius: 5px;
+    font-family: Bahnschrift;
+}
