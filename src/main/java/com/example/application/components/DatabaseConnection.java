@@ -91,4 +91,7 @@ public class DatabaseConnection {
 
         return null;
     }
+//    public User getLoggedInUser(){
+//        return User.getInstance();
+//    }
 }

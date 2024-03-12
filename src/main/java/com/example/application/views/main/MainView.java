@@ -24,6 +24,7 @@ public class MainView extends Navigation {
     private HorizontalLayout mainLayout = new HorizontalLayout();
     private VerticalLayout verticalLeftLayout = new VerticalLayout();
     private VerticalLayout verticalRightLayout = new VerticalLayout();
+    private DatabaseConnection databaseConnection = new DatabaseConnection();
     public MainView() {
         super("Main");
 
@@ -46,11 +47,11 @@ public class MainView extends Navigation {
         }
 
 
-//        Button button = new Button("Sprawdź zalogowanego użytkownika");
-//        button.addClickListener(e -> {
-//            Notification.show(databaseConnection.getLoggedInUser().getDisplayName());
-//        });
-//        verticalRightLayout.add(button);
+        Button button = new Button("Sprawdź zalogowanego użytkownika");
+        button.addClickListener(e -> {
+            Notification.show(User.getLoggedInUser().getDisplayName());
+        });
+        verticalRightLayout.add(button);
 
 
         mainLayout.add(verticalLeftLayout);

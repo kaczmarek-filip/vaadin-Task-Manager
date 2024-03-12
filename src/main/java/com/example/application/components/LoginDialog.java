@@ -76,6 +76,10 @@ public class LoginDialog extends Dialog {
             notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
             notification.open();
 
+            User.getInstance().setId(loggedInUser.getId());
+            User.getInstance().setDisplayName(loggedInUser.getDisplayName());
+            User.getInstance().setEmail(loggedInUser.getEmail());
+
             Notification.show(loggedInUser.getDisplayName());
 
         } else {
