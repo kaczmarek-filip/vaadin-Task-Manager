@@ -1,7 +1,11 @@
 package com.example.application.views.main;
 
+import com.example.application.components.DatabaseConnection;
 import com.example.application.components.TaskElement;
+import com.example.application.components.User;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
@@ -42,7 +46,11 @@ public class MainView extends Navigation {
         }
 
 
-//        verticalRightLayout.add(button2);
+//        Button button = new Button("Sprawdź zalogowanego użytkownika");
+//        button.addClickListener(e -> {
+//            Notification.show(databaseConnection.getLoggedInUser().getDisplayName());
+//        });
+//        verticalRightLayout.add(button);
 
 
         mainLayout.add(verticalLeftLayout);

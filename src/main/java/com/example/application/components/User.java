@@ -2,8 +2,6 @@ package com.example.application.components;
 
 import lombok.Getter;
 
-import java.security.KeyStore;
-
 @Getter
 public class User {
     private int id;

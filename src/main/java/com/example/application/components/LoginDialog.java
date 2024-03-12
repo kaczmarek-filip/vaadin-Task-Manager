@@ -11,10 +11,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
-import jakarta.servlet.ServletContext;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-@Configuration
+
 public class LoginDialog extends Dialog {
 
     private Button loginButton;
@@ -24,8 +21,6 @@ public class LoginDialog extends Dialog {
 
     private EmailField emailField = new EmailField("Email");
     private PasswordField passwordField = new PasswordField("Password");
-//    @Autowired
-//    private ServletContext servletContext;
 
     public LoginDialog() {
         setCloseOnOutsideClick(false);
@@ -68,19 +63,21 @@ public class LoginDialog extends Dialog {
 
         return verticalLayout;
     }
-    private void beforeLogin(){
+
+    private void beforeLogin() {
         String email = emailField.getValue();
         String password = passwordField.getValue();
 
-        User user = databaseConnection.loginUser(email, password);
+        User loggedInUser = databaseConnection.loginUser(email, password);
 
-        if (user != null){
+        if (loggedInUser != null) {
             close();
             Notification notification = new Notification("Logged in", 5000, Notification.Position.BOTTOM_CENTER);
             notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
             notification.open();
-//            new MainView().updateUser(user);
-            Notification.show(user.getDisplayName());
+
+            Notification.show(loggedInUser.getDisplayName());
+
         } else {
             Notification notification = new Notification("Incorrect login data", 5000, Notification.Position.BOTTOM_CENTER);
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);

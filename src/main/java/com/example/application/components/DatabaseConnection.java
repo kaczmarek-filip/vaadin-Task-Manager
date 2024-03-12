@@ -1,11 +1,12 @@
 package com.example.application.components;
 
 import com.vaadin.flow.component.notification.Notification;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
-@Component
 public class DatabaseConnection {
     private final static String DbUrl = "jdbc:mysql://localhost/taskmanager";
     private final static String DbUser = "root";

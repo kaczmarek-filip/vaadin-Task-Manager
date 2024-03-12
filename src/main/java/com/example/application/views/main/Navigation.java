@@ -13,6 +13,8 @@ import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.servlet.ServletContext;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,7 +22,7 @@ import javax.annotation.Nullable;
 
 
 public class Navigation extends AppLayout {
-    Button avatar = new Button();
+    private Button avatar = new Button();
 
     public Navigation(String siteName) {
         DrawerToggle toggle = new DrawerToggle();
@@ -56,8 +58,5 @@ public class Navigation extends AppLayout {
 
         setPrimarySection(Section.DRAWER);
 
-    }
-    public void updateUser(User user){
-        avatar.setText(user.getDisplayName());
     }
 }
