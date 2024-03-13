@@ -10,6 +10,7 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Route;
+import jakarta.annotation.security.PermitAll;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
  * @see Navigation
  */
 @Route("team")
+//@PermitAll
 public class TeamsSite extends Navigation {
     HorizontalLayout horizontalLayout = new HorizontalLayout();
     DatabaseConnection databaseConnection = new DatabaseConnection();

@@ -1,13 +1,17 @@
 package com.example.application.views.main;
 
 import com.example.application.components.DatabaseConnection;
+//import com.example.application.components.SecurityService;
 import com.example.application.components.elements.TaskElement;
 import com.example.application.components.User;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
@@ -23,7 +27,7 @@ import org.springframework.stereotype.Component;
  */
 @PageTitle("Main")
 @Route(value = "")
-public class MainView extends Navigation {
+public class MainView extends Navigation{
 
     private HorizontalLayout mainLayout = new HorizontalLayout();
     private VerticalLayout verticalLeftLayout = new VerticalLayout();
@@ -62,5 +66,4 @@ public class MainView extends Navigation {
         mainLayout.add(verticalRightLayout);
         setContent(mainLayout);
     }
-
 }

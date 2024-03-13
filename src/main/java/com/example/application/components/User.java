@@ -44,4 +44,7 @@ public class User {
     public static User getLoggedInUser(){
         return User.getInstance();
     }
+    public static void logOut(){
+        instance = null;
+    }
 }
