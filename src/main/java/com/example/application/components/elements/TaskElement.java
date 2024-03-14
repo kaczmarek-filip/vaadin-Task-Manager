@@ -1,7 +1,6 @@
 package com.example.application.components.elements;
 
 import com.example.application.components.dialogs.TaskDialog;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 
 //TODO: isDone w konstruktorze
@@ -12,10 +11,14 @@ import com.vaadin.flow.component.html.Span;
  */
 public class TaskElement extends Element {
 
+    public TaskElement() {
+        super("deadlineElement");
+        layout();
+        listenerAction();
+    }
+
     @Override
     public void layout() {
-
-        cssSelector = "deadlineElement";
 
         setText("Betlejemskie Światło Pokoju");
 

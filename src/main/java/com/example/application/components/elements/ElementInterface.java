@@ -2,7 +2,7 @@ package com.example.application.components.elements;
 
 public interface ElementInterface {
 
-    public void layout();
+    void layout();
 
-    public void listenerAction();
+    void listenerAction();
 }

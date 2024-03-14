@@ -1,18 +1,25 @@
 package com.example.application.components.elements;
 
+import com.example.application.components.Teams;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Paragraph;
 
-public class TeamsElement extends Element{
+public class TeamsElement extends Element {
+
+    private final Teams team;
+
+    public TeamsElement(Teams team) {
+        super("teamsElement");
+        this.team = team;
+        layout();
+        listenerAction();
+    }
 
     @Override
     public void layout() {
-        cssSelector = "teamsElement";
+//        cssSelector = "teamsElement";
 
-
-//        setText("Zespół Promocji");
-        H1 title = new H1("Zespół promocji");
+        H1 title = new H1(team.getName());
         title.getStyle().set("text-align", "center");
 
         Div membersDiv = new Div();
@@ -24,7 +31,7 @@ public class TeamsElement extends Element{
         membersDiv.add(new TeamsMemberElement());
         membersDiv.add(new TeamsMemberElement());
 
-        add(new TeamsUserRole());
+        add(new TeamsUserRoleElement(team.getRole()));
         add(title);
         add(membersDiv);
     }

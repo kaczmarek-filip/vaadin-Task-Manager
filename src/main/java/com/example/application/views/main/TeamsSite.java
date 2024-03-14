@@ -1,6 +1,7 @@
 package com.example.application.views.main;
 
 import com.example.application.components.DatabaseConnection;
+import com.example.application.components.TeamRoles;
 import com.example.application.components.Teams;
 import com.example.application.components.User;
 import com.example.application.components.elements.TeamsElement;
@@ -18,19 +19,23 @@ import java.util.ArrayList;
  * Teams management site
  * @see Navigation
  */
-@Route("team")
+@Route("teams")
 //@PermitAll
 public class TeamsSite extends Navigation {
     HorizontalLayout horizontalLayout = new HorizontalLayout();
     DatabaseConnection databaseConnection = new DatabaseConnection();
     ArrayList<Teams> teamsArrayList;
     public TeamsSite() {
-        super("Team");
+        super("Teams");
 
         teamsArrayList = databaseConnection.findTeamsByUser(User.getLoggedInUser());
-        if(teamsArrayList != null){
-            for(int i = 0; i < teamsArrayList.size(); i++){
-                Notification.show(teamsArrayList.get(i).getName() + " " + teamsArrayList.get(i).getRole());
+//        if(teamsArrayList != null){
+        if(!teamsArrayList.isEmpty()){
+            for (Teams team : teamsArrayList) {
+//                Notification.show(team.getName() + " " + team.getRole());
+                TeamsElement teamsElement = new TeamsElement(team); // wywala błąd
+
+                horizontalLayout.add(teamsElement);
 
                 //TODO: dodać do DB innych użytkowników danej grupy.
                 // odrębny formularz logowania, który nie wpuszcza niezalogowanego użytkownika dalej
@@ -39,11 +44,11 @@ public class TeamsSite extends Navigation {
 
 
 
-        horizontalLayout.add(new TeamsElement());
-        horizontalLayout.add(new TeamsElement());
-        horizontalLayout.add(new TeamsElement());
-        horizontalLayout.add(new TeamsElement());
-        horizontalLayout.add(new TeamsElement());
+//        horizontalLayout.add(new TeamsElement());
+//        horizontalLayout.add(new TeamsElement());
+//        horizontalLayout.add(new TeamsElement());
+//        horizontalLayout.add(new TeamsElement());
+//        horizontalLayout.add(new TeamsElement());
         horizontalLayout.addClassName("teamsHorizontalLayout");
 
         setContent(horizontalLayout);
