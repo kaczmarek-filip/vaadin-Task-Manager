@@ -1,7 +1,10 @@
-package com.example.application.components;
+package com.example.application.components.data;
 
 import lombok.Getter;
 
+/**
+ * Sprawdza użytkowników należących do konkretnego teamu
+ */
 @Getter
 public class TeamMembers {
     private int teamId;

@@ -1,5 +1,6 @@
-package com.example.application.components;
+package com.example.application.components.data.database;
 
+import com.example.application.components.data.*;
 import com.vaadin.flow.component.notification.Notification;
 
 import java.sql.*;
@@ -20,6 +21,17 @@ public class DatabaseConnection {
     private String query;
     private SQLParser sqlParser = new SQLParser();
 
+    public DatabaseConnection() {
+        try {
+            Class.forName(DbDriver).newInstance();
+            connection = DriverManager.getConnection(DbUrl, DbUser, DbPassword);
+            statement = connection.createStatement();
+        } catch (Exception e){
+            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+        }
+
+    }
+
     /**
      * Method to register user in database
      * @param user User to register in database
@@ -28,9 +40,6 @@ public class DatabaseConnection {
         query = sqlParser.createUser(user);
 
         try {
-            Class.forName(DbDriver).newInstance();
-            connection = DriverManager.getConnection(DbUrl, DbUser, DbPassword);
-            statement = connection.createStatement();
             statement.executeUpdate(query);
 
             statement.close();
@@ -47,10 +56,6 @@ public class DatabaseConnection {
     public boolean isEmailExists(User user){
         query = sqlParser.isEmailExists(user);
 
-        try {
-            Class.forName(DbDriver).newInstance();
-            connection = DriverManager.getConnection(DbUrl, DbUser, DbPassword);
-            statement = connection.createStatement();
             try (ResultSet resultSet = statement.executeQuery(query)) {
 
                 if (resultSet.next()) {
@@ -64,11 +69,6 @@ public class DatabaseConnection {
             } catch (Exception e) {
                 Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
             }
-
-
-        } catch (Exception e) {
-            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
-        }
         return false;
     }
 
@@ -80,10 +80,6 @@ public class DatabaseConnection {
     public User loginUser(String email, String password){
         query = sqlParser.loginUser(email, password);
 
-        try {
-            Class.forName(DbDriver).newInstance();
-            connection = DriverManager.getConnection(DbUrl, DbUser, DbPassword);
-            statement = connection.createStatement();
             try (ResultSet resultSet = statement.executeQuery(query)) {
 
                 while (resultSet.next()){
@@ -101,21 +97,14 @@ public class DatabaseConnection {
             } catch (Exception e) {
                 Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
             }
-        } catch (Exception e){
-            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
-        }
 
         return null;
     }
 
-    public ArrayList<Teams> findTeamsByUser(User user){
+    public ArrayList<UserTeams> findTeamsByUser(User user){
         query = sqlParser.findTeamsByUser(user);
-        ArrayList<Teams> teamsArrayList = new ArrayList<>();
+        ArrayList<UserTeams> userTeamsArrayList = new ArrayList<>();
 
-        try {
-            Class.forName(DbDriver).newInstance();
-            connection = DriverManager.getConnection(DbUrl, DbUser, DbPassword);
-            statement = connection.createStatement();
             try (ResultSet resultSet = statement.executeQuery(query)) {
 
 
@@ -125,34 +114,24 @@ public class DatabaseConnection {
                     String DbName = resultSet.getString("name");
                     TeamRoles DbRole = TeamRoles.valueOf(resultSet.getString("role"));
 
-                    teamsArrayList.add(new Teams(DbId, DbName, DbRole));
+                    userTeamsArrayList.add(new UserTeams(DbId, DbName, DbRole));
                 }
                 statement.close();
                 connection.close();
             } catch (Exception e) {
                 Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
             }
-        } catch (Exception e){
-            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
-        }
 
-
-
-        return teamsArrayList;
+        return userTeamsArrayList;
     }
 
-    public ArrayList<TeamMembers> findUsersByTeam(Teams teams){
-        query = sqlParser.findUsersByTeam(teams);
+    public ArrayList<TeamMembers> findUsersByTeam(UserTeams userTeams){
+        query = sqlParser.findUsersByTeam(userTeams);
         ArrayList<TeamMembers> teamMembersArrayList = new ArrayList<>();
 
-        try {
-            Class.forName(DbDriver).newInstance();
-            connection = DriverManager.getConnection(DbUrl, DbUser, DbPassword);
-            statement = connection.createStatement();
             try (ResultSet resultSet = statement.executeQuery(query)) {
 
                 while (resultSet.next()){
-//                    int DbTeamId = resultSet.getInt("team_ID");
 
                     int DbId = resultSet.getInt("ID");
                     String DbEmail = resultSet.getString("email");
@@ -161,7 +140,7 @@ public class DatabaseConnection {
 
                     TeamRoles DbRole = TeamRoles.valueOf(resultSet.getString("role"));
 
-                    TeamMembers teamMembers = new TeamMembers(teams.getId(), new User(DbId, DbDisplayName, DbEmail, DbPassword), DbRole);
+                    TeamMembers teamMembers = new TeamMembers(userTeams.getId(), new User(DbId, DbDisplayName, DbEmail, DbPassword), DbRole);
 
                     teamMembersArrayList.add(teamMembers);
                 }
@@ -170,12 +149,21 @@ public class DatabaseConnection {
             } catch (Exception e) {
                 Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
             }
-        } catch (Exception e){
-            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
-        }
 
 
         return teamMembersArrayList;
+    }
+    public Team findTeamNameByTeamId(int teamId){
+        query = sqlParser.findTeamNameByTeamId(teamId);
+        try (ResultSet resultSet = statement.executeQuery(query)){
+            if(resultSet.next()){
+                String teamName = resultSet.getString("name");
+                return new Team(teamId, teamName);
+            }
+        } catch (Exception e){
+            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+        }
+        return null;
     }
 
 }

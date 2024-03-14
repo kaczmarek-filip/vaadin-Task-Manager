@@ -1,9 +1,7 @@
 package com.example.application.components.dialogs;
 
-import com.example.application.components.DatabaseConnection;
-import com.example.application.components.User;
-import com.example.application.views.main.MainView;
-import com.example.application.views.main.Navigation;
+import com.example.application.components.data.database.DatabaseConnection;
+import com.example.application.components.data.User;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -17,6 +15,8 @@ import com.vaadin.flow.component.textfield.PasswordField;
 /**
  * Loggin dialog with user
  */
+
+@Deprecated
 public final class LoginDialog extends Dialog {
 
     private Button loginButton;

@@ -1,17 +1,17 @@
 package com.example.application.components.elements;
 
-import com.example.application.components.DatabaseConnection;
-import com.example.application.components.TeamMembers;
-import com.example.application.components.Teams;
+import com.example.application.components.data.database.DatabaseConnection;
+import com.example.application.components.data.TeamMembers;
+import com.example.application.components.data.UserTeams;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 
 public class TeamsElement extends Element {
 
-    private final Teams team;
+    private final UserTeams team;
     private DatabaseConnection databaseConnection = new DatabaseConnection();
 
-    public TeamsElement(Teams team) {
+    public TeamsElement(UserTeams team) {
         super("teamsElement");
         this.team = team;
         layout();
@@ -31,12 +31,6 @@ public class TeamsElement extends Element {
             membersDiv.add(new TeamsMemberElement(teamMembers));
         }
 
-
-//        membersDiv.add(new TeamsMemberElement());
-//        membersDiv.add(new TeamsMemberElement());
-//        membersDiv.add(new TeamsMemberElement());
-//        membersDiv.add(new TeamsMemberElement());
-
         add(new TeamsUserRoleElement(team.getRole()));
         add(title);
         add(membersDiv);
@@ -44,6 +38,8 @@ public class TeamsElement extends Element {
 
     @Override
     public void listenerAction() {
-
+        addClickListener(e -> {
+            getUI().ifPresent(ui -> ui.navigate("teams/team_id/" + team.getId()));
+        });
     }
 }

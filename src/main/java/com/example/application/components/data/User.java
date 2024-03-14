@@ -1,4 +1,4 @@
-package com.example.application.components;
+package com.example.application.components.data;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,7 @@
 package com.example.application.components.elements;
 
-import com.example.application.components.TeamMembers;
-import com.example.application.components.TeamRoles;
+import com.example.application.components.data.TeamMembers;
+import com.example.application.components.data.TeamRoles;
 
 public class TeamsMemberElement extends Element {
     private final TeamMembers teamMembers;

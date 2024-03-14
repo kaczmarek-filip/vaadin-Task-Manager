@@ -1,7 +1,8 @@
 package com.example.application.components.dialogs;
 
-import com.example.application.components.DatabaseConnection;
-import com.example.application.components.User;
+import com.example.application.components.data.database.DatabaseConnection;
+import com.example.application.components.data.User;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -11,8 +12,6 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
-
-import java.sql.SQLException;
 
 /**
  * Register dialog with user
@@ -35,6 +34,7 @@ public class RegisterDialog extends Dialog {
 
         registerButton = new Button("Register");
         registerButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+        registerButton.addClickShortcut(Key.ENTER);
         registerButton.addClickListener(e -> {
             beforeRegister();
         });
