@@ -121,10 +121,11 @@ public class DatabaseConnection {
 
 
                 while (resultSet.next()){
+                    int DbId = resultSet.getInt("ID");
                     String DbName = resultSet.getString("name");
                     TeamRoles DbRole = TeamRoles.valueOf(resultSet.getString("role"));
 
-                    teamsArrayList.add(new Teams(DbName, DbRole));
+                    teamsArrayList.add(new Teams(DbId, DbName, DbRole));
                 }
                 statement.close();
                 connection.close();
@@ -138,6 +139,43 @@ public class DatabaseConnection {
 
 
         return teamsArrayList;
+    }
+
+    public ArrayList<TeamMembers> findUsersByTeam(Teams teams){
+        query = sqlParser.findUsersByTeam(teams);
+        ArrayList<TeamMembers> teamMembersArrayList = new ArrayList<>();
+
+        try {
+            Class.forName(DbDriver).newInstance();
+            connection = DriverManager.getConnection(DbUrl, DbUser, DbPassword);
+            statement = connection.createStatement();
+            try (ResultSet resultSet = statement.executeQuery(query)) {
+
+                while (resultSet.next()){
+//                    int DbTeamId = resultSet.getInt("team_ID");
+
+                    int DbId = resultSet.getInt("ID");
+                    String DbEmail = resultSet.getString("email");
+                    String DbPassword = resultSet.getString("password");
+                    String DbDisplayName = resultSet.getString("displayName");
+
+                    TeamRoles DbRole = TeamRoles.valueOf(resultSet.getString("role"));
+
+                    TeamMembers teamMembers = new TeamMembers(teams.getId(), new User(DbId, DbDisplayName, DbEmail, DbPassword), DbRole);
+
+                    teamMembersArrayList.add(teamMembers);
+                }
+                statement.close();
+                connection.close();
+            } catch (Exception e) {
+                Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+            }
+        } catch (Exception e){
+            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+        }
+
+
+        return teamMembersArrayList;
     }
 
 }
