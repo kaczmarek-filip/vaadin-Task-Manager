@@ -1,7 +1,11 @@
 package com.example.application.components.data.database;
 
 import com.example.application.components.data.Team;
+import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 public class SQLParser {
     /**
@@ -9,8 +13,8 @@ public class SQLParser {
      * @return query
      * @see DatabaseConnection
      */
-    public String createUser(User user) {
-        String query = "INSERT INTO `users`(`email`, `password`, `displayName`) VALUES ('" + user.getEmail() + "','" + user.getPassword() + "','" + user.getDisplayName() + "')";
+    public String createUser(User user, String password) {
+        String query = "INSERT INTO `users`(`email`, `password`, `displayName`) VALUES ('" + user.getEmail() + "','" + password + "','" + user.getDisplayName() + "')";
 
         return query;
     }
@@ -45,5 +49,22 @@ public class SQLParser {
     public String findTeamNameByTeamId(int teamId){
         String query = "SELECT * FROM teams WHERE ID = " + teamId;
         return query;
+    }
+    public String getAllUsers(){
+        String query = "SELECT * FROM `users`";
+
+        return query;
+    }
+    public ArrayList<String> createTeam(String teamName, String teamMotto, User user, Set<User> teamMembers){
+        ArrayList<String> queryArrayList = new ArrayList<>();
+        queryArrayList.add("INSERT INTO `teams`(`name`, `motto`) VALUES ('"+ teamName +"','"+ teamMotto +"');");
+        queryArrayList.add("INSERT INTO `team_member`(`team_ID`, `user_ID`, `role`) VALUES (LAST_INSERT_ID(),'"+ user.getId() +"','"+ TeamRoles.OWNER +"')");
+
+        for (User teamMember : teamMembers){
+            queryArrayList.add("INSERT INTO `team_member`(`team_ID`, `user_ID`, `role`) VALUES (LAST_INSERT_ID(),'"+ teamMember.getId() +"','"+ TeamRoles.MEMBER +"')");
+        }
+
+
+        return queryArrayList;
     }
 }

@@ -66,7 +66,7 @@ public class RegisterDialog extends Dialog {
         String emailValue = email.getValue();
         String passwordValue = password.getValue();
 
-        User user = new User(0, displayNameValue, emailValue, passwordValue);
+        User user = new User(0, displayNameValue, emailValue);
 
         if (!password.getValue().equals(confirmPassword.getValue())) {
             Notification notification = new Notification("Passwords are not the same", 5000, Notification.Position.BOTTOM_CENTER);
@@ -86,7 +86,7 @@ public class RegisterDialog extends Dialog {
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
             notification.open();
         } else {
-            databaseConnection.registerUser(user);
+            databaseConnection.registerUser(user, passwordValue);
             close();
             Notification notification = new Notification("Successfully registered", 5000, Notification.Position.BOTTOM_CENTER);
             notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);

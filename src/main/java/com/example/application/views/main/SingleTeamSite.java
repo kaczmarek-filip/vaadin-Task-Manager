@@ -4,6 +4,8 @@ package com.example.application.views.main;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.DatabaseConnection;
 import com.example.application.components.data.Team;
+import com.example.application.components.dialogs.CreateTeamDialog;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.router.*;
@@ -17,7 +19,10 @@ public class SingleTeamSite extends Navigation implements BeforeEnterObserver, H
     private DatabaseConnection databaseConnection = new DatabaseConnection();
     public SingleTeamSite() {
         super("Team");
-        addTopNavButton("Create team");
+        addTopNavButton("Create team", ButtonVariant.LUMO_SUCCESS).addClickListener(e -> {
+           new CreateTeamDialog().open();
+        });
+        addTopNavButton("Edit team", ButtonVariant.LUMO_CONTRAST);
     }
 
 

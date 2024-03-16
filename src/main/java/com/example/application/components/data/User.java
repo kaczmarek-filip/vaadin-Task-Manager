@@ -15,7 +15,7 @@ public class User {
     private int id;
     private String displayName;
     private String email;
-    private String password;
+//    private String password;
 
     private static User instance;
 
@@ -25,13 +25,11 @@ public class User {
      * @param id
      * @param displayName
      * @param email
-     * @param password
      */
-    public User(int id, String displayName, String email, String password) {
+    public User(int id, String displayName, String email) {
         this.id = id;
         this.displayName = displayName;
         this.email = email;
-        this.password = password;
     }
 
     public static synchronized User getInstance() {
@@ -56,5 +54,11 @@ public class User {
         ArrayList<Team> teamsByUser = databaseConnection.findTeamsByUser(User.getLoggedInUser());
 
         return teamsByUser;
+    }
+    public static ArrayList<User> getAllUsers(){
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        ArrayList<User> allUsers = databaseConnection.getAllUsers();
+
+        return allUsers;
     }
 }

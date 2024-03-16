@@ -2,8 +2,10 @@ package com.example.application.views.main;
 
 import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
+import com.example.application.components.dialogs.CreateTeamDialog;
 import com.example.application.components.elements.TeamsElement;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Route;
 
@@ -31,12 +33,8 @@ public class TeamsSite extends Navigation {
 
         setContent(horizontalLayout);
 
-        addTopNavButton("Create team");
-    }
-
-    @Override
-    protected Button addTopNavButton(String buttonText) {
-        return super.addTopNavButton(buttonText);
-        //TODO: Create listener
+        addTopNavButton("Create team", ButtonVariant.LUMO_SUCCESS).addClickListener(e -> {
+            new CreateTeamDialog().open();
+        });
     }
 }

@@ -7,6 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Database connection
@@ -40,8 +41,8 @@ public class DatabaseConnection {
      * Method to register user in database
      * @param user User to register in database
      */
-    public void registerUser(User user) {
-        query = sqlParser.createUser(user);
+    public void registerUser(User user, String password) {
+        query = sqlParser.createUser(user, password);
 
         try {
             statement.executeUpdate(query);
@@ -93,7 +94,7 @@ public class DatabaseConnection {
                     String DbPassword = resultSet.getString("password");
                     String DbDisplayName = resultSet.getString("displayName");
                     if (email.equals(DbEmail) && password.equals(DbPassword)){
-                        return new User(DbId, DbDisplayName, DbEmail, DbPassword);
+                        return new User(DbId, DbDisplayName, DbEmail);
                     }
                 }
                 statement.close();
@@ -140,12 +141,12 @@ public class DatabaseConnection {
 
                     int DbId = resultSet.getInt("ID");
                     String DbEmail = resultSet.getString("email");
-                    String DbPassword = resultSet.getString("password");
+//                    String DbPassword = resultSet.getString("password");
                     String DbDisplayName = resultSet.getString("displayName");
 
                     TeamRoles DbRole = TeamRoles.valueOf(resultSet.getString("role"));
 
-                    userTeamRolesMap.put(new User(DbId, DbDisplayName, DbEmail, DbPassword), DbRole);
+                    userTeamRolesMap.put(new User(DbId, DbDisplayName, DbEmail), DbRole);
 
                 }
                 statement.close();
@@ -164,10 +165,44 @@ public class DatabaseConnection {
                 String teamName = resultSet.getString("name");
                 return new Team(teamId, teamName);
             }
+            statement.close();
+            connection.close();
         } catch (Exception e){
             Notification.show(error, 5000, Notification.Position.BOTTOM_CENTER);
         }
         return null;
+    }
+    public ArrayList<User> getAllUsers(){
+        ArrayList<User> allUsers = new ArrayList<>();
+        query = sqlParser.getAllUsers();
+        try (ResultSet resultSet = statement.executeQuery(query)){
+            while (resultSet.next()) {
+
+                    int DbId = resultSet.getInt("ID");
+                    String DbEmail = resultSet.getString("email");
+                    String DbDisplayName = resultSet.getString("displayName");
+
+                    allUsers.add(new User(DbId, DbDisplayName, DbEmail));
+            }
+        } catch (Exception e){
+            Notification.show(error, 5000, Notification.Position.BOTTOM_CENTER);
+        }
+
+        return allUsers;
+    }
+    public void createTeam(String teamName, String teamMotto, User user, Set<User> teamMembers){
+        ArrayList<String> queryArrayList = sqlParser.createTeam(teamName, teamMotto, user, teamMembers);
+
+        try {
+            for (String query : queryArrayList){
+                statement.executeUpdate(query);
+            }
+
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+        }
     }
 
 }

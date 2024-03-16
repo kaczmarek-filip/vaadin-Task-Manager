@@ -82,15 +82,16 @@ public class Navigation extends AppLayout  implements BeforeEnterObserver {
         });
         return logOut;
     }
+    @Deprecated
     private Paragraph loggedInUser(){
         Paragraph paragraph = new Paragraph(User.getLoggedInUser().getDisplayName());
         paragraph.addClassName("loggedInUser");
         paragraph.getElement().getStyle().set("font-size", LumoUtility.FontSize.LARGE);
         return paragraph;
     }
-    protected Button addTopNavButton(String buttonText){
+    protected Button addTopNavButton(String buttonText, ButtonVariant buttonVariant){
         Button button = new Button(buttonText);
-        button.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+        button.addThemeVariants(buttonVariant);
         button.addClassName("customNavButton");
         addToNavbar(button);
         return button;
