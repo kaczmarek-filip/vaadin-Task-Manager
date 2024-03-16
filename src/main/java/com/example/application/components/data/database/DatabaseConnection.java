@@ -27,7 +27,7 @@ public class DatabaseConnection {
             connection = DriverManager.getConnection(DbUrl, DbUser, DbPassword);
             statement = connection.createStatement();
         } catch (Exception e){
-            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+            Notification.show("Database connection error", 5000, Notification.Position.BOTTOM_CENTER);
         }
 
     }

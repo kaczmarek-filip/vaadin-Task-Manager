@@ -14,7 +14,6 @@ import java.util.ArrayList;
  * @see Navigation
  */
 @Route("teams")
-//@PermitAll
 public class TeamsSite extends Navigation {
     HorizontalLayout horizontalLayout = new HorizontalLayout();
     DatabaseConnection databaseConnection = new DatabaseConnection();
@@ -23,26 +22,15 @@ public class TeamsSite extends Navigation {
         super("Teams");
 
         userTeamsArrayList = databaseConnection.findTeamsByUser(User.getLoggedInUser());
-//        if(teamsArrayList != null){
         if(!userTeamsArrayList.isEmpty()){
             for (UserTeams team : userTeamsArrayList) {
-//                Notification.show(team.getName() + " " + team.getRole());
-                TeamsElement teamsElement = new TeamsElement(team); // wywala błąd
+                TeamsElement teamsElement = new TeamsElement(team);
 
                 horizontalLayout.add(teamsElement);
 
-                //TODO: dodać do DB innych użytkowników danej grupy.
-                // odrębny formularz logowania, który nie wpuszcza niezalogowanego użytkownika dalej
+                //TODO: scrollowany panel
             }
         }
-
-
-
-//        horizontalLayout.add(new TeamsElement());
-//        horizontalLayout.add(new TeamsElement());
-//        horizontalLayout.add(new TeamsElement());
-//        horizontalLayout.add(new TeamsElement());
-//        horizontalLayout.add(new TeamsElement());
         horizontalLayout.addClassName("teamsHorizontalLayout");
 
         setContent(horizontalLayout);

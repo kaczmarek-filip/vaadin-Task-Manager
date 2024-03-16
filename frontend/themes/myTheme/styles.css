@@ -1,3 +1,5 @@
+@import url(components/theme.css);
+
 /*-----------------------------------------------------------*/
 /* Navigation */
 /*-----------------------------------------------------------*/
@@ -22,7 +24,7 @@
     /*width: fit-content;*/
     text-align: left;
     padding: 2%;
-    background-color: #88B04B;
+    /*background-color: #88B04B;*/
     border-radius: 15px 15px 5px 5px;
     opacity: 0.9;
 }
@@ -50,8 +52,6 @@
     justify-content: flex-start;
     align-items: flex-start;
     align-content: flex-start;
-    /*display: grid;*/
-    /*grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));*/
 }
 .teamsElement{
     width: 25vw;
@@ -67,7 +67,6 @@
     padding: 2%;
     box-sizing: border-box;
     position: relative;
-    cursor: pointer;
 }
 .teamsMembersDiv{
     width: 100%;
@@ -119,5 +118,4 @@
     box-shadow: inset -10px 15px 9px -18px rgba(66, 68, 90, 1);
     border-radius: 5px;
     font-family: Bahnschrift;
-
 }

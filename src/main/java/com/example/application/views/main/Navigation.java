@@ -41,8 +41,6 @@ public class Navigation extends AppLayout  implements BeforeEnterObserver {
         siteTitle.getStyle().set("font-size", "var(--lumo-font-size-l)")
                 .set("margin", "0");
 
-
-
         Scroller scroller = new Scroller(setNavigation());
         scroller.setClassName(LumoUtility.Padding.SMALL);
 
