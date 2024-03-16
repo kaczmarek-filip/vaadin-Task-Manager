@@ -5,6 +5,8 @@ import com.vaadin.flow.component.notification.Notification;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Database connection
@@ -21,13 +23,15 @@ public class DatabaseConnection {
     private String query;
     private SQLParser sqlParser = new SQLParser();
 
+    private String error = "Database connection error";
+
     public DatabaseConnection() {
         try {
             Class.forName(DbDriver).newInstance();
             connection = DriverManager.getConnection(DbUrl, DbUser, DbPassword);
             statement = connection.createStatement();
         } catch (Exception e){
-            Notification.show("Database connection error", 5000, Notification.Position.BOTTOM_CENTER);
+            Notification.show(error, 5000, Notification.Position.BOTTOM_CENTER);
         }
 
     }
@@ -45,7 +49,7 @@ public class DatabaseConnection {
             statement.close();
             connection.close();
         } catch (Exception e) {
-            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+            Notification.show(error, 5000, Notification.Position.BOTTOM_CENTER);
         }
     }
 
@@ -67,7 +71,7 @@ public class DatabaseConnection {
                 statement.close();
                 connection.close();
             } catch (Exception e) {
-                Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+                Notification.show(error, 5000, Notification.Position.BOTTOM_CENTER);
             }
         return false;
     }
@@ -95,39 +99,40 @@ public class DatabaseConnection {
                 statement.close();
                 connection.close();
             } catch (Exception e) {
-                Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+                Notification.show(error, 5000, Notification.Position.BOTTOM_CENTER);
             }
 
         return null;
     }
 
-    public ArrayList<UserTeams> findTeamsByUser(User user){
+    public ArrayList<Team> findTeamsByUser(User user){
         query = sqlParser.findTeamsByUser(user);
-        ArrayList<UserTeams> userTeamsArrayList = new ArrayList<>();
+        ArrayList<Team> userTeamsArrayList = new ArrayList<>();
 
             try (ResultSet resultSet = statement.executeQuery(query)) {
 
-
-
                 while (resultSet.next()){
-                    int DbId = resultSet.getInt("ID");
-                    String DbName = resultSet.getString("name");
+                    int DbTeamId = resultSet.getInt("ID");
+                    String DbTeamName = resultSet.getString("name");
                     TeamRoles DbRole = TeamRoles.valueOf(resultSet.getString("role"));
 
-                    userTeamsArrayList.add(new UserTeams(DbId, DbName, DbRole));
+                    Map<User, TeamRoles> userTeamRolesMap = new HashMap<>();
+                    userTeamRolesMap.put(user, DbRole);
+
+                    userTeamsArrayList.add(new Team(DbTeamId, DbTeamName, userTeamRolesMap));
                 }
                 statement.close();
                 connection.close();
             } catch (Exception e) {
-                Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+                Notification.show(error, 5000, Notification.Position.BOTTOM_CENTER);
             }
 
         return userTeamsArrayList;
     }
 
-    public ArrayList<TeamMembers> findUsersByTeam(UserTeams userTeams){
-        query = sqlParser.findUsersByTeam(userTeams);
-        ArrayList<TeamMembers> teamMembersArrayList = new ArrayList<>();
+    public Map<User, TeamRoles> findUsersInTeam(Team team){
+        query = sqlParser.findUsersInTeam(team);
+        Map<User, TeamRoles> userTeamRolesMap = new HashMap<>();
 
             try (ResultSet resultSet = statement.executeQuery(query)) {
 
@@ -140,18 +145,17 @@ public class DatabaseConnection {
 
                     TeamRoles DbRole = TeamRoles.valueOf(resultSet.getString("role"));
 
-                    TeamMembers teamMembers = new TeamMembers(userTeams.getId(), new User(DbId, DbDisplayName, DbEmail, DbPassword), DbRole);
+                    userTeamRolesMap.put(new User(DbId, DbDisplayName, DbEmail, DbPassword), DbRole);
 
-                    teamMembersArrayList.add(teamMembers);
                 }
                 statement.close();
                 connection.close();
             } catch (Exception e) {
-                Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+                Notification.show(error, 5000, Notification.Position.BOTTOM_CENTER);
             }
 
 
-        return teamMembersArrayList;
+        return userTeamRolesMap;
     }
     public Team findTeamNameByTeamId(int teamId){
         query = sqlParser.findTeamNameByTeamId(teamId);
@@ -161,7 +165,7 @@ public class DatabaseConnection {
                 return new Team(teamId, teamName);
             }
         } catch (Exception e){
-            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+            Notification.show(error, 5000, Notification.Position.BOTTOM_CENTER);
         }
         return null;
     }

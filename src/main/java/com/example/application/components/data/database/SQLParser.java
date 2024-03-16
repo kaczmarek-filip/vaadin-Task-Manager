@@ -1,8 +1,7 @@
 package com.example.application.components.data.database;
 
+import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
-import com.example.application.components.data.UserTeams;
-import com.example.application.components.data.database.DatabaseConnection;
 
 public class SQLParser {
     /**
@@ -39,8 +38,8 @@ public class SQLParser {
         String query = "SELECT teams.ID AS ID, teams.name AS name, team_member.role AS role FROM teams INNER JOIN team_member ON teams.ID = team_member.team_ID INNER JOIN users ON team_member.user_ID = users.ID WHERE users.ID = " + user.getId();
         return query;
     }
-    public String findUsersByTeam(UserTeams userTeams){
-        String query = "SELECT team_member.team_ID as team_ID, users.*, team_member.role as role FROM users INNER JOIN team_member ON users.ID = team_member.user_ID WHERE team_member.team_ID = " + userTeams.getId();
+    public String findUsersInTeam(Team team){
+        String query = "SELECT team_member.team_ID as team_ID, users.*, team_member.role as role FROM users INNER JOIN team_member ON users.ID = team_member.user_ID WHERE team_member.team_ID = " + team.getId();
         return query;
     }
     public String findTeamNameByTeamId(int teamId){

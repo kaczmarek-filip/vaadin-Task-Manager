@@ -6,6 +6,7 @@ import lombok.Getter;
  * Sprawdza użytkowników należących do konkretnego teamu
  */
 @Getter
+@Deprecated
 public class TeamMembers {
     private int teamId;
     private User user;

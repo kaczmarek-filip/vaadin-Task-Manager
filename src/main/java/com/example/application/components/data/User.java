@@ -1,7 +1,10 @@
 package com.example.application.components.data;
 
+import com.example.application.components.data.database.DatabaseConnection;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
 
 /**
  * Singleton
@@ -46,5 +49,12 @@ public class User {
     }
     public static void logOut(){
         instance = null;
+    }
+
+    public static ArrayList<Team> getLoggedInUserTeams(){
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        ArrayList<Team> teamsByUser = databaseConnection.findTeamsByUser(User.getLoggedInUser());
+
+        return teamsByUser;
     }
 }

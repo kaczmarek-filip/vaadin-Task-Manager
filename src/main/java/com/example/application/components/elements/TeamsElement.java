@@ -1,17 +1,17 @@
 package com.example.application.components.elements;
 
-import com.example.application.components.data.database.DatabaseConnection;
-import com.example.application.components.data.TeamMembers;
-import com.example.application.components.data.UserTeams;
+import com.example.application.components.data.*;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.notification.Notification;
+
+import java.util.Map;
 
 public class TeamsElement extends Element {
 
-    private final UserTeams team;
-    private DatabaseConnection databaseConnection = new DatabaseConnection();
+    private final Team team;
 
-    public TeamsElement(UserTeams team) {
+    public TeamsElement(Team team) {
         super("teamsElement");
         this.team = team;
         layout();
@@ -27,11 +27,11 @@ public class TeamsElement extends Element {
         Div membersDiv = new Div();
         membersDiv.setClassName("teamsMembersDiv");
 
-        for(TeamMembers teamMembers : databaseConnection.findUsersByTeam(team)){
-            membersDiv.add(new TeamsMemberElement(teamMembers));
+        for(Map.Entry<User, TeamRoles> entry : Team.getAllTeamUsers(team).entrySet()){
+            membersDiv.add(new TeamsMemberElement(entry.getKey(), entry.getValue()));
         }
 
-        add(new TeamsUserRoleElement(team.getRole()));
+        add(new TeamsUserRoleElement(team.getUsersInTeam().get(User.getLoggedInUser())));
         add(title);
         add(membersDiv);
     }

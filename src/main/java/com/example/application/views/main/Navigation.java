@@ -1,7 +1,7 @@
 package com.example.application.views.main;
 
+import com.example.application.components.data.Team;
 import com.example.application.components.data.database.DatabaseConnection;
-import com.example.application.components.data.UserTeams;
 import com.example.application.components.data.User;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -26,8 +26,6 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
  * @see AppLayout
  */
 public class Navigation extends AppLayout  implements BeforeEnterObserver {
-
-    private DatabaseConnection databaseConnection = new DatabaseConnection();
     protected H1 siteTitle = new H1();
 
     /**
@@ -45,7 +43,7 @@ public class Navigation extends AppLayout  implements BeforeEnterObserver {
         scroller.setClassName(LumoUtility.Padding.SMALL);
 
         addToDrawer(scroller);
-        addToNavbar(toggle, siteTitle, loggedInUser(),logOutButton());
+        addToNavbar(toggle, siteTitle, logOutButton());
 
         setPrimarySection(Section.DRAWER);
     }
@@ -58,8 +56,8 @@ public class Navigation extends AppLayout  implements BeforeEnterObserver {
         SideNavItem teamLink = new SideNavItem("Team", TeamsSite.class, VaadinIcon.MALE.create());
         SideNavItem userLink = new SideNavItem("User", UserSite.class, VaadinIcon.USER_CARD.create());
 
-        for (UserTeams userTeams : databaseConnection.findTeamsByUser(User.getLoggedInUser())){
-            teamLink.addItem(new SideNavItem(userTeams.getName(), "teams/team_id/" + userTeams.getId(), VaadinIcon.ANGLE_RIGHT.create()));
+        for (Team team : User.getLoggedInUserTeams()){
+            teamLink.addItem(new SideNavItem(team.getName(), "teams/team_id/" + team.getId(), VaadinIcon.ANGLE_RIGHT.create()));
         }
 
         nav.addItem(mainSiteLink,taskLink, messengerLink, teamLink, userLink);
@@ -89,6 +87,13 @@ public class Navigation extends AppLayout  implements BeforeEnterObserver {
         paragraph.addClassName("loggedInUser");
         paragraph.getElement().getStyle().set("font-size", LumoUtility.FontSize.LARGE);
         return paragraph;
+    }
+    protected Button addTopNavButton(String buttonText){
+        Button button = new Button(buttonText);
+        button.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+        button.addClassName("customNavButton");
+        addToNavbar(button);
+        return button;
     }
 
     /**

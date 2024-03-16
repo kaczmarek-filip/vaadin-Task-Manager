@@ -1,9 +1,9 @@
 package com.example.application.views.main;
 
-import com.example.application.components.data.database.DatabaseConnection;
-import com.example.application.components.data.UserTeams;
+import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
 import com.example.application.components.elements.TeamsElement;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Route;
 
@@ -16,23 +16,27 @@ import java.util.ArrayList;
 @Route("teams")
 public class TeamsSite extends Navigation {
     HorizontalLayout horizontalLayout = new HorizontalLayout();
-    DatabaseConnection databaseConnection = new DatabaseConnection();
-    ArrayList<UserTeams> userTeamsArrayList;
+    ArrayList<Team> userTeamsArrayList;
     public TeamsSite() {
         super("Teams");
-
-        userTeamsArrayList = databaseConnection.findTeamsByUser(User.getLoggedInUser());
+        userTeamsArrayList = User.getLoggedInUserTeams();
         if(!userTeamsArrayList.isEmpty()){
-            for (UserTeams team : userTeamsArrayList) {
+            for (Team team : userTeamsArrayList) {
                 TeamsElement teamsElement = new TeamsElement(team);
 
                 horizontalLayout.add(teamsElement);
-
-                //TODO: scrollowany panel
             }
         }
         horizontalLayout.addClassName("teamsHorizontalLayout");
 
         setContent(horizontalLayout);
+
+        addTopNavButton("Create team");
+    }
+
+    @Override
+    protected Button addTopNavButton(String buttonText) {
+        return super.addTopNavButton(buttonText);
+        //TODO: Create listener
     }
 }

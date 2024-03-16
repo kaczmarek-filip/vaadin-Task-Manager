@@ -83,7 +83,6 @@ public class LoginView extends VerticalLayout {
             User.getInstance().setDisplayName(loggedInUser.getDisplayName());
             User.getInstance().setEmail(loggedInUser.getEmail());
 
-            Notification.show(loggedInUser.getDisplayName());
             getUI().ifPresent(ui -> ui.navigate(MainView.class));
 
 
