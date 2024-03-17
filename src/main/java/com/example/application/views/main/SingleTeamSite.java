@@ -4,7 +4,7 @@ package com.example.application.views.main;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.DatabaseConnection;
 import com.example.application.components.data.Team;
-import com.example.application.components.dialogs.CreateTeamDialog;
+import com.example.application.components.dialogs.EditTeamDialog;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
@@ -19,17 +19,17 @@ public class SingleTeamSite extends Navigation implements BeforeEnterObserver, H
     private DatabaseConnection databaseConnection = new DatabaseConnection();
     public SingleTeamSite() {
         super("Team");
-        addTopNavButton("Create team", ButtonVariant.LUMO_SUCCESS).addClickListener(e -> {
-           new CreateTeamDialog().open();
-        });
-        addTopNavButton("Edit team", ButtonVariant.LUMO_CONTRAST);
+
+        addTopNavButton("Edit", ButtonVariant.LUMO_CONTRAST).addClickListener(e -> {
+           new EditTeamDialog(team).open();
+        }); //TODO: If owner
     }
 
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, String s) {
         teamId = Integer.parseInt(s);
-        team = databaseConnection.findTeamNameByTeamId(teamId);
+        team = databaseConnection.findTeamByTeamId(teamId);
         siteTitle.setText(team.getName());
     }
 
@@ -44,7 +44,6 @@ public class SingleTeamSite extends Navigation implements BeforeEnterObserver, H
         }
 
         if(!teamIdsWithAccess.contains(teamId)){
-//            Notification.show("You do not have access to this team", 5000, Notification.Position.TOP_CENTER);
             Notification notification = new Notification("You do not have access to this team", 5000, Notification.Position.TOP_STRETCH);
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
             notification.open();

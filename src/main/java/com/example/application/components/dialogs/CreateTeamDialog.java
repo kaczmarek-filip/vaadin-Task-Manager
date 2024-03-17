@@ -11,43 +11,35 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CreateTeamDialog extends Dialog {
     private Button cancelButton;
     private Button createButton;
-    TextField teamNameField = new TextField("Team name");
-    TextArea teamMottoField = new TextArea("Motto");
-    MultiSelectComboBox<User> userComboBoxField = new MultiSelectComboBox<>("Members");
+    private TextField teamNameField = new TextField("Team name");
+    private TextArea teamMottoField = new TextArea("Motto");
+    private MultiSelectComboBox<User> userComboBoxField = new MultiSelectComboBox<>("Members");
+    private TextArea selectedUsersArea = new TextArea("Selected Users");
 
     public CreateTeamDialog() {
         setHeaderTitle("Create team");
         setCloseOnOutsideClick(false);
         setCloseOnEsc(false);
 
-        cancelButton = new Button("Cancel");
-        cancelButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        cancelButton.addClickListener(e -> {
-            close();
-        });
-        createButton = new Button("Create");
-        createButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
-        createButton.addClickShortcut(Key.ENTER);
-        createButton.addClickListener(e -> {
-            beforeCreate();
-        });
         teamNameField.setRequired(true);
 
-        userComboBoxField.setItems(User.getAllUsers());
-        userComboBoxField.setItemLabelGenerator(User::getDisplayName);
-        userComboBoxField.setSelectedItemsOnTop(true);
-        FormLayout formLayout = new FormLayout(teamNameField, teamMottoField, userComboBoxField);
+        selectedUsersArea.setReadOnly(true);
+
+
+        FormLayout formLayout = new FormLayout(teamNameField, teamMottoField, setUserComboBoxField(), selectedUsersArea);
         add(formLayout);
 
-        getFooter().add(cancelButton, createButton);
+        getFooter().add(setCancelButton(), setCreateButton());
     }
 
     private void beforeCreate() {
@@ -59,12 +51,41 @@ public class CreateTeamDialog extends Dialog {
         databaseConnection.createTeam(teamName, teamMotto, User.getLoggedInUser(), userComboBox);
         close();
 
-        UI.getCurrent().getPage().reload();
-
         Notification notification = new Notification("The team has been created", 5000, Notification.Position.BOTTOM_CENTER);
         notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
         notification.open();
 
+        UI.getCurrent().getPage().reload();
+    }
+    private Button setCancelButton(){
+        cancelButton = new Button("Cancel");
+        cancelButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        cancelButton.addClickListener(e -> {
+            close();
+        });
 
+        return cancelButton;
+    }
+    private Button setCreateButton(){
+        createButton = new Button("Create");
+        createButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+        createButton.addClickShortcut(Key.ENTER);
+        createButton.addClickListener(e -> {
+            beforeCreate();
+        });
+
+        return createButton;
+    }
+    private MultiSelectComboBox<User> setUserComboBoxField(){
+        userComboBoxField.setItems(User.getAllUsers());
+        userComboBoxField.setItemLabelGenerator(User::getDisplayName);
+        userComboBoxField.setSelectedItemsOnTop(true);
+
+        userComboBoxField.addValueChangeListener(e -> {
+            String selectedUsersText = e.getValue().stream().map(User::getDisplayName).collect(Collectors.joining(" "));
+            selectedUsersArea.setValue(selectedUsersText);
+        });
+
+        return userComboBoxField;
     }
 }

@@ -39,15 +39,19 @@ public class SQLParser {
     }
 
     public String findTeamsByUser(User user){
-        String query = "SELECT teams.ID AS ID, teams.name AS name, team_member.role AS role FROM teams INNER JOIN team_member ON teams.ID = team_member.team_ID INNER JOIN users ON team_member.user_ID = users.ID WHERE users.ID = " + user.getId();
+        String query = "SELECT teams.ID AS ID, teams.name AS name, teams.motto, team_member.role AS role FROM teams INNER JOIN team_member ON teams.ID = team_member.team_ID INNER JOIN users ON team_member.user_ID = users.ID WHERE users.ID = " + user.getId();
         return query;
     }
-    public String findUsersInTeam(Team team){
-        String query = "SELECT team_member.team_ID as team_ID, users.*, team_member.role as role FROM users INNER JOIN team_member ON users.ID = team_member.user_ID WHERE team_member.team_ID = " + team.getId();
+    public String findUsersInTeam(int teamId){
+        String query = "SELECT team_member.team_ID as team_ID, users.*, team_member.role as role FROM users INNER JOIN team_member ON users.ID = team_member.user_ID WHERE team_member.team_ID = " + teamId;
         return query;
     }
-    public String findTeamNameByTeamId(int teamId){
-        String query = "SELECT * FROM teams WHERE ID = " + teamId;
+    public String findTeamByTeamId(int teamId){
+        String query = "SELECT teams.*, users.ID AS user_ID, users.email, users.displayName, team_member.role " +
+                "FROM teams " +
+                "INNER JOIN team_member ON team_member.team_ID = teams.ID " +
+                "INNER JOIN users ON team_member.user_ID = users.ID " +
+                "WHERE teams.ID = " + teamId;
         return query;
     }
     public String getAllUsers(){
@@ -66,5 +70,9 @@ public class SQLParser {
 
 
         return queryArrayList;
+    }
+    public String deleteTeam(int teamId){
+        String query = "DELETE FROM `teams` WHERE `teams`.`ID` = " + teamId;
+        return query;
     }
 }
