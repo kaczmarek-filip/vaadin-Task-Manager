@@ -37,44 +37,9 @@ public class EditTeamDialog extends Dialog {
         setCloseOnOutsideClick(false);
         setCloseOnEsc(false);
 
-//        deleteButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
-//        deleteButton.getStyle().set("margin-right", "auto");
-
-//        cancelButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
-//        cancelButton.addClickListener(e -> {
-//           close();
-//        });
-
-//        selectedUsersArea.setReadOnly(true);
-
-//        StringBuilder alreadyUsers = new StringBuilder();
-//
-//        for (Map.Entry<User, TeamRoles> entry : team.getUsersInTeam().entrySet()){
-//            alreadyUsers.append(entry.getKey().getDisplayName() + " ");
-//        }
-//        userComboBoxField.setItems(team.getUsersInTeam().keySet());
-//        userComboBoxField.setItems(User.getAllUsers());
-//        userComboBoxField.select(team.getUsersInTeam().keySet());
-//        userComboBoxField.setItemLabelGenerator(User::getDisplayName);
-//        userComboBoxField.setSelectedItemsOnTop(true);
-//
-//        userComboBoxField.addValueChangeListener(e -> {
-//            String selectedUsersText = e.getValue().stream().map(User::getDisplayName).collect(Collectors.joining(" "));
-//            selectedUsersArea.setValue(selectedUsersText);
-//        });
-
-//        selectedUsersArea.setValue(alreadyUsers.toString());
-
-//        saveButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
 
         teamNameField.setValue(team.getName());
         teamMottoField.setValue(team.getMotto());
-
-//        for (Map.Entry<User, TeamRoles> entry : team.getUsersInTeam().entrySet()){
-//            Notification.show(entry.getKey().getDisplayName() + ":" + entry.getValue());
-//        }
-
-
 
         FormLayout formLayout = new FormLayout(teamNameField, teamMottoField, setUserComboBoxField(), setSelectedUsersArea());
 
@@ -92,14 +57,16 @@ public class EditTeamDialog extends Dialog {
         deleteButton.getStyle().set("margin-right", "auto");
 
         deleteButton.addClickListener(e -> {
-            DatabaseConnection databaseConnection = new DatabaseConnection();
-            databaseConnection.deleteTeam(team.getId());
-
-            UI.getCurrent().navigate(TeamsSite.class);
-
-            Notification notification = new Notification("The team has been deleted", 5000, Notification.Position.BOTTOM_CENTER);
-            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            notification.open();
+//            DatabaseConnection databaseConnection = new DatabaseConnection();
+//            databaseConnection.deleteTeam(team.getId());
+//
+//            UI.getCurrent().navigate(TeamsSite.class);
+//
+//            Notification notification = new Notification("The team has been deleted", 5000, Notification.Position.BOTTOM_CENTER);
+//            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+//            notification.open();
+//            close();
+            new DeleteConfirmDialog(team).open();
             close();
         });
 
