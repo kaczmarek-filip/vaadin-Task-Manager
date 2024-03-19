@@ -25,8 +25,6 @@ public class RegisterDialog extends Dialog {
     PasswordField password = new PasswordField("Password");
     PasswordField confirmPassword = new PasswordField("Confirm password");
 
-    DatabaseConnection databaseConnection = new DatabaseConnection();
-
     public RegisterDialog() {
         setHeaderTitle("Register");
         setCloseOnOutsideClick(false);
@@ -81,12 +79,13 @@ public class RegisterDialog extends Dialog {
             Notification notification = new Notification("The password must contain at least 8 characters", 5000, Notification.Position.BOTTOM_CENTER);
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
             notification.open();
-        } else if (databaseConnection.isEmailExists(user)) {
+        } else if (new DatabaseConnection().isEmailExists(user)) {
             Notification notification = new Notification("There is already a user with the specified email", 5000, Notification.Position.BOTTOM_CENTER);
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
             notification.open();
         } else {
-            databaseConnection.registerUser(user, passwordValue);
+            new DatabaseConnection().registerUser(user, passwordValue);
+
             close();
             Notification notification = new Notification("Successfully registered", 5000, Notification.Position.BOTTOM_CENTER);
             notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
