@@ -11,7 +11,6 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 
@@ -57,7 +56,8 @@ public class CreateTeamDialog extends Dialog {
 
         UI.getCurrent().getPage().reload();
     }
-    private Button setCancelButton(){
+
+    private Button setCancelButton() {
         cancelButton = new Button("Cancel");
         cancelButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
         cancelButton.addClickListener(e -> {
@@ -66,7 +66,8 @@ public class CreateTeamDialog extends Dialog {
 
         return cancelButton;
     }
-    private Button setCreateButton(){
+
+    private Button setCreateButton() {
         createButton = new Button("Create");
         createButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
         createButton.addClickShortcut(Key.ENTER);
@@ -76,7 +77,8 @@ public class CreateTeamDialog extends Dialog {
 
         return createButton;
     }
-    private MultiSelectComboBox<User> setUserComboBoxField(){
+
+    private MultiSelectComboBox<User> setUserComboBoxField() {
         userComboBoxField.setItems(User.getAllUsers());
         userComboBoxField.setItemLabelGenerator(User::getDisplayName);
         userComboBoxField.setSelectedItemsOnTop(true);

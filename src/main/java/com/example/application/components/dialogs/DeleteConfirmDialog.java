@@ -1,6 +1,7 @@
 package com.example.application.components.dialogs;
 
 import com.example.application.components.data.Team;
+import com.example.application.components.data.User;
 import com.example.application.components.data.database.DatabaseConnection;
 import com.example.application.views.main.TeamsSite;
 import com.vaadin.flow.component.UI;
@@ -11,9 +12,23 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 
 public class DeleteConfirmDialog extends Dialog {
-    public DeleteConfirmDialog(Team team) {
-        Button deleteButton = new Button("Delete");
+    Button deleteButton = new Button("Delete");
+    Button cancelButton = new Button("Cancel", (e) -> close());
 
+    public DeleteConfirmDialog() {
+
+        deleteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY,
+                ButtonVariant.LUMO_ERROR);
+
+        deleteButton.getStyle().set("margin-right", "auto");
+
+
+        cancelButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        getFooter().add(deleteButton);
+        getFooter().add(cancelButton);
+    }
+
+    public Dialog deleteTeam(Team team) {
         setHeaderTitle("Confirm deletion");
         add("Are you sure to remove " + team.getName() + "?");
 
@@ -29,18 +44,27 @@ public class DeleteConfirmDialog extends Dialog {
             notification.open();
             close();
         });
+        return this;
+    }
 
-        deleteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY,
-                ButtonVariant.LUMO_ERROR);
+    public Dialog deleteUser(Team team, User user) {
+        setHeaderTitle("Confirm deletion");
+        add("Are you sure to remove " + user.getDisplayName() + "?");
 
-        deleteButton.getStyle().set("margin-right", "auto");
+        deleteButton.addClickListener(e -> {
 
-        getFooter().add(deleteButton);
+            DatabaseConnection databaseConnection = new DatabaseConnection();
+            databaseConnection.deleteUserFromTeam(team, user);
 
-        Button cancelButton = new Button("Cancel", (e) -> close());
+            Notification notification = new Notification(user.getDisplayName() + " has been deleted", 5000, Notification.Position.BOTTOM_CENTER);
+            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+            notification.open();
+            close();
 
-        cancelButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
-        getFooter().add(cancelButton);
+            UI.getCurrent().getPage().reload();
+        });
+
+        return this;
     }
 }

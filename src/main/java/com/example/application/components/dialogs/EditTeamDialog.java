@@ -4,31 +4,32 @@ import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.DatabaseConnection;
-import com.example.application.views.main.TeamsSite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.dialog.Dialog;
-import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 public class EditTeamDialog extends Dialog {
     private Button saveButton = new Button("Save");
     private Button deleteButton = new Button("Delete");
     private Button cancelButton = new Button("Cancel");
+    private Button addUserButton = new Button("Add users");
     private Team team;
     private TextField teamNameField = new TextField("Team name");
     private TextArea teamMottoField = new TextArea("Motto");
-    private MultiSelectComboBox<User> userComboBoxField = new MultiSelectComboBox<>("Members");
-    private TextArea selectedUsersArea = new TextArea("Selected Users");
-
+    private Grid<Map.Entry<User, TeamRoles>> grid = new Grid<>();
+    private Set<Map.Entry<User, TeamRoles>> items;
 
 
     public EditTeamDialog(Team team) {
@@ -36,74 +37,123 @@ public class EditTeamDialog extends Dialog {
         setHeaderTitle("Edit team");
         setCloseOnOutsideClick(false);
         setCloseOnEsc(false);
+        setWidth("50%");
 
 
         teamNameField.setValue(team.getName());
+        teamNameField.setWidthFull();
         teamMottoField.setValue(team.getMotto());
+        teamMottoField.setWidthFull();
 
-        FormLayout formLayout = new FormLayout(teamNameField, teamMottoField, setUserComboBoxField(), setSelectedUsersArea());
+        HorizontalLayout horizontalLayout = new HorizontalLayout(setAddUserButton(), setSaveButton());
+        horizontalLayout.setWidthFull();
+        horizontalLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
 
-        add(formLayout);
+        VerticalLayout verticalLayout = new VerticalLayout(teamNameField, teamMottoField, horizontalLayout, setGridContextMenu());
+
+        add(verticalLayout);
         getFooter().add(setDeleteButton());
         getFooter().add(setCancelButton());
-        getFooter().add(setSaveButton());
     }
-    private Button setSaveButton(){
+
+    private void beforeEdit() {
+        String teamName = teamNameField.getValue();
+        String teamMotto = teamMottoField.getValue();
+
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        databaseConnection.updateTeamInfo(team.getId(), teamName, teamMotto);
+    }
+
+    private Button setAddUserButton() {
+        addUserButton.addClickListener(e -> {
+            new AddUserDialog(team).open();
+        });
+        addUserButton.getStyle().set("margin-right", "auto");
+        return addUserButton;
+    }
+
+    private Button setSaveButton() {
         saveButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+
+        saveButton.getStyle().set("margin-left", "auto");
+
+        saveButton.addClickListener(e -> {
+            beforeEdit();
+            UI.getCurrent().getPage().reload();
+        });
+
         return saveButton;
     }
-    private Button setDeleteButton(){
+
+    private Button setDeleteButton() {
         deleteButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
         deleteButton.getStyle().set("margin-right", "auto");
 
         deleteButton.addClickListener(e -> {
-//            DatabaseConnection databaseConnection = new DatabaseConnection();
-//            databaseConnection.deleteTeam(team.getId());
-//
-//            UI.getCurrent().navigate(TeamsSite.class);
-//
-//            Notification notification = new Notification("The team has been deleted", 5000, Notification.Position.BOTTOM_CENTER);
-//            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-//            notification.open();
-//            close();
-            new DeleteConfirmDialog(team).open();
+            new DeleteConfirmDialog().deleteTeam(team).open();
             close();
         });
 
         return deleteButton;
     }
-    private Button setCancelButton(){
+
+    private Button setCancelButton() {
         cancelButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
         cancelButton.addClickListener(e -> {
             close();
         });
         return cancelButton;
     }
-    private TextArea setSelectedUsersArea(){
-        selectedUsersArea.setReadOnly(true);
 
-        StringBuilder alreadyUsers = new StringBuilder();
+    private Grid<Map.Entry<User, TeamRoles>> setGridContextMenu() {
 
-        for (Map.Entry<User, TeamRoles> entry : team.getUsersInTeam().entrySet()){
-            alreadyUsers.append(entry.getKey().getDisplayName() + " ");
-        }
+        items = team.getUsersInTeam().entrySet();
+        grid.setItems(items);
 
-        selectedUsersArea.setValue(alreadyUsers.toString());
+//        grid.setSelectionMode(Grid.SelectionMode.MULTI);
 
-        return selectedUsersArea;
-    }
+        grid.addColumn(entry -> entry.getKey().getDisplayName())
+                .setHeader("Display name");
+        grid.addColumn(entry -> entry.getKey().getEmail())
+                .setHeader("Email");
 
-    private MultiSelectComboBox<User> setUserComboBoxField() {
-        userComboBoxField.setItems(User.getAllUsers());
-        userComboBoxField.select(team.getUsersInTeam().keySet());
-        userComboBoxField.setItemLabelGenerator(User::getDisplayName);
-        userComboBoxField.setSelectedItemsOnTop(true);
+        grid.addComponentColumn(entry -> {
+            Select<TeamRoles> rolesSelect = new Select<>();
+            rolesSelect.setItems(TeamRoles.values());
+            rolesSelect.setValue(entry.getValue());
 
-        userComboBoxField.addValueChangeListener(e -> {
-            String selectedUsersText = e.getValue().stream().map(User::getDisplayName).collect(Collectors.joining(" "));
-            selectedUsersArea.setValue(selectedUsersText);
-        });
+            rolesSelect.addValueChangeListener(event -> {
+//                entry.setValue(event.getValue());
 
-        return userComboBoxField;
+                DatabaseConnection databaseConnection = new DatabaseConnection();
+                databaseConnection.updateUserRole(team, entry.getKey(), event.getValue());
+            });
+
+            if (entry.getValue() == TeamRoles.OWNER) {
+                rolesSelect.setReadOnly(true);
+            }
+
+            return rolesSelect;
+        }).setHeader("User Role");
+
+
+        grid.addComponentColumn(entry -> {
+
+            Button button = new Button();
+            button.setIcon(VaadinIcon.TRASH.create());
+            button.addThemeVariants(ButtonVariant.LUMO_ERROR);
+
+            if (entry.getValue() == TeamRoles.OWNER) {
+                button.setEnabled(false);
+            }
+
+            button.addClickListener(e -> {
+                new DeleteConfirmDialog().deleteUser(team, entry.getKey()).open();
+            });
+
+            return button;
+        }).setFlexGrow(0);
+
+        return grid;
     }
 }

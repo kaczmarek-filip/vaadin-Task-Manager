@@ -29,7 +29,7 @@ public class SQLParser {
     }
 
     /**
-     * @param email from {@link com.example.application.components.dialogs.LoginDialog}
+     * @param email    from {@link com.example.application.components.dialogs.LoginDialog}
      * @param password from {@link com.example.application.components.dialogs.LoginDialog}
      * @return query
      */
@@ -38,15 +38,17 @@ public class SQLParser {
         return query;
     }
 
-    public String findTeamsByUser(User user){
+    public String findTeamsByUser(User user) {
         String query = "SELECT teams.ID AS ID, teams.name AS name, teams.motto, team_member.role AS role FROM teams INNER JOIN team_member ON teams.ID = team_member.team_ID INNER JOIN users ON team_member.user_ID = users.ID WHERE users.ID = " + user.getId();
         return query;
     }
-    public String findUsersInTeam(int teamId){
+
+    public String findUsersInTeam(int teamId) {
         String query = "SELECT team_member.team_ID as team_ID, users.*, team_member.role as role FROM users INNER JOIN team_member ON users.ID = team_member.user_ID WHERE team_member.team_ID = " + teamId;
         return query;
     }
-    public String findTeamByTeamId(int teamId){
+
+    public String findTeamByTeamId(int teamId) {
         String query = "SELECT teams.*, users.ID AS user_ID, users.email, users.displayName, team_member.role " +
                 "FROM teams " +
                 "INNER JOIN team_member ON team_member.team_ID = teams.ID " +
@@ -54,25 +56,56 @@ public class SQLParser {
                 "WHERE teams.ID = " + teamId;
         return query;
     }
-    public String getAllUsers(){
+
+    public String getAllUsers() {
         String query = "SELECT * FROM `users`";
 
         return query;
     }
-    public ArrayList<String> createTeam(String teamName, String teamMotto, User user, Set<User> teamMembers){
-        ArrayList<String> queryArrayList = new ArrayList<>();
-        queryArrayList.add("INSERT INTO `teams`(`name`, `motto`) VALUES ('"+ teamName +"','"+ teamMotto +"');");
-        queryArrayList.add("INSERT INTO `team_member`(`team_ID`, `user_ID`, `role`) VALUES (LAST_INSERT_ID(),'"+ user.getId() +"','"+ TeamRoles.OWNER +"')");
 
-        for (User teamMember : teamMembers){
-            queryArrayList.add("INSERT INTO `team_member`(`team_ID`, `user_ID`, `role`) VALUES (LAST_INSERT_ID(),'"+ teamMember.getId() +"','"+ TeamRoles.MEMBER +"')");
+    public ArrayList<String> createTeam(String teamName, String teamMotto, User user, Set<User> teamMembers) {
+        ArrayList<String> queryArrayList = new ArrayList<>();
+        queryArrayList.add("INSERT INTO `teams`(`name`, `motto`) VALUES ('" + teamName + "','" + teamMotto + "');");
+        queryArrayList.add("INSERT INTO `team_member`(`team_ID`, `user_ID`, `role`) VALUES (LAST_INSERT_ID(),'" + user.getId() + "','" + TeamRoles.OWNER + "')");
+
+        for (User teamMember : teamMembers) {
+            queryArrayList.add("INSERT INTO `team_member`(`team_ID`, `user_ID`, `role`) VALUES (LAST_INSERT_ID(),'" + teamMember.getId() + "','" + TeamRoles.MEMBER + "')");
         }
 
 
         return queryArrayList;
     }
-    public String deleteTeam(int teamId){
+
+    public String deleteTeam(int teamId) {
         String query = "DELETE FROM `teams` WHERE `teams`.`ID` = " + teamId;
+        return query;
+    }
+
+    public String updateTeamInfo(int teamId, String teamName, String teamMotto) {
+        String query = "UPDATE teams SET name='" + teamName + "', motto='" + teamMotto + "' WHERE ID = " + teamId;
+
+        return query;
+    }
+
+    public ArrayList<String> insertUsersIntoTeam(int teamId, Set<User> userSet) {
+        ArrayList<String> queryArrayList = new ArrayList<>();
+
+        for (User user : userSet) {
+            queryArrayList.add("INSERT INTO `team_member`(`team_ID`, `user_ID`, `role`) VALUES (" + teamId + ",'" + user.getId() + "','" + TeamRoles.MEMBER + "')");
+        }
+
+        return queryArrayList;
+    }
+
+    public String deleteUserFromTeam(Team team, User user) {
+        String query = "DELETE FROM `team_member` WHERE team_ID = " + team.getId() + " AND user_ID = " + user.getId();
+
+        return query;
+    }
+
+    public String updateUserRole(Team team, User user, TeamRoles teamRoles) {
+        String query = "UPDATE `team_member` SET `role`='" + teamRoles + "' WHERE team_ID = " + team.getId() + " AND user_ID = " + user.getId();
+
         return query;
     }
 }
