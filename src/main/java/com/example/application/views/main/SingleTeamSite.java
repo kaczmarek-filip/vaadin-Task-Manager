@@ -44,13 +44,8 @@ public class SingleTeamSite extends Navigation implements BeforeEnterObserver, H
 
         editButton.setVisible(true);
 
-        for (Map.Entry<User, TeamRoles> userTeamRolesEntry : Team.getAllTeamUsers(teamId).entrySet()) {
-            User user = userTeamRolesEntry.getKey();
-            TeamRoles role = userTeamRolesEntry.getValue();
-
-            if (!user.equals(User.getLoggedInUser()) && role == TeamRoles.OWNER) {
-                editButton.setVisible(false);
-            }
+        if(Team.getUserTeamRole(User.getLoggedInUser(), teamId) != TeamRoles.OWNER){
+            editButton.setVisible(false);
         }
     }
 

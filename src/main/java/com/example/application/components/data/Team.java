@@ -26,5 +26,18 @@ public class Team {
         return databaseConnection.findUsersInTeam(teamId);
     }
 
-    //TODO: przekminić metodę, która zwaraca rolę użytkownika w danym teamie i na tej podstawie zrobić klasę uprawnień
+    public static TeamRoles getUserTeamRole(User user, int teamId) {
+
+        for (Map.Entry<User, TeamRoles> userTeamRolesEntry : Team.getAllTeamUsers(teamId).entrySet()) {
+            User entryKey = userTeamRolesEntry.getKey();
+            TeamRoles entryValue = userTeamRolesEntry.getValue();
+
+            if (entryKey.equals(user)) {
+                return entryValue;
+            }
+
+        }
+
+        return null;
+    }
 }
