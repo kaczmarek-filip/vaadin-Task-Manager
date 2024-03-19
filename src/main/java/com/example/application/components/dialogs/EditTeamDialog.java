@@ -17,6 +17,7 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 
+import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,7 +31,6 @@ public class EditTeamDialog extends Dialog {
     private TextArea teamMottoField = new TextArea("Motto");
     private Grid<Map.Entry<User, TeamRoles>> grid = new Grid<>();
     private Set<Map.Entry<User, TeamRoles>> items;
-
 
     public EditTeamDialog(Team team) {
         this.team = team;
@@ -108,6 +108,7 @@ public class EditTeamDialog extends Dialog {
     private Grid<Map.Entry<User, TeamRoles>> setGridContextMenu() {
 
         items = team.getUsersInTeam().entrySet();
+        items.remove(User.getLoggedInUser());
         grid.setItems(items);
 
 //        grid.setSelectionMode(Grid.SelectionMode.MULTI);
@@ -119,8 +120,12 @@ public class EditTeamDialog extends Dialog {
 
         grid.addComponentColumn(entry -> {
             Select<TeamRoles> rolesSelect = new Select<>();
-            rolesSelect.setItems(TeamRoles.values());
+            Set<TeamRoles> rolesSet = EnumSet.allOf(TeamRoles.class);
+            rolesSet.remove(TeamRoles.OWNER); //TODO: Brak możliwości wybrania OWNER, ale żeby wyświetlał się przy nazwisku
+            rolesSelect.setItems(rolesSet);
+//            rolesSelect.setItems(TeamRoles.values());
             rolesSelect.setValue(entry.getValue());
+
 
             rolesSelect.addValueChangeListener(event -> {
 //                entry.setValue(event.getValue());

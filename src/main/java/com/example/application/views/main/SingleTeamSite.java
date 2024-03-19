@@ -1,28 +1,38 @@
 package com.example.application.views.main;
 
 
+import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.DatabaseConnection;
 import com.example.application.components.data.Team;
 import com.example.application.components.dialogs.EditTeamDialog;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.router.*;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @Route("teams/team_id")
 public class SingleTeamSite extends Navigation implements BeforeEnterObserver, HasUrlParameter<String> {
     private int teamId;
     private Team team;
     private DatabaseConnection databaseConnection = new DatabaseConnection();
+    private Button editButton = new Button("Edit");
+
     public SingleTeamSite() {
         super("Team");
 
-        addTopNavButton("Edit", ButtonVariant.LUMO_CONTRAST).addClickListener(e -> {
-           new EditTeamDialog(team).open();
-        }); //TODO: If owner
+
+        editButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+        editButton.addClickListener(e -> {
+            new EditTeamDialog(team).open();
+        });
+        addTopNavButton(editButton);
+
+
     }
 
 
@@ -31,6 +41,17 @@ public class SingleTeamSite extends Navigation implements BeforeEnterObserver, H
         teamId = Integer.parseInt(s);
         team = databaseConnection.findTeamByTeamId(teamId);
         siteTitle.setText(team.getName());
+
+        editButton.setVisible(true);
+
+        for (Map.Entry<User, TeamRoles> userTeamRolesEntry : Team.getAllTeamUsers(teamId).entrySet()) {
+            User user = userTeamRolesEntry.getKey();
+            TeamRoles role = userTeamRolesEntry.getValue();
+
+            if (!user.equals(User.getLoggedInUser()) && role == TeamRoles.OWNER) {
+                editButton.setVisible(false);
+            }
+        }
     }
 
     @Override
@@ -39,11 +60,11 @@ public class SingleTeamSite extends Navigation implements BeforeEnterObserver, H
 
         ArrayList<Integer> teamIdsWithAccess = new ArrayList<>();
 
-        for (Team teams : User.getLoggedInUserTeams()){
+        for (Team teams : User.getLoggedInUserTeams()) {
             teamIdsWithAccess.add(teams.getId());
         }
 
-        if(!teamIdsWithAccess.contains(teamId)){
+        if (!teamIdsWithAccess.contains(teamId)) {
             Notification notification = new Notification("You do not have access to this team", 5000, Notification.Position.TOP_STRETCH);
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
             notification.open();

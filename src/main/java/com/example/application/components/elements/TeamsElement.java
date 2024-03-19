@@ -28,7 +28,7 @@ public class TeamsElement extends Element {
         membersDiv.setClassName("teamsMembersDiv");
 
 
-        for(Map.Entry<User, TeamRoles> entry : Team.getAllTeamUsers(team).entrySet()){
+        for(Map.Entry<User, TeamRoles> entry : Team.getAllTeamUsers(team.getId()).entrySet()){
             membersDiv.add(new TeamsMemberElement(entry.getKey(), entry.getValue()));
         }
 

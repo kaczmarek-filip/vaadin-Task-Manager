@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class TeamsSite extends Navigation {
     HorizontalLayout horizontalLayout = new HorizontalLayout();
     ArrayList<Team> userTeamsArrayList;
+    private Button createTeamButton = new Button("Create team");
     public TeamsSite() {
         super("Teams");
         userTeamsArrayList = User.getLoggedInUserTeams();
@@ -33,8 +34,11 @@ public class TeamsSite extends Navigation {
 
         setContent(horizontalLayout);
 
-        addTopNavButton("Create team", ButtonVariant.LUMO_SUCCESS).addClickListener(e -> {
+        createTeamButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+        createTeamButton.addClickListener(e -> {
             new CreateTeamDialog().open();
         });
+
+        addTopNavButton(createTeamButton);
     }
 }

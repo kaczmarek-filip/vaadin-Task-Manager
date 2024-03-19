@@ -7,15 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TeamsMemberElement extends Element {
-//    private final TeamMembers teamMembers;
-    private Map<User, TeamRoles> usersInTeam = new HashMap<>();
     private User teamUser;
     private TeamRoles teamRole;
 
     public TeamsMemberElement(User teamUser, TeamRoles teamRole) {
         super("TeamsMemberElement");
-//        this.teamMembers = teamMembers;
-//        this.usersInTeam = usersInTeam;
         this.teamUser = teamUser;
         this.teamRole = teamRole;
         layout();

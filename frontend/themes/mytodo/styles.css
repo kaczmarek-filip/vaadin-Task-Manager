@@ -93,23 +93,18 @@
     font-weight: bold;
     box-shadow: 8px 8px 28px -14px rgba(66, 68, 90, 1);
     display: flex;
-    gap: 10%;
+    /*gap: 10%;*/
 }
 .TeamsMemberOwner{
     background-color: gold;
-    padding-right: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 .TeamsMemberOwner::before, .TeamsMemberOwner::after{
     content: url('components/crown.svg');
     width: 24px;
     height: 24px;
-    margin-top: 2%;
-    /*background-image: url('https://unpkg.com/css.gg@2.0.0/icons/svg/crown.svg');*/
-    background-size: contain;
-    background-repeat: no-repeat;
-    display: inline-block;
-    vertical-align: middle;
-
 }
 .TeamsUserRole {
     position: absolute;

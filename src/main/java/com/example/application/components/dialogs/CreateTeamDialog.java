@@ -14,6 +14,7 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -79,7 +80,11 @@ public class CreateTeamDialog extends Dialog {
     }
 
     private MultiSelectComboBox<User> setUserComboBoxField() {
-        userComboBoxField.setItems(User.getAllUsers());
+
+        List<User> allUsersList = User.getAllUsers();
+        allUsersList.remove(User.getLoggedInUser());
+
+        userComboBoxField.setItems(allUsersList);
         userComboBoxField.setItemLabelGenerator(User::getDisplayName);
         userComboBoxField.setSelectedItemsOnTop(true);
 

@@ -4,10 +4,10 @@ public enum TeamRoles {
 //    ADMIN(0),
 //    USER(1),
 //    MODERATOR(2),
-    MEMBER("Member"),
-    ADMIN("Admin"),
     OWNER("Owner"),
-    MODERATOR("Moderator");
+    ADMIN("Admin"),
+    MODERATOR("Moderator"),
+    MEMBER("Member");
 
     private final String value;
 

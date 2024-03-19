@@ -89,9 +89,9 @@ public class Navigation extends AppLayout  implements BeforeEnterObserver {
         paragraph.getElement().getStyle().set("font-size", LumoUtility.FontSize.LARGE);
         return paragraph;
     }
-    protected Button addTopNavButton(String buttonText, ButtonVariant buttonVariant){
-        Button button = new Button(buttonText);
-        button.addThemeVariants(buttonVariant);
+    protected Button addTopNavButton(Button button){
+//        Button button = new Button(buttonText);
+//        button.addThemeVariants(buttonVariant);
         button.addClassName("customNavButton");
         addToNavbar(button);
         return button;

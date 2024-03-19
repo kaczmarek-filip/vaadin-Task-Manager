@@ -13,11 +13,6 @@ public class Team {
     private String motto;
     private Map<User, TeamRoles> usersInTeam = new HashMap<>();
 
-//    public Team(int id, String name) {
-//        this.id = id;
-//        this.name = name;
-//    }
-
     public Team(int id, String name, String motto, Map<User, TeamRoles> usersInTeam) {
         this.id = id;
         this.name = name;
@@ -26,8 +21,10 @@ public class Team {
     }
 
     @Deprecated
-    public static Map<User, TeamRoles> getAllTeamUsers(Team team) {
+    public static Map<User, TeamRoles> getAllTeamUsers(int teamId) {
         DatabaseConnection databaseConnection = new DatabaseConnection();
-        return databaseConnection.findUsersInTeam(team.getId());
+        return databaseConnection.findUsersInTeam(teamId);
     }
+
+    //TODO: przekminić metodę, która zwaraca rolę użytkownika w danym teamie i na tej podstawie zrobić klasę uprawnień
 }
