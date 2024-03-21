@@ -6,10 +6,15 @@ import com.example.application.components.data.User;
 import com.example.application.components.data.database.DatabaseConnection;
 import com.example.application.components.data.Team;
 import com.example.application.components.dialogs.EditTeamDialog;
+import com.example.application.components.elements.SingleTeamSiteContent;
+import com.example.application.components.elements.TaskElement;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.Scroller;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 
 import java.util.ArrayList;
@@ -44,9 +49,10 @@ public class SingleTeamSite extends Navigation implements BeforeEnterObserver, H
 
         editButton.setVisible(true);
 
-        if(Team.getUserTeamRole(User.getLoggedInUser(), teamId) != TeamRoles.OWNER){
+        if (Team.getUserTeamRole(User.getLoggedInUser(), teamId) != TeamRoles.OWNER) {
             editButton.setVisible(false);
         }
+        setContent(new SingleTeamSiteContent(team));
     }
 
     @Override

@@ -13,6 +13,8 @@ public class Team {
     private String motto;
     private Map<User, TeamRoles> usersInTeam = new HashMap<>();
 
+    public static int mottoCharLimit = 200;
+
     public Team(int id, String name, String motto, Map<User, TeamRoles> usersInTeam) {
         this.id = id;
         this.name = name;

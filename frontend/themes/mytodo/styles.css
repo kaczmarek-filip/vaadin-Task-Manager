@@ -1,3 +1,4 @@
+@import url('https://fonts.cdnfonts.com/css/monday-feelings');
 /*-----------------------------------------------------------*/
 /* Navigation */
 /*-----------------------------------------------------------*/
@@ -117,5 +118,21 @@
     box-shadow: inset -10px 15px 9px -18px rgba(66, 68, 90, 1);
     border-radius: 5px;
     font-family: Bahnschrift;
+}
+/*-----------------------------------------------------------*/
+/* Single team site */
+/*-----------------------------------------------------------*/
+.singleTeamMemberElement{
+    background-color: cornflowerblue;
+    width: 100%;
+    border-radius: 10px;
+    padding: 2% 5%;
+    box-sizing: border-box;
+}
 
+.singleTeamMotto{
+    font-family: 'Monday Feelings', sans-serif;
+    margin: 3% auto;
+    padding: 2%;
+    text-align: center;
 }

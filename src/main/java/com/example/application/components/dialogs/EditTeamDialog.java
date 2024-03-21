@@ -16,10 +16,13 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
 
 import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
+
+import static com.example.application.components.data.Team.mottoCharLimit;
 
 public class EditTeamDialog extends Dialog {
     private Button saveButton = new Button("Save");
@@ -43,7 +46,12 @@ public class EditTeamDialog extends Dialog {
         teamNameField.setValue(team.getName());
         teamNameField.setWidthFull();
         teamMottoField.setValue(team.getMotto());
+        teamMottoField.setMaxLength(mottoCharLimit);
+        teamMottoField.setValueChangeMode(ValueChangeMode.EAGER);
         teamMottoField.setWidthFull();
+        teamMottoField.addValueChangeListener(e -> {
+           e.getSource().setHelperText(e.getValue().length() + "/" + mottoCharLimit);
+        });
 
         HorizontalLayout horizontalLayout = new HorizontalLayout(setAddUserButton(), setSaveButton());
         horizontalLayout.setWidthFull();

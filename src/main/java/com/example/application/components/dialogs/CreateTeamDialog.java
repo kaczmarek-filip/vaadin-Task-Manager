@@ -13,10 +13,13 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.example.application.components.data.Team.mottoCharLimit;
 
 public class CreateTeamDialog extends Dialog {
     private Button cancelButton;
@@ -32,6 +35,11 @@ public class CreateTeamDialog extends Dialog {
         setCloseOnEsc(false);
 
         teamNameField.setRequired(true);
+        teamMottoField.setMaxLength(mottoCharLimit);
+        teamMottoField.setValueChangeMode(ValueChangeMode.EAGER);
+        teamMottoField.addValueChangeListener(e -> {
+            e.getSource().setHelperText(e.getValue().length() + "/" + mottoCharLimit);
+        });
 
         selectedUsersArea.setReadOnly(true);
 
