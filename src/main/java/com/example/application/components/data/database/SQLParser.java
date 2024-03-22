@@ -30,8 +30,8 @@ public class SQLParser {
     }
 
     /**
-     * @param email    from {@link com.example.application.components.dialogs.LoginDialog}
-     * @param password from {@link com.example.application.components.dialogs.LoginDialog}
+     * @param email user email
+     * @param password user password
      * @return query
      */
     public String loginUser(String email, String password) {
