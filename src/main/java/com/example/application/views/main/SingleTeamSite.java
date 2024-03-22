@@ -6,6 +6,7 @@ import com.example.application.components.data.User;
 import com.example.application.components.data.database.DatabaseConnection;
 import com.example.application.components.data.Team;
 import com.example.application.components.dialogs.EditTeamDialog;
+import com.example.application.components.dialogs.MakeTaskDialog;
 import com.example.application.components.elements.SingleTeamSiteContent;
 import com.example.application.components.elements.TaskElement;
 import com.vaadin.flow.component.button.Button;
@@ -26,6 +27,7 @@ public class SingleTeamSite extends Navigation implements BeforeEnterObserver, H
     private Team team;
     private DatabaseConnection databaseConnection = new DatabaseConnection();
     private Button editButton = new Button("Edit");
+    private Button makeTaskButton = new Button("Make task");
 
     public SingleTeamSite() {
         super("Team");
@@ -37,6 +39,10 @@ public class SingleTeamSite extends Navigation implements BeforeEnterObserver, H
         });
         addTopNavButton(editButton);
 
+        makeTaskButton.addClickListener(e -> {
+            new MakeTaskDialog(team).open();
+        });
+        addTopNavButton(makeTaskButton);
 
     }
 
@@ -48,9 +54,11 @@ public class SingleTeamSite extends Navigation implements BeforeEnterObserver, H
         siteTitle.setText(team.getName());
 
         editButton.setVisible(true);
+        makeTaskButton.setVisible(true);
 
         if (Team.getUserTeamRole(User.getLoggedInUser(), teamId) != TeamRoles.OWNER) {
             editButton.setVisible(false);
+            makeTaskButton.setVisible(false);
         }
         setContent(new SingleTeamSiteContent(team));
     }

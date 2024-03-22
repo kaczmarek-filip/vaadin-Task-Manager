@@ -1,5 +1,6 @@
 package com.example.application.components.data.database;
 
+import com.example.application.components.data.Task;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
@@ -107,5 +108,20 @@ public class SQLParser {
         String query = "UPDATE `team_member` SET `role`='" + teamRoles + "' WHERE team_ID = " + team.getId() + " AND user_ID = " + user.getId();
 
         return query;
+    }
+
+    public ArrayList<String> createTask(Task task) {
+        ArrayList<String> queryArrayList = new ArrayList<>();
+        queryArrayList.add("INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`) VALUES " +
+                "('"+task.getTitle()+"','"+task.getDescription()+"','"+task.getCreationDate().toString()+"','"+task.getDeadline().toString()+"','"+task.getCreator().getId()+"');");
+
+        if(task.getHolders() != null){
+            for (User taskHolder : task.getHolders()){
+                queryArrayList.add("INSERT INTO `taskholders`(`taskID`, `user_ID`) VALUES (LAST_INSERT_ID(),'"+taskHolder.getId()+"');");
+            }
+        }
+
+
+        return queryArrayList;
     }
 }

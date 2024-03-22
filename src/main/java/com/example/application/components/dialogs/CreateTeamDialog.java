@@ -2,6 +2,7 @@ package com.example.application.components.dialogs;
 
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.DatabaseConnection;
+import com.example.application.components.elements.components.TextAreaCounter;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -25,7 +26,7 @@ public class CreateTeamDialog extends Dialog {
     private Button cancelButton;
     private Button createButton;
     private TextField teamNameField = new TextField("Team name");
-    private TextArea teamMottoField = new TextArea("Motto");
+    private TextAreaCounter teamMottoField = new TextAreaCounter("Motto");
     private MultiSelectComboBox<User> userComboBoxField = new MultiSelectComboBox<>("Members");
     private TextArea selectedUsersArea = new TextArea("Selected Users");
 
@@ -35,11 +36,7 @@ public class CreateTeamDialog extends Dialog {
         setCloseOnEsc(false);
 
         teamNameField.setRequired(true);
-        teamMottoField.setMaxLength(mottoCharLimit);
-        teamMottoField.setValueChangeMode(ValueChangeMode.EAGER);
-        teamMottoField.addValueChangeListener(e -> {
-            e.getSource().setHelperText(e.getValue().length() + "/" + mottoCharLimit);
-        });
+        teamMottoField.setCounter(mottoCharLimit);
 
         selectedUsersArea.setReadOnly(true);
 

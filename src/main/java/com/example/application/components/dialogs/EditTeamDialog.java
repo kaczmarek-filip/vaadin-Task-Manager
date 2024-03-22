@@ -4,6 +4,7 @@ import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.DatabaseConnection;
+import com.example.application.components.elements.components.TextAreaCounter;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -14,15 +15,15 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
-import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.value.ValueChangeMode;
 
 import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
 
 import static com.example.application.components.data.Team.mottoCharLimit;
+//TODO: Dodać możliwość dodawania użytkowników jak w tutorialu
+// https://vaadin.com/docs/latest/components/grid
 
 public class EditTeamDialog extends Dialog {
     private Button saveButton = new Button("Save");
@@ -31,7 +32,7 @@ public class EditTeamDialog extends Dialog {
     private Button addUserButton = new Button("Add users");
     private Team team;
     private TextField teamNameField = new TextField("Team name");
-    private TextArea teamMottoField = new TextArea("Motto");
+    private TextAreaCounter teamMottoField = new TextAreaCounter("Motto");
     private Grid<Map.Entry<User, TeamRoles>> grid = new Grid<>();
     private Set<Map.Entry<User, TeamRoles>> items;
 
@@ -46,12 +47,8 @@ public class EditTeamDialog extends Dialog {
         teamNameField.setValue(team.getName());
         teamNameField.setWidthFull();
         teamMottoField.setValue(team.getMotto());
-        teamMottoField.setMaxLength(mottoCharLimit);
-        teamMottoField.setValueChangeMode(ValueChangeMode.EAGER);
         teamMottoField.setWidthFull();
-        teamMottoField.addValueChangeListener(e -> {
-           e.getSource().setHelperText(e.getValue().length() + "/" + mottoCharLimit);
-        });
+        teamMottoField.setCounter(mottoCharLimit);
 
         HorizontalLayout horizontalLayout = new HorizontalLayout(setAddUserButton(), setSaveButton());
         horizontalLayout.setWidthFull();
@@ -74,7 +71,7 @@ public class EditTeamDialog extends Dialog {
 
     private Button setAddUserButton() {
         addUserButton.addClickListener(e -> {
-            new AddUserDialog(team).open();
+            new AddUserToTeamDialog(team).open();
         });
         addUserButton.getStyle().set("margin-right", "auto");
         return addUserButton;

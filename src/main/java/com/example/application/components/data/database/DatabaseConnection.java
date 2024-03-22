@@ -318,5 +318,19 @@ public class DatabaseConnection {
             Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
         }
     }
+    public void createTask(Task task){
+        ArrayList<String> queryArrayList = sqlParser.createTask(task);
+
+        try {
+            for (String query : queryArrayList) {
+                statement.executeUpdate(query);
+            }
+
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+        }
+    }
 
 }

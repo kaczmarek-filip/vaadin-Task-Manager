@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class AddUserDialog extends Dialog {
+public class AddUserToTeamDialog extends Dialog {
     private Team team;
     private MultiSelectComboBox<User> userComboBoxField = new MultiSelectComboBox<>("Members");
     private ArrayList<User> allUsersWithoutTeamUsers;
@@ -23,7 +23,7 @@ public class AddUserDialog extends Dialog {
     private Button saveButton = new Button("Save");
     private Button cancelButton = new Button("Cancel");
 
-    public AddUserDialog(Team team){
+    public AddUserToTeamDialog(Team team){
         this.team = team;
         setHeaderTitle("Add user");
         setCloseOnOutsideClick(false);
