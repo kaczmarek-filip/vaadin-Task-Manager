@@ -1,7 +1,6 @@
 package com.example.application.views.main;
 
 import com.example.application.components.data.Team;
-import com.example.application.components.data.database.DatabaseConnection;
 import com.example.application.components.data.User;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;

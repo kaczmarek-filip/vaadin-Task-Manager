@@ -4,7 +4,7 @@ import com.example.application.components.data.Task;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.DatabaseConnection;
+import com.example.application.components.data.database.TaskDB;
 import com.example.application.components.elements.components.TextAreaCounter;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -13,18 +13,14 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.dnd.GridDropMode;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class MakeTaskDialog extends Dialog {
     private boolean isOwnTask = false;
@@ -152,6 +148,6 @@ public class MakeTaskDialog extends Dialog {
             notification.open();
             close();
         }
-        new DatabaseConnection().createTask(task);
+        new TaskDB().createTask(task);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.application.components.dialogs;
 
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.DatabaseConnection;
+import com.example.application.components.data.database.TeamDB;
 import com.example.application.components.elements.components.TextAreaCounter;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
@@ -14,7 +14,6 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.value.ValueChangeMode;
 
 import java.util.List;
 import java.util.Set;
@@ -52,8 +51,7 @@ public class CreateTeamDialog extends Dialog {
         String teamMotto = teamMottoField.getValue();
         Set<User> userComboBox = userComboBoxField.getSelectedItems();
 
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        databaseConnection.createTeam(teamName, teamMotto, User.getLoggedInUser(), userComboBox);
+        new TeamDB().createTeam(teamName, teamMotto, User.getLoggedInUser(), userComboBox);
         close();
 
         Notification notification = new Notification("The team has been created", 5000, Notification.Position.BOTTOM_CENTER);

@@ -1,6 +1,6 @@
 package com.example.application.components.data;
 
-import com.example.application.components.data.database.DatabaseConnection;
+import com.example.application.components.data.database.TeamDB;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -21,10 +21,9 @@ public class Team {
         this.usersInTeam = usersInTeam;
     }
 
-    @Deprecated
     public static Map<User, TeamRoles> getAllTeamUsers(int teamId) {
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        return databaseConnection.findUsersInTeam(teamId);
+//        TeamDB teamDB = new TeamDB();
+        return new TeamDB().findUsersInTeam(teamId);
     }
 
     public static TeamRoles getUserTeamRole(User user, int teamId) {

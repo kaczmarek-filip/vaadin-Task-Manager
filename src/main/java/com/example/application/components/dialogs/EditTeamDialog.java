@@ -3,7 +3,7 @@ package com.example.application.components.dialogs;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.DatabaseConnection;
+import com.example.application.components.data.database.TeamDB;
 import com.example.application.components.elements.components.TextAreaCounter;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -65,8 +65,7 @@ public class EditTeamDialog extends Dialog {
         String teamName = teamNameField.getValue();
         String teamMotto = teamMottoField.getValue();
 
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        databaseConnection.updateTeamInfo(team.getId(), teamName, teamMotto);
+        new TeamDB().updateTeamInfo(team.getId(), teamName, teamMotto);
     }
 
     private Button setAddUserButton() {
@@ -133,10 +132,9 @@ public class EditTeamDialog extends Dialog {
 
 
             rolesSelect.addValueChangeListener(event -> {
-//                entry.setValue(event.getValue());
+                entry.setValue(event.getValue());
 
-                DatabaseConnection databaseConnection = new DatabaseConnection();
-                databaseConnection.updateUserRole(team, entry.getKey(), event.getValue());
+                new TeamDB().updateUserRole(team, entry.getKey(), event.getValue());
             });
 
             if (entry.getValue() == TeamRoles.OWNER) {

@@ -1,7 +1,8 @@
 package com.example.application.components.dialogs;
 
-import com.example.application.components.data.database.DatabaseConnection;
+import com.example.application.components.data.database.DatabaseConnectionDeprecated;
 import com.example.application.components.data.User;
+import com.example.application.components.data.database.UserDB;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -22,7 +23,7 @@ public final class LoginDialog extends Dialog {
     private Button loginButton;
     private Button cancelButton;
     private Button registerButton;
-    private DatabaseConnection databaseConnection = new DatabaseConnection();
+    private UserDB databaseConnection = new UserDB();
 
     private EmailField emailField = new EmailField("Email");
     private PasswordField passwordField = new PasswordField("Password");
@@ -78,7 +79,7 @@ public final class LoginDialog extends Dialog {
 
     /**
      * Checking for correct login data
-     * @see DatabaseConnection
+     * @see DatabaseConnectionDeprecated
      * @see User
      */
     private void beforeLogin() {

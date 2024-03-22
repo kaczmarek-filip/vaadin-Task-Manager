@@ -2,7 +2,7 @@ package com.example.application.components.dialogs;
 
 import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.DatabaseConnection;
+import com.example.application.components.data.database.TeamDB;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
@@ -62,8 +62,8 @@ public class AddUserToTeamDialog extends Dialog {
     private Button setSaveButton(){
         saveButton.addClickListener(e -> {
             Set<User> userComboBox = userComboBoxField.getSelectedItems();
-            DatabaseConnection databaseConnection = new DatabaseConnection();
-            databaseConnection.insertUsersIntoTeam(team.getId(), userComboBox);
+
+            new TeamDB().insertUsersIntoTeam(team.getId(), userComboBox);
 
             UI.getCurrent().getPage().reload();
         });

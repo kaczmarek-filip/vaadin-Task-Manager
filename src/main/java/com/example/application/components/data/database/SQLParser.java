@@ -12,7 +12,7 @@ public class SQLParser {
     /**
      * @param user {@link User} object to save in DB
      * @return query
-     * @see DatabaseConnection
+     * @see DatabaseConnectionDeprecated
      */
     public String createUser(User user, String password) {
         String query = "INSERT INTO `users`(`email`, `password`, `displayName`) VALUES ('" + user.getEmail() + "','" + password + "','" + user.getDisplayName() + "')";

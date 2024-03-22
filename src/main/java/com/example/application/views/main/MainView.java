@@ -1,7 +1,6 @@
 package com.example.application.views.main;
 
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.DatabaseConnection;
 //import com.example.application.components.SecurityService;
 import com.example.application.components.elements.TaskElement;
 import com.vaadin.flow.component.button.Button;

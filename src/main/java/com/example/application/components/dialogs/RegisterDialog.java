@@ -1,7 +1,7 @@
 package com.example.application.components.dialogs;
 
-import com.example.application.components.data.database.DatabaseConnection;
 import com.example.application.components.data.User;
+import com.example.application.components.data.database.UserDB;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -79,12 +79,12 @@ public class RegisterDialog extends Dialog {
             Notification notification = new Notification("The password must contain at least 8 characters", 5000, Notification.Position.BOTTOM_CENTER);
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
             notification.open();
-        } else if (new DatabaseConnection().isEmailExists(user)) {
+        } else if (new UserDB().isEmailExists(user)) {
             Notification notification = new Notification("There is already a user with the specified email", 5000, Notification.Position.BOTTOM_CENTER);
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
             notification.open();
         } else {
-            new DatabaseConnection().registerUser(user, passwordValue);
+            new UserDB().registerUser(user, passwordValue);
 
             close();
             Notification notification = new Notification("Successfully registered", 5000, Notification.Position.BOTTOM_CENTER);

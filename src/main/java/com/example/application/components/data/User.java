@@ -1,6 +1,7 @@
 package com.example.application.components.data;
 
-import com.example.application.components.data.database.DatabaseConnection;
+import com.example.application.components.data.database.TeamDB;
+import com.example.application.components.data.database.UserDB;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,14 +51,13 @@ public class User {
     }
 
     public static ArrayList<Team> getLoggedInUserTeams(){
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        ArrayList<Team> teamsByUser = databaseConnection.findTeamsByUser(User.getLoggedInUser());
+        TeamDB teamDB = new TeamDB();
+        ArrayList<Team> teamsByUser = teamDB.findTeamsByUser(User.getLoggedInUser());
 
         return teamsByUser;
     }
     public static ArrayList<User> getAllUsers(){
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        ArrayList<User> allUsers = databaseConnection.getAllUsers();
+        ArrayList<User> allUsers = new UserDB().getAllUsers();
 
         return allUsers;
     }

@@ -1,8 +1,8 @@
 package com.example.application.views.main;
 
 
-import com.example.application.components.data.database.DatabaseConnection;
 import com.example.application.components.data.User;
+import com.example.application.components.data.database.UserDB;
 import com.example.application.components.dialogs.RegisterDialog;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -23,9 +23,7 @@ import com.vaadin.flow.router.Route;
 //@AnonymousAllowed
 public class LoginView extends VerticalLayout {
     private Button loginButton;
-    private Button cancelButton;
     private Button registerButton;
-    private DatabaseConnection databaseConnection = new DatabaseConnection();
     private EmailField emailField = new EmailField("Email");
     private PasswordField passwordField = new PasswordField("Password");
 
@@ -72,7 +70,9 @@ public class LoginView extends VerticalLayout {
         String email = emailField.getValue();
         String password = passwordField.getValue();
 
-        User loggedInUser = databaseConnection.loginUser(email, password);
+        UserDB userDB = new UserDB();
+
+        User loggedInUser = userDB.loginUser(email, password);
 
         if (loggedInUser != null) {
             Notification notification = new Notification("Logged in", 5000, Notification.Position.BOTTOM_CENTER);

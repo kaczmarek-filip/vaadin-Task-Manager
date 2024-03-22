@@ -2,7 +2,7 @@ package com.example.application.components.dialogs;
 
 import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.DatabaseConnection;
+import com.example.application.components.data.database.TeamDB;
 import com.example.application.views.main.TeamsSite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -34,8 +34,7 @@ public class DeleteConfirmDialog extends Dialog {
 
         deleteButton.addClickListener(e -> {
 
-            DatabaseConnection databaseConnection = new DatabaseConnection();
-            databaseConnection.deleteTeam(team.getId());
+            new TeamDB().deleteTeam(team.getId());
 
             UI.getCurrent().navigate(TeamsSite.class);
 
@@ -53,8 +52,7 @@ public class DeleteConfirmDialog extends Dialog {
 
         deleteButton.addClickListener(e -> {
 
-            DatabaseConnection databaseConnection = new DatabaseConnection();
-            databaseConnection.deleteUserFromTeam(team, user);
+            new TeamDB().deleteUserFromTeam(team, user);
 
             Notification notification = new Notification(user.getDisplayName() + " has been deleted", 5000, Notification.Position.BOTTOM_CENTER);
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
