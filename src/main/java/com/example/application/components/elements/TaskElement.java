@@ -38,7 +38,7 @@ public class TaskElement extends Element {
     @Override
     public void listenerAction() {
         addClickListener(e -> {
-            new TaskDialog().open();
+//            new TaskDialog().open();
         });
     }
 }

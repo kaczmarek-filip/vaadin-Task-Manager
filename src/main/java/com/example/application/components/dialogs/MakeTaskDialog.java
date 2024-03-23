@@ -65,6 +65,7 @@ public class MakeTaskDialog extends Dialog {
     private DatePicker deadline() {
         deadlineDatePicker = new DatePicker("Deadline");
         deadlineDatePicker.setMin(LocalDate.now());
+        deadlineDatePicker.setRequired(true);
         return deadlineDatePicker;
     }
 
@@ -88,6 +89,7 @@ public class MakeTaskDialog extends Dialog {
         });
         return createButton;
     }
+
     @Deprecated
     private MultiSelectComboBox<User> setUserComboBoxField() {
         multiSelectComboBox = new MultiSelectComboBox("Holders");
@@ -102,7 +104,8 @@ public class MakeTaskDialog extends Dialog {
 
         return multiSelectComboBox;
     }
-    private Grid<User> setUserGrid(){
+
+    private Grid<User> setUserGrid() {
         userGrid = new Grid<>();
         userGrid.setItems(team.getUsersInTeam().keySet());
 
@@ -112,42 +115,55 @@ public class MakeTaskDialog extends Dialog {
 
         return userGrid;
     }
-    public MakeTaskDialog onlyOwnTask(){
+
+    public MakeTaskDialog onlyOwnTask() {
 
         this.isOwnTask = true;
 
         return this;
     }
+
     private void beforeCreate() {
         String title = titleTextField.getValue();
         String description = descriptionTextArea.getValue();
         LocalDate deadline = deadlineDatePicker.getValue();
-        Task task = null;
-        
-        if (!isOwnTask){ // if created on SingleTeamSite
-            Set<User> selectedUsers = userGrid.getSelectedItems();
+        Task task;
 
-            if(!selectedUsers.isEmpty()){ // is one member at least
-                task = new Task(title, description, LocalDate.now(), deadline, User.getLoggedInUser(), selectedUsers);
+        if (title.isEmpty()) {
+            Notification notification = new Notification("The title field must not be empty", 5000, Notification.Position.BOTTOM_CENTER);
+            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+            notification.open();
+        } else if (deadline == null) {
+            Notification notification = new Notification("The deadline field must not be empty", 5000, Notification.Position.BOTTOM_CENTER);
+            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+            notification.open();
+        } else {
+            if (!isOwnTask) { // if created on SingleTeamSite
+                Set<User> selectedUsers = userGrid.getSelectedItems();
+
+                if (!selectedUsers.isEmpty()) { // is one member at least
+                    task = new Task(0, team, title, description, LocalDate.now(), deadline, User.getLoggedInUser(), selectedUsers);
+                    new TaskDB().createTask(task, false);
+
+                    Notification notification = new Notification("Created successfully", 5000, Notification.Position.BOTTOM_CENTER);
+                    notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+                    notification.open();
+                    close();
+                } else {
+                    Notification notification = new Notification("You must choose at least one person", 5000, Notification.Position.BOTTOM_CENTER);
+                    notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+                    notification.open();
+                }
+
+            } else {
+                task = new Task(0, title, description, LocalDate.now(), deadline, User.getLoggedInUser());
+                new TaskDB().createTask(task, true);
 
                 Notification notification = new Notification("Created successfully", 5000, Notification.Position.BOTTOM_CENTER);
                 notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
                 notification.open();
                 close();
-            } else {
-                Notification notification = new Notification("You must choose at least one person", 5000, Notification.Position.BOTTOM_CENTER);
-                notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-                notification.open();
             }
-
-        } else {
-            task = new Task(title, description, LocalDate.now(), deadline, User.getLoggedInUser(), null);
-
-            Notification notification = new Notification("Created successfully", 5000, Notification.Position.BOTTOM_CENTER);
-            notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-            notification.open();
-            close();
         }
-        new TaskDB().createTask(task);
     }
 }

@@ -7,7 +7,7 @@ import com.example.application.components.data.Team;
 import com.example.application.components.data.database.TeamDB;
 import com.example.application.components.dialogs.EditTeamDialog;
 import com.example.application.components.dialogs.MakeTaskDialog;
-import com.example.application.components.elements.SingleTeamSiteContent;
+import com.example.application.components.contents.SingleTeamSiteContent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.notification.Notification;

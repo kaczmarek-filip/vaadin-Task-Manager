@@ -30,7 +30,7 @@ public class SQLParser {
     }
 
     /**
-     * @param email user email
+     * @param email    user email
      * @param password user password
      * @return query
      */
@@ -110,18 +110,37 @@ public class SQLParser {
         return query;
     }
 
-    public ArrayList<String> createTask(Task task) {
+    public ArrayList<String> createTeamTask(Task task) {
         ArrayList<String> queryArrayList = new ArrayList<>();
-        queryArrayList.add("INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`) VALUES " +
-                "('"+task.getTitle()+"','"+task.getDescription()+"','"+task.getCreationDate().toString()+"','"+task.getDeadline().toString()+"','"+task.getCreator().getId()+"');");
+//        if (task.getDeadline() == null) {
+//            queryArrayList.add("INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`, `team_ID`) VALUES " +
+//                    "('" + task.getTitle() + "','" + task.getDescription() + "','" + task.getCreationDate() + "'," + null + ",'" + task.getCreator().getId() + "', '" + task.getTeam().getId() + "');");
+//        } else {
+            queryArrayList.add("INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`, `team_ID`) VALUES " +
+                    "('" + task.getTitle() + "','" + task.getDescription() + "','" + task.getCreationDate() + "','" + task.getDeadline() + "','" + task.getCreator().getId() + "', '" + task.getTeam().getId() + "');");
+//        }
 
-        if(task.getHolders() != null){
-            for (User taskHolder : task.getHolders()){
-                queryArrayList.add("INSERT INTO `taskholders`(`taskID`, `user_ID`) VALUES (LAST_INSERT_ID(),'"+taskHolder.getId()+"');");
-            }
+
+        for (User taskHolder : task.getHolders()) {
+            queryArrayList.add("INSERT INTO `taskholders`(`taskID`, `user_ID`) VALUES (LAST_INSERT_ID(),'" + taskHolder.getId() + "');");
         }
 
-
         return queryArrayList;
+    }
+
+    public String createOwnTask(Task task) {
+
+//        if (task.getDeadline() == null) {
+//            return "INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`, `team_ID`) VALUES " +
+//                    "('" + task.getTitle() + "','" + task.getDescription() + "','" + task.getCreationDate() + "', " + null + ",'" + task.getCreator().getId() + "',NULL)";
+//        } else {
+            return "INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`, `team_ID`) VALUES " +
+                    "('" + task.getTitle() + "','" + task.getDescription() + "','" + task.getCreationDate() + "','" + task.getDeadline() + "','" + task.getCreator().getId() + "',NULL)";
+//        }
+
+    }
+
+    public String getOwnTasks(User user) {
+        return "SELECT * FROM `tasks` WHERE creatorUserID = " + user.getId() + " AND team_ID IS NULL ORDER BY deadline";
     }
 }

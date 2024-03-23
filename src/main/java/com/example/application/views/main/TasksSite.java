@@ -2,11 +2,12 @@ package com.example.application.views.main;
 
 
 import com.example.application.components.dialogs.MakeTaskDialog;
+import com.example.application.components.contents.TaskSiteContent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.router.Route;
 
 @Route("tasks")
-public class TasksSite extends Navigation{
+public class TasksSite extends Navigation {
     /**
      * Default constructor
      */
@@ -17,5 +18,7 @@ public class TasksSite extends Navigation{
             new MakeTaskDialog().onlyOwnTask().open();
         });
         addTopNavButton(button);
+
+        setContent(new TaskSiteContent());
     }
 }

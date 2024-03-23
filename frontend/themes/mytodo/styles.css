@@ -136,3 +136,40 @@
     padding: 2%;
     text-align: center;
 }
+/*-----------------------------------------------------------*/
+/* Task Site */
+/*-----------------------------------------------------------*/
+.taskSiteContent {
+    padding: 2%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+.taskElement{
+    background-color: #006783;
+    padding: 1%;
+    border-radius: 5px;
+    color: #ffffff;
+}
+.taskElementTitle{
+    text-align: center;
+    margin-bottom: 2vh;
+    font-weight: bold;
+}
+.taskElementDeadline{
+    margin-right: 2vh;
+}
+.taskElementCheckbox{
+    /*!*--vaadin-checkbox-background: #bde9ff;*!*/
+    /*!*--vaadin-checkbox-checkmark-color: #001f2a;*!*/
+    /*--vaadin-checkbox-background-hover: red;*/
+    /*--vaadin-checkbox-background: red;*/
+
+    /*--vaadin-checkbox-checkmark-color: red;*/
+    /*--vaadin-checkbox-label-color: red;*/
+    /*--vaadin-checkbox-checkmark-char-indeterminate: red;*/
+    /*!*accent-color: red;*!*/
+}

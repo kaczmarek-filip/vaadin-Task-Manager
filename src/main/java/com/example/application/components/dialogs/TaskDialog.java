@@ -1,5 +1,6 @@
 package com.example.application.components.dialogs;
 
+import com.example.application.components.data.Task;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -21,8 +22,10 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 public class TaskDialog extends Dialog {
     private Button cancelButton;
     private String informations = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum";
-    public TaskDialog() {
-        setHeaderTitle("Betlejemskie Światło Pokoju");
+    private Task task;
+    public TaskDialog(Task task) {
+        this.task = task;
+        setHeaderTitle(task.getTitle());
 
 
         cancelButton = new Button(new Icon("lumo", "cross"));
@@ -41,7 +44,7 @@ public class TaskDialog extends Dialog {
      */
     private VerticalLayout setLayout(){
 
-        Span date = new Span("21.12.2002");
+        Span date = new Span(task.getDeadline().toString());
         date.getElement().getThemeList().add("badge");
         date.addClassName("taskDialogTime");
 
@@ -51,7 +54,7 @@ public class TaskDialog extends Dialog {
 
         HorizontalLayout horizontalLayout = new HorizontalLayout(time, date);
 
-        Paragraph paragraph = new Paragraph(informations);
+        Paragraph paragraph = new Paragraph(task.getDescription());
 
         horizontalLayout.addClassName(LumoUtility.Padding.MEDIUM);
         VerticalLayout verticalLayout = new VerticalLayout(horizontalLayout, paragraph);

@@ -1,8 +1,9 @@
-package com.example.application.components.elements;
+package com.example.application.components.contents;
 
 import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
+import com.example.application.components.elements.SingleTeamMemberElement;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
