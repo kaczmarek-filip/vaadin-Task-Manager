@@ -97,7 +97,7 @@ public class TaskDB extends DatabaseConnection {
                 LocalDate DbDeadline = resultSet.getDate("deadline").toLocalDate();
                 boolean DbIsDone = resultSet.getBoolean("isDone");
 
-                taskArrayList.add(new Task(DbTaskId, DbIsDone, DbTitle, DbDescription, DbCreationDate, DbDeadline, User.getLoggedInUser()));
+                taskArrayList.add(new Task(DbTaskId, DbIsDone, DbTitle, DbDescription, DbCreationDate, DbDeadline, User.getLoggedInUser())); //TODO: bez logged in user
             }
             statement.close();
             connection.close();
@@ -129,6 +129,29 @@ public class TaskDB extends DatabaseConnection {
 
 
         return userSet;
+    }
+    public ArrayList<Task> getUserTasks(User user){
+        query = sqlParser.getUserTasks(user);
+        ArrayList<Task> taskArrayList = new ArrayList<>();
+
+        try (ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                int DbTaskId = resultSet.getInt("taskID");
+                String DbTitle = resultSet.getString("title");
+                String DbDescription = resultSet.getString("description");
+                LocalDate DbCreationDate = resultSet.getDate("creationDate").toLocalDate();
+                LocalDate DbDeadline = resultSet.getDate("deadline").toLocalDate();
+                boolean DbIsDone = resultSet.getBoolean("isDone");
+
+                taskArrayList.add(new Task(DbTaskId, DbIsDone, DbTitle, DbDescription, DbCreationDate, DbDeadline, User.getLoggedInUser())); //TODO: bez logged in user
+            }
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+        }
+        return taskArrayList;
     }
 
 

@@ -58,6 +58,8 @@ public class TaskBlockElement extends Element implements TaskDoneCallback {
             getStyle().set("background-color", "#ba1a1a");
         } else if (liczbaDni < 3) {
             getStyle().set("background-color", "rgba(255, 86, 74, 0.6)");
+        } else {
+            getStyle().set("background-color", "#006783");
         }
     }
 

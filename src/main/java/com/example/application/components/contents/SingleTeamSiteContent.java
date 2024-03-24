@@ -5,7 +5,6 @@ import com.example.application.components.data.database.TaskDB;
 import com.example.application.components.elements.SingleTeamMemberElement;
 import com.example.application.components.elements.TaskBlockElement;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -25,16 +24,17 @@ public class SingleTeamSiteContent extends HorizontalLayout {
     private VerticalLayout mainContent() {
         VerticalLayout mainContent = new VerticalLayout();
         mainContent.setWidth("80%");
-        mainContent.add(motto(), horizontalLayout());
+//        mainContent.add(motto(), horizontalLayout());
+        mainContent.add(motto(), memberTasks());
 
         return mainContent;
     }
-    private HorizontalLayout horizontalLayout(){
+    private HorizontalLayout userTasks(User user){
         HorizontalLayout horizontalLayout = new HorizontalLayout();
         horizontalLayout.addClassName("taskSiteContent");
         horizontalLayout.setWidthFull();
 
-        for (Task task : new TaskDB().getTeamTasks(team)) {
+        for (Task task : new TaskDB().getUserTasks(user)) {
             horizontalLayout.add(new TaskBlockElement(task));
         }
 
@@ -52,6 +52,7 @@ public class SingleTeamSiteContent extends HorizontalLayout {
         Scroller scroller = new Scroller();
         scroller.setScrollDirection(Scroller.ScrollDirection.VERTICAL);
         scroller.setWidth("20%");
+
         for(int i = 0; i < 10; i++){
             for(Map.Entry<User, TeamRoles> entry : Team.getAllTeamUsers(team.getId()).entrySet()){
                 membersList.add(new SingleTeamMemberElement(entry.getKey(), entry.getValue()));
@@ -60,6 +61,22 @@ public class SingleTeamSiteContent extends HorizontalLayout {
 
 
         scroller.setContent(membersList);
+        return scroller;
+    }
+    private Scroller memberTasks(){
+        VerticalLayout verticalLayout = new VerticalLayout();
+
+        for(Map.Entry<User, TeamRoles> entry : Team.getAllTeamUsers(team.getId()).entrySet()){
+            if (!new TaskDB().getUserTasks(entry.getKey()).isEmpty()){
+                verticalLayout.add(new H1(entry.getKey().getDisplayName()));
+                verticalLayout.add(userTasks(entry.getKey()));
+            }
+        }
+
+        Scroller scroller = new Scroller();
+        scroller.setScrollDirection(Scroller.ScrollDirection.VERTICAL);
+        scroller.setWidthFull();
+        scroller.setContent(verticalLayout);
         return scroller;
     }
 }

@@ -61,7 +61,10 @@ public class Task {
     }
 
     public Set<User> getHolders() {
-        holders = new TaskDB().getTaskHolders(this);
+        if (holders == null){
+            holders = new TaskDB().getTaskHolders(this);
+        }
+
         return holders;
     }
 }

@@ -112,14 +112,9 @@ public class SQLParser {
 
     public ArrayList<String> createTeamTask(Task task) {
         ArrayList<String> queryArrayList = new ArrayList<>();
-//        if (task.getDeadline() == null) {
-//            queryArrayList.add("INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`, `team_ID`) VALUES " +
-//                    "('" + task.getTitle() + "','" + task.getDescription() + "','" + task.getCreationDate() + "'," + null + ",'" + task.getCreator().getId() + "', '" + task.getTeam().getId() + "');");
-//        } else {
+
         queryArrayList.add("INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`, `team_ID`) VALUES " +
                 "('" + task.getTitle() + "','" + task.getDescription() + "','" + task.getCreationDate() + "','" + task.getDeadline() + "','" + task.getCreator().getId() + "', '" + task.getTeam().getId() + "');");
-//        }
-
 
         for (User taskHolder : task.getHolders()) {
             queryArrayList.add("INSERT INTO `taskholders`(`taskID`, `user_ID`) VALUES (LAST_INSERT_ID(),'" + taskHolder.getId() + "');");
@@ -129,15 +124,8 @@ public class SQLParser {
     }
 
     public String createOwnTask(Task task) {
-
-//        if (task.getDeadline() == null) {
-//            return "INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`, `team_ID`) VALUES " +
-//                    "('" + task.getTitle() + "','" + task.getDescription() + "','" + task.getCreationDate() + "', " + null + ",'" + task.getCreator().getId() + "',NULL)";
-//        } else {
         return "INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`, `team_ID`) VALUES " +
                 "('" + task.getTitle() + "','" + task.getDescription() + "','" + task.getCreationDate() + "','" + task.getDeadline() + "','" + task.getCreator().getId() + "',NULL)";
-//        }
-
     }
 
     public String getOwnTasks(User user) {
@@ -167,5 +155,8 @@ public class SQLParser {
 
     public String getTaskHolders(Task task) {
         return "SELECT taskholders.taskID, users.ID, users.email, users.displayName FROM `taskholders` INNER JOIN users ON user_ID = users.ID WHERE taskholders.taskID =" + task.getId();
+    }
+    public String getUserTasks(User user){
+        return "SELECT * FROM `taskholders` INNER JOIN tasks ON taskID = tasks.ID WHERE user_ID = " + user.getId();
     }
 }
