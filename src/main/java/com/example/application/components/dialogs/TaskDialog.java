@@ -1,70 +1,106 @@
 package com.example.application.components.dialogs;
 
 import com.example.application.components.data.Task;
-import com.vaadin.flow.component.Component;
+import com.example.application.components.elements.components.CallbackValues;
+import com.example.application.components.elements.components.TaskDoneCallback;
+import com.vaadin.flow.component.Html;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.EmailField;
-import com.vaadin.flow.component.textfield.PasswordField;
+import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.theme.lumo.LumoUtility;
+
+import java.time.format.DateTimeFormatter;
 
 
 /**
  *
  */
 public class TaskDialog extends Dialog {
-    private Button cancelButton;
-    private String informations = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum";
     private Task task;
-    public TaskDialog(Task task) {
+    private TaskDoneCallback callback;
+
+    public TaskDialog(Task task, TaskDoneCallback callback) {
         this.task = task;
+        this.callback = callback;
         setHeaderTitle(task.getTitle());
 
-
-        cancelButton = new Button(new Icon("lumo", "cross"));
-        cancelButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-        cancelButton.addClickListener(e -> {
-            close();
-        });
         add(setLayout());
         setMinHeight("200");
         setMinWidth("500");
-        getHeader().add(cancelButton);
+        getHeader().add(cancelButton());
+
+        if (!task.isDone()) {
+            getFooter().add(doneButton());
+        } else {
+            getFooter().add(unDoneButton());
+            getFooter().add(deleteButton());
+        }
     }
 
     /**
      * @return {@link VerticalLayout}
      */
-    private VerticalLayout setLayout(){
+    private VerticalLayout setLayout() {
+        VerticalLayout verticalLayout = new VerticalLayout();
 
-        Span date = new Span(task.getDeadline().toString());
-        date.getElement().getThemeList().add("badge");
+        Span date = new Span(task.getFormattedDeadline());
         date.addClassName("taskDialogTime");
 
-        Span time = new Span("18:00");
-        time.getElement().getThemeList().add("badge error");
-        time.addClassName("taskDialogTime");
+        Html html = new Html("<pre>" + task.getDescription() + "</pre>");
+        html.getStyle().set("width", "-webkit-fill-available").set("padding", "2%");
 
-        HorizontalLayout horizontalLayout = new HorizontalLayout(time, date);
 
-        Paragraph paragraph = new Paragraph(task.getDescription());
-
-        horizontalLayout.addClassName(LumoUtility.Padding.MEDIUM);
-        VerticalLayout verticalLayout = new VerticalLayout(horizontalLayout, paragraph);
-
-        verticalLayout.setPadding(false);
-        verticalLayout.setSpacing(false);
-
-        verticalLayout.setAlignItems(FlexComponent.Alignment.STRETCH);
         verticalLayout.getStyle().set("width", "28rem").set("max-width", "100%");
-
+        verticalLayout.add(date, html);
         return verticalLayout;
+    }
+
+    private Button cancelButton() {
+        Button button = new Button(new Icon("lumo", "cross"));
+        button.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        button.addClickListener(e -> {
+            close();
+        });
+        return button;
+    }
+
+    private Button doneButton() {
+        Button button = new Button("Done");
+        button.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+        button.addClickListener(e -> {
+            close();
+            callback.onSave(CallbackValues.DONE);
+        });
+        return button;
+    }
+
+    private Button unDoneButton() {
+        Button button = new Button("Undone");
+        button.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        button.addClickListener(e -> {
+            close();
+            callback.onSave(CallbackValues.UNDONE);
+        });
+        return button;
+    }
+
+    private Button deleteButton() {
+        Button button = new Button(VaadinIcon.TRASH.create());
+        button.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        button.getStyle().set("margin-left", "auto");
+        button.addClickListener(e -> {
+            close();
+            callback.onSave(CallbackValues.DELETE);
+        });
+        return button;
     }
 }

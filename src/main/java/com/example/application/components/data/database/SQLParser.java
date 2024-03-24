@@ -116,8 +116,8 @@ public class SQLParser {
 //            queryArrayList.add("INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`, `team_ID`) VALUES " +
 //                    "('" + task.getTitle() + "','" + task.getDescription() + "','" + task.getCreationDate() + "'," + null + ",'" + task.getCreator().getId() + "', '" + task.getTeam().getId() + "');");
 //        } else {
-            queryArrayList.add("INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`, `team_ID`) VALUES " +
-                    "('" + task.getTitle() + "','" + task.getDescription() + "','" + task.getCreationDate() + "','" + task.getDeadline() + "','" + task.getCreator().getId() + "', '" + task.getTeam().getId() + "');");
+        queryArrayList.add("INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`, `team_ID`) VALUES " +
+                "('" + task.getTitle() + "','" + task.getDescription() + "','" + task.getCreationDate() + "','" + task.getDeadline() + "','" + task.getCreator().getId() + "', '" + task.getTeam().getId() + "');");
 //        }
 
 
@@ -134,13 +134,20 @@ public class SQLParser {
 //            return "INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`, `team_ID`) VALUES " +
 //                    "('" + task.getTitle() + "','" + task.getDescription() + "','" + task.getCreationDate() + "', " + null + ",'" + task.getCreator().getId() + "',NULL)";
 //        } else {
-            return "INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`, `team_ID`) VALUES " +
-                    "('" + task.getTitle() + "','" + task.getDescription() + "','" + task.getCreationDate() + "','" + task.getDeadline() + "','" + task.getCreator().getId() + "',NULL)";
+        return "INSERT INTO `tasks`(`title`, `description`, `creationDate`, `deadline`, `creatorUserID`, `team_ID`) VALUES " +
+                "('" + task.getTitle() + "','" + task.getDescription() + "','" + task.getCreationDate() + "','" + task.getDeadline() + "','" + task.getCreator().getId() + "',NULL)";
 //        }
 
     }
 
     public String getOwnTasks(User user) {
         return "SELECT * FROM `tasks` WHERE creatorUserID = " + user.getId() + " AND team_ID IS NULL ORDER BY deadline";
+    }
+
+    public String setIsDone(Task task) {
+        return "UPDATE `tasks` SET `isDone`= " + task.isDone() + " WHERE ID = " + task.getId();
+    }
+    public String deleteTask(Task task){
+        return "DELETE FROM `tasks` WHERE ID = " + task.getId();
     }
 }

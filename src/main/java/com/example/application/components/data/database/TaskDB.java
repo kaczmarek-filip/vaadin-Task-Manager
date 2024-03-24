@@ -9,10 +9,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TaskDB extends DatabaseConnection {
-    public void createTask(Task task, boolean isOwn){
+    public void createTask(Task task, boolean isOwn) {
         ArrayList<String> queryArrayList = new ArrayList<>();
 
-        if (isOwn){
+        if (isOwn) {
             queryArrayList.add(sqlParser.createOwnTask(task));
         } else {
             queryArrayList = sqlParser.createTeamTask(task);
@@ -30,7 +30,8 @@ public class TaskDB extends DatabaseConnection {
             Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
         }
     }
-    public ArrayList<Task> getOwnTasks(User user){
+
+    public ArrayList<Task> getOwnTasks(User user) {
         query = sqlParser.getOwnTasks(user);
         ArrayList<Task> taskArrayList = new ArrayList<>();
 
@@ -42,8 +43,9 @@ public class TaskDB extends DatabaseConnection {
                 String DbDescription = resultSet.getString("description");
                 LocalDate DbCreationDate = resultSet.getDate("creationDate").toLocalDate();
                 LocalDate DbDeadline = resultSet.getDate("deadline").toLocalDate();
+                boolean DbIsDone = resultSet.getBoolean("isDone");
 
-                taskArrayList.add(new Task(DbTaskId, DbTitle, DbDescription, DbCreationDate, DbDeadline, user));
+                taskArrayList.add(new Task(DbTaskId, DbIsDone, DbTitle, DbDescription, DbCreationDate, DbDeadline, user));
             }
             statement.close();
             connection.close();
@@ -51,5 +53,29 @@ public class TaskDB extends DatabaseConnection {
             Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
         }
         return taskArrayList;
+    }
+    public void setIsDone(Task task){
+        query = sqlParser.setIsDone(task);
+
+        try {
+            statement.executeUpdate(query);
+
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+        }
+    }
+    public void deleteTask(Task task){
+        query = sqlParser.deleteTask(task);
+
+        try {
+            statement.executeUpdate(query);
+
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+        }
     }
 }

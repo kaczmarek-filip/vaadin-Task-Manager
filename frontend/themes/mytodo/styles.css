@@ -37,11 +37,6 @@
     font-weight: bold;
     padding-left: 5%;
 }
-.taskDialogTime{
-    font-size: 1.5rem;
-    align-items: center;
-    margin: auto;
-}
 
 /*-----------------------------------------------------------*/
 /* Teams */
@@ -156,10 +151,11 @@
 }
 .taskElementTitle{
     text-align: center;
-    margin-bottom: 2vh;
+    /*margin-bottom: 2vh;*/
     font-weight: bold;
 }
 .taskElementDeadline{
+    margin-top: 2vh;
     margin-right: 2vh;
 }
 .taskElementCheckbox{
@@ -172,4 +168,13 @@
     /*--vaadin-checkbox-label-color: red;*/
     /*--vaadin-checkbox-checkmark-char-indeterminate: red;*/
     /*!*accent-color: red;*!*/
+}
+.taskDialogTime{
+    font-size: 1.5rem;
+    align-items: center;
+    margin: auto;
+    background-color: #7e0007;
+    color: white;
+    padding: 1% 2%;
+    border-radius: 5px;
 }

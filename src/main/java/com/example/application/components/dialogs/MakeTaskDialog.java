@@ -6,6 +6,7 @@ import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.TaskDB;
 import com.example.application.components.elements.components.TextAreaCounter;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
@@ -156,7 +157,7 @@ public class MakeTaskDialog extends Dialog {
                 }
 
             } else {
-                task = new Task(0, title, description, LocalDate.now(), deadline, User.getLoggedInUser());
+                task = new Task(0, false, title, description, LocalDate.now(), deadline, User.getLoggedInUser());
                 new TaskDB().createTask(task, true);
 
                 Notification notification = new Notification("Created successfully", 5000, Notification.Position.BOTTOM_CENTER);
@@ -165,5 +166,7 @@ public class MakeTaskDialog extends Dialog {
                 close();
             }
         }
+        UI.getCurrent().getPage().reload();
+        //TODO: Callback
     }
 }

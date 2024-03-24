@@ -1,8 +1,10 @@
 package com.example.application.components.data;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 @Getter
@@ -10,12 +12,16 @@ public class Task {
     private int id;
     private Team team;
     private String title;
+    //TODO: Formatowanie tekstu - entery
     private String description;
     private LocalDate creationDate;
     private LocalDate deadline;
     private User creator;
     private Set<User> holders;
     public static int descriptionMaxLength = 200;
+    @Setter
+    private boolean isDone;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     /**
      * Team's task
@@ -34,12 +40,19 @@ public class Task {
     /**
      * User's own task
      */
-    public Task(int id, String title, String description, LocalDate creationDate, LocalDate deadline, User creator) {
+    public Task(int id, boolean isDone, String title, String description, LocalDate creationDate, LocalDate deadline, User creator) {
         this.id = id;
+        this.isDone = isDone;
         this.title = title;
         this.description = description;
         this.creationDate = creationDate;
         this.deadline = deadline;
         this.creator = creator;
+    }
+    public String getFormattedCreationDate(){
+        return creationDate.format(formatter);
+    }
+    public String getFormattedDeadline(){
+        return deadline.format(formatter);
     }
 }
