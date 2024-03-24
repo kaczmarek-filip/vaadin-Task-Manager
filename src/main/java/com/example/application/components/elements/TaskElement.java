@@ -9,6 +9,7 @@ import com.vaadin.flow.component.html.Span;
 /**
  * Displayed element with Tasks
  */
+@Deprecated
 public class TaskElement extends Element {
 
     public TaskElement() {

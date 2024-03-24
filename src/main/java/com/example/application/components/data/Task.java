@@ -1,5 +1,6 @@
 package com.example.application.components.data;
 
+import com.example.application.components.data.database.TaskDB;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,9 +27,10 @@ public class Task {
     /**
      * Team's task
      */
-    public Task(int id, Team team, String title, String description, LocalDate creationDate, LocalDate deadline, User creator, Set<User> holders) {
+    public Task(int id, Team team, boolean isDone, String title, String description, LocalDate creationDate, LocalDate deadline, User creator, Set<User> holders) {
         this.id = id;
         this.team = team;
+        this.isDone = isDone;
         this.title = title;
         this.description = description;
         this.creationDate = creationDate;
@@ -49,10 +51,17 @@ public class Task {
         this.deadline = deadline;
         this.creator = creator;
     }
-    public String getFormattedCreationDate(){
+
+    public String getFormattedCreationDate() {
         return creationDate.format(formatter);
     }
-    public String getFormattedDeadline(){
+
+    public String getFormattedDeadline() {
         return deadline.format(formatter);
+    }
+
+    public Set<User> getHolders() {
+        holders = new TaskDB().getTaskHolders(this);
+        return holders;
     }
 }

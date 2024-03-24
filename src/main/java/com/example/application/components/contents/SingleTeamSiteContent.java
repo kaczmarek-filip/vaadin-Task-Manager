@@ -1,10 +1,11 @@
 package com.example.application.components.contents;
 
-import com.example.application.components.data.Team;
-import com.example.application.components.data.TeamRoles;
-import com.example.application.components.data.User;
+import com.example.application.components.data.*;
+import com.example.application.components.data.database.TaskDB;
 import com.example.application.components.elements.SingleTeamMemberElement;
+import com.example.application.components.elements.TaskBlockElement;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -24,10 +25,20 @@ public class SingleTeamSiteContent extends HorizontalLayout {
     private VerticalLayout mainContent() {
         VerticalLayout mainContent = new VerticalLayout();
         mainContent.setWidth("80%");
-//        mainContent.add("ciekawe czy się scrolluje");
-        mainContent.add(motto());
+        mainContent.add(motto(), horizontalLayout());
 
         return mainContent;
+    }
+    private HorizontalLayout horizontalLayout(){
+        HorizontalLayout horizontalLayout = new HorizontalLayout();
+        horizontalLayout.addClassName("taskSiteContent");
+        horizontalLayout.setWidthFull();
+
+        for (Task task : new TaskDB().getTeamTasks(team)) {
+            horizontalLayout.add(new TaskBlockElement(task));
+        }
+
+        return horizontalLayout;
     }
     private H1 motto(){
         H1 motto = new H1(team.getMotto());

@@ -147,7 +147,25 @@ public class SQLParser {
     public String setIsDone(Task task) {
         return "UPDATE `tasks` SET `isDone`= " + task.isDone() + " WHERE ID = " + task.getId();
     }
-    public String deleteTask(Task task){
+
+    public String deleteTask(Task task) {
         return "DELETE FROM `tasks` WHERE ID = " + task.getId();
+    }
+
+    public String getTeamTasks(Team team) {
+//        return "SELECT tasks.*, taskholders.user_ID, users.email, users.displayName FROM `tasks` " +
+//                "INNER JOIN taskholders ON tasks.ID = taskholders.taskID " +
+//                "INNER JOIN users ON creatorUserID = users.ID " +
+//                "WHERE team_ID = " + team.getId();
+
+        // Alternatywa
+//        SELECT tasks.*, taskholders.user_ID, users.email, users.displayName FROM `tasks` INNER JOIN taskholders ON tasks.ID = taskholders.taskID INNER JOIN users ON taskholders.user_ID = users.ID WHERE team_ID = 42;
+        return "SELECT tasks.*, users.email, users.displayName FROM `tasks` " +
+                "INNER JOIN users ON creatorUserID = users.ID " +
+                "WHERE team_ID = " + team.getId();
+    }
+
+    public String getTaskHolders(Task task) {
+        return "SELECT taskholders.taskID, users.ID, users.email, users.displayName FROM `taskholders` INNER JOIN users ON user_ID = users.ID WHERE taskholders.taskID =" + task.getId();
     }
 }

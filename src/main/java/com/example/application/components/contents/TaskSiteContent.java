@@ -17,7 +17,6 @@ public class TaskSiteContent extends HorizontalLayout {
 
     private void generateTasks() {
         for (Task task : new TaskDB().getOwnTasks(User.getLoggedInUser())) {
-//            add(new Button(task.getTitle() + task.getDeadline().toString()));
             add(new TaskBlockElement(task));
         }
     }
