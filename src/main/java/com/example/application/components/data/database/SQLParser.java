@@ -140,6 +140,7 @@ public class SQLParser {
         return "DELETE FROM `tasks` WHERE ID = " + task.getId();
     }
 
+    @Deprecated
     public String getTeamTasks(Team team) {
 //        return "SELECT tasks.*, taskholders.user_ID, users.email, users.displayName FROM `tasks` " +
 //                "INNER JOIN taskholders ON tasks.ID = taskholders.taskID " +
@@ -156,7 +157,7 @@ public class SQLParser {
     public String getTaskHolders(Task task) {
         return "SELECT taskholders.taskID, users.ID, users.email, users.displayName FROM `taskholders` INNER JOIN users ON user_ID = users.ID WHERE taskholders.taskID =" + task.getId();
     }
-    public String getUserTasks(User user){
-        return "SELECT * FROM `taskholders` INNER JOIN tasks ON taskID = tasks.ID WHERE user_ID = " + user.getId();
+    public String getUserTasks(User user, Team team){
+        return "SELECT * FROM `taskholders` INNER JOIN tasks ON taskID = tasks.ID WHERE user_ID = " + user.getId() + " AND team_ID = "+ team.getId();
     }
 }

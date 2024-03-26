@@ -13,7 +13,7 @@ public class Task {
     private int id;
     private Team team;
     private String title;
-    //TODO: Formatowanie tekstu - entery
+    //TODO: Uploading files
     private String description;
     private LocalDate creationDate;
     private LocalDate deadline;

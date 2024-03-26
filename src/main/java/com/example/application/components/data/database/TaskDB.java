@@ -83,6 +83,7 @@ public class TaskDB extends DatabaseConnection {
             Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
         }
     }
+    @Deprecated
     public ArrayList<Task> getTeamTasks(Team team) {
         query = sqlParser.getTeamTasks(team);
         ArrayList<Task> taskArrayList = new ArrayList<>();
@@ -130,8 +131,8 @@ public class TaskDB extends DatabaseConnection {
 
         return userSet;
     }
-    public ArrayList<Task> getUserTasks(User user){
-        query = sqlParser.getUserTasks(user);
+    public ArrayList<Task> getUserTasks(User user, Team team){
+        query = sqlParser.getUserTasks(user, team);
         ArrayList<Task> taskArrayList = new ArrayList<>();
 
         try (ResultSet resultSet = statement.executeQuery(query)) {

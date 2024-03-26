@@ -34,7 +34,9 @@ public class SingleTeamSiteContent extends HorizontalLayout {
         horizontalLayout.addClassName("taskSiteContent");
         horizontalLayout.setWidthFull();
 
-        for (Task task : new TaskDB().getUserTasks(user)) {
+        if (user.equals(User.getLoggedInUser())) horizontalLayout.getStyle().set("order", "-1");
+
+        for (Task task : new TaskDB().getUserTasks(user, team)) {
             horizontalLayout.add(new TaskBlockElement(task));
         }
 
@@ -67,8 +69,10 @@ public class SingleTeamSiteContent extends HorizontalLayout {
         VerticalLayout verticalLayout = new VerticalLayout();
 
         for(Map.Entry<User, TeamRoles> entry : Team.getAllTeamUsers(team.getId()).entrySet()){
-            if (!new TaskDB().getUserTasks(entry.getKey()).isEmpty()){
-                verticalLayout.add(new H1(entry.getKey().getDisplayName()));
+            if (!new TaskDB().getUserTasks(entry.getKey(), team).isEmpty()){ // not display users without tasks
+                H1 h1 = new H1(entry.getKey().getDisplayName());
+                if (entry.getKey().equals(User.getLoggedInUser())) h1.getStyle().set("order", "-1");
+                verticalLayout.add(h1);
                 verticalLayout.add(userTasks(entry.getKey()));
             }
         }

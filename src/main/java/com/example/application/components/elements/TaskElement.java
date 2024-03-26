@@ -3,8 +3,6 @@ package com.example.application.components.elements;
 import com.example.application.components.dialogs.TaskDialog;
 import com.vaadin.flow.component.html.Span;
 
-//TODO: isDone w konstruktorze
-
 
 /**
  * Displayed element with Tasks

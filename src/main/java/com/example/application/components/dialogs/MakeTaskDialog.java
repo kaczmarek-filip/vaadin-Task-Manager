@@ -91,21 +91,6 @@ public class MakeTaskDialog extends Dialog {
         return createButton;
     }
 
-    @Deprecated
-    private MultiSelectComboBox<User> setUserComboBoxField() {
-        multiSelectComboBox = new MultiSelectComboBox("Holders");
-
-        Map<User, TeamRoles> usersInTeam = team.getUsersInTeam();
-
-        multiSelectComboBox.setItems(usersInTeam.keySet());
-        multiSelectComboBox.setWidthFull();
-
-        multiSelectComboBox.setItemLabelGenerator(User::getDisplayName);
-        multiSelectComboBox.setSelectedItemsOnTop(true);
-
-        return multiSelectComboBox;
-    }
-
     private Grid<User> setUserGrid() {
         userGrid = new Grid<>();
         userGrid.setItems(team.getUsersInTeam().keySet());
@@ -167,6 +152,5 @@ public class MakeTaskDialog extends Dialog {
             }
         }
         UI.getCurrent().getPage().reload();
-        //TODO: Callback
     }
 }
