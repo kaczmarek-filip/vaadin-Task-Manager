@@ -11,7 +11,8 @@ import java.util.ArrayList;
  * Singleton
  * User class
  */
-@Getter @Setter
+@Getter
+@Setter
 public class User {
     private int id;
     private String displayName;
@@ -20,7 +21,8 @@ public class User {
 
     private static User instance;
 
-    private User() {}
+    private User() {
+    }
 
     /**
      * @param id
@@ -43,20 +45,22 @@ public class User {
     /**
      * @return Singleton {@link User}
      */
-    public static User getLoggedInUser(){
+    public static User getLoggedInUser() {
         return User.getInstance();
     }
-    public static void logOut(){
+
+    public static void logOut() {
         instance = null;
     }
 
-    public static ArrayList<Team> getLoggedInUserTeams(){
+    public static ArrayList<Team> getLoggedInUserTeams() {
         TeamDB teamDB = new TeamDB();
         ArrayList<Team> teamsByUser = teamDB.findTeamsByUser(User.getLoggedInUser());
 
         return teamsByUser;
     }
-    public static ArrayList<User> getAllUsers(){
+
+    public static ArrayList<User> getAllUsers() {
         ArrayList<User> allUsers = new UserDB().getAllUsers();
 
         return allUsers;
@@ -68,5 +72,14 @@ public class User {
         if (obj == null || getClass() != obj.getClass()) return false;
         User user = (User) obj;
         return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+
+        return result;
     }
 }

@@ -138,14 +138,20 @@ public class TaskDB extends DatabaseConnection {
         try (ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
-                int DbTaskId = resultSet.getInt("taskID");
+                int DbTaskId = resultSet.getInt("ID");
                 String DbTitle = resultSet.getString("title");
                 String DbDescription = resultSet.getString("description");
                 LocalDate DbCreationDate = resultSet.getDate("creationDate").toLocalDate();
                 LocalDate DbDeadline = resultSet.getDate("deadline").toLocalDate();
                 boolean DbIsDone = resultSet.getBoolean("isDone");
 
-                taskArrayList.add(new Task(DbTaskId, DbIsDone, DbTitle, DbDescription, DbCreationDate, DbDeadline, User.getLoggedInUser())); //TODO: bez logged in user
+                int DbCreatorId = resultSet.getInt("creatorUserID");
+                String DbCreatorEmail = resultSet.getString("email");
+                String DbCreatorDisplayName = resultSet.getString("displayName");
+
+                User creator = new User(DbCreatorId, DbCreatorDisplayName, DbCreatorEmail);
+
+                taskArrayList.add(new Task(DbTaskId, DbIsDone, DbTitle, DbDescription, DbCreationDate, DbDeadline, creator));
             }
             statement.close();
             connection.close();

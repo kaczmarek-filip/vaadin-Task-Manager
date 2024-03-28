@@ -1,24 +1,17 @@
 package com.example.application.components.dialogs;
 
 import com.example.application.components.data.Task;
+import com.example.application.components.data.User;
 import com.example.application.components.elements.components.CallbackValues;
 import com.example.application.components.elements.components.TaskDoneCallback;
 import com.vaadin.flow.component.Html;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.tabs.Tab;
-import com.vaadin.flow.theme.lumo.LumoUtility;
-
-import java.time.format.DateTimeFormatter;
 
 
 /**
@@ -38,12 +31,18 @@ public class TaskDialog extends Dialog {
         setMinWidth("500");
         getHeader().add(cancelButton());
 
-        if (!task.isDone()) {
-            getFooter().add(doneButton());
-        } else {
-            getFooter().add(unDoneButton());
+
+        if (task.getHolders().contains(User.getLoggedInUser())){
+            if (!task.isDone()) {
+                getFooter().add(doneButton());
+            } else {
+                getFooter().add(unDoneButton());
+                getFooter().add(deleteButton());
+            }
+        } else if (task.getCreator().equals(User.getLoggedInUser())) {
             getFooter().add(deleteButton());
         }
+
     }
 
     /**

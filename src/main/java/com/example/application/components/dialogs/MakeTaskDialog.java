@@ -2,7 +2,6 @@ package com.example.application.components.dialogs;
 
 import com.example.application.components.data.Task;
 import com.example.application.components.data.Team;
-import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.TaskDB;
 import com.example.application.components.elements.components.TextAreaCounter;
@@ -20,7 +19,6 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 
 import java.time.LocalDate;
-import java.util.Map;
 import java.util.Set;
 
 public class MakeTaskDialog extends Dialog {
@@ -52,7 +50,7 @@ public class MakeTaskDialog extends Dialog {
     }
 
     private TextField title() {
-        titleTextField = new TextField("title");
+        titleTextField = new TextField("Title");
         titleTextField.setRequired(true);
         return titleTextField;
     }

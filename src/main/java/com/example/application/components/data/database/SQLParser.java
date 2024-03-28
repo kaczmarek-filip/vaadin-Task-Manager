@@ -157,7 +157,11 @@ public class SQLParser {
     public String getTaskHolders(Task task) {
         return "SELECT taskholders.taskID, users.ID, users.email, users.displayName FROM `taskholders` INNER JOIN users ON user_ID = users.ID WHERE taskholders.taskID =" + task.getId();
     }
-    public String getUserTasks(User user, Team team){
-        return "SELECT * FROM `taskholders` INNER JOIN tasks ON taskID = tasks.ID WHERE user_ID = " + user.getId() + " AND team_ID = "+ team.getId();
+
+    public String getUserTasks(User user, Team team) {
+        return "SELECT tasks.ID, tasks.title, tasks.description, tasks.creationDate, tasks.deadline, tasks.isDone, tasks.creatorUserID,users.email, users.displayName " +
+                "FROM `taskholders` INNER JOIN tasks ON taskID = tasks.ID " +
+                "INNER JOIN users ON tasks.creatorUserID = users.ID " +
+                "WHERE user_ID = " + user.getId() + " AND team_ID = " + team.getId();
     }
 }
