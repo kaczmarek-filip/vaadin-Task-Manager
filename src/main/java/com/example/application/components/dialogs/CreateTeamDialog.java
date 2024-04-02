@@ -2,6 +2,7 @@ package com.example.application.components.dialogs;
 
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.TeamDB;
+import com.example.application.components.elements.components.CancelButton;
 import com.example.application.components.elements.components.TextAreaCounter;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
@@ -22,7 +23,6 @@ import java.util.stream.Collectors;
 import static com.example.application.components.data.Team.mottoCharLimit;
 
 public class CreateTeamDialog extends Dialog {
-    private Button cancelButton;
     private Button createButton;
     private TextField teamNameField = new TextField("Team name");
     private TextAreaCounter teamMottoField = new TextAreaCounter("Motto");
@@ -43,7 +43,7 @@ public class CreateTeamDialog extends Dialog {
         FormLayout formLayout = new FormLayout(teamNameField, teamMottoField, setUserComboBoxField(), selectedUsersArea);
         add(formLayout);
 
-        getFooter().add(setCancelButton(), setCreateButton());
+        getFooter().add(new CancelButton(this), setCreateButton());
     }
 
     private void beforeCreate() {
@@ -59,16 +59,6 @@ public class CreateTeamDialog extends Dialog {
         notification.open();
 
         UI.getCurrent().getPage().reload();
-    }
-
-    private Button setCancelButton() {
-        cancelButton = new Button("Cancel");
-        cancelButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        cancelButton.addClickListener(e -> {
-            close();
-        });
-
-        return cancelButton;
     }
 
     private Button setCreateButton() {

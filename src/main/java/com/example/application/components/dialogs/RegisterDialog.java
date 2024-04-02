@@ -2,6 +2,7 @@ package com.example.application.components.dialogs;
 
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.UserDB;
+import com.example.application.components.elements.components.CancelButton;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -17,7 +18,6 @@ import com.vaadin.flow.component.textfield.TextField;
  * Register dialog with user
  */
 public class RegisterDialog extends Dialog {
-    private Button cancelButton;
     private Button registerButton;
 
     EmailField email = new EmailField("Email");
@@ -31,20 +31,14 @@ public class RegisterDialog extends Dialog {
         setCloseOnEsc(false);
 
         registerButton = new Button("Register");
-        registerButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+        registerButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
         registerButton.addClickShortcut(Key.ENTER);
         registerButton.addClickListener(e -> {
             beforeRegister();
         });
 
-        cancelButton = new Button("Cancel");
-        cancelButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        cancelButton.addClickListener(e -> {
-            close();
-        });
-
         add(layout());
-        getFooter().add(cancelButton);
+        getFooter().add(new CancelButton(this));
         getFooter().add(registerButton);
     }
 

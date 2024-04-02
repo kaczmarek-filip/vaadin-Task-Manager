@@ -4,6 +4,7 @@ import com.example.application.components.data.Task;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.TaskDB;
+import com.example.application.components.elements.components.CancelButton;
 import com.example.application.components.elements.components.TextAreaCounter;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -25,7 +26,6 @@ public class MakeTaskDialog extends Dialog {
     private boolean isOwnTask = false;
     private Team team;
     private FormLayout formLayout = new FormLayout();
-    private Button cancelButton;
     private Button createButton;
     private TextField titleTextField;
     private TextAreaCounter descriptionTextArea;
@@ -40,7 +40,7 @@ public class MakeTaskDialog extends Dialog {
 
         formLayout.add(title(), description(), deadline());
         add(formLayout);
-        getFooter().add(cancelButton(), createButton());
+        getFooter().add(new CancelButton(this), createButton());
     }
 
     public MakeTaskDialog(Team team) {
@@ -68,20 +68,9 @@ public class MakeTaskDialog extends Dialog {
         return deadlineDatePicker;
     }
 
-    private Button cancelButton() {
-        cancelButton = new Button("Cancel");
-        cancelButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
-
-        cancelButton.addClickListener(e -> {
-            close();
-        });
-
-        return cancelButton;
-    }
-
     private Button createButton() {
         createButton = new Button("Create");
-        createButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+        createButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
 
         createButton.addClickListener(e -> {
             beforeCreate();

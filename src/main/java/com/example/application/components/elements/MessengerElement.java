@@ -32,8 +32,8 @@ public class MessengerElement extends VerticalLayout{
         add(chatWith(user), messageList(), messageInput());
     }
     private Text chatWith(User user){
-
-        return new Text("Chat with " + user.getDisplayName());
+        Text text = new Text("Chat with " + user.getDisplayName());
+        return text;
     }
     private MessageList messageList(){
         messageList = new MessageList();

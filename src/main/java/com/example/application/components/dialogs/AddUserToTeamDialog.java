@@ -3,6 +3,7 @@ package com.example.application.components.dialogs;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.TeamDB;
+import com.example.application.components.elements.components.CancelButton;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
@@ -21,7 +22,6 @@ public class AddUserToTeamDialog extends Dialog {
     private ArrayList<User> allUsersWithoutTeamUsers;
     private TextArea selectedUsersArea = new TextArea("Selected Users");
     private Button saveButton = new Button("Save");
-    private Button cancelButton = new Button("Cancel");
 
     public AddUserToTeamDialog(Team team){
         this.team = team;
@@ -32,7 +32,7 @@ public class AddUserToTeamDialog extends Dialog {
         FormLayout formLayout = new FormLayout(setUserComboBoxField(), setSelectedUsersArea());
 
         add(formLayout);
-        getFooter().add(setCancelButton());
+        getFooter().add(new CancelButton(this));
         getFooter().add(setSaveButton());
     }
     private MultiSelectComboBox<User> setUserComboBoxField() {
@@ -68,11 +68,5 @@ public class AddUserToTeamDialog extends Dialog {
             UI.getCurrent().getPage().reload();
         });
         return saveButton;
-    }
-    private Button setCancelButton(){
-        cancelButton.addClickListener(e -> {
-            close();
-        });
-        return cancelButton;
     }
 }

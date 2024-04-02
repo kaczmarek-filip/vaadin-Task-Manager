@@ -4,6 +4,7 @@ import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.TeamDB;
+import com.example.application.components.elements.components.CancelButton;
 import com.example.application.components.elements.components.TextAreaCounter;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -28,7 +29,6 @@ import static com.example.application.components.data.Team.mottoCharLimit;
 public class EditTeamDialog extends Dialog {
     private Button saveButton = new Button("Save");
     private Button deleteButton = new Button("Delete");
-    private Button cancelButton = new Button("Cancel");
     private Button addUserButton = new Button("Add users");
     private Team team;
     private TextField teamNameField = new TextField("Team name");
@@ -58,7 +58,7 @@ public class EditTeamDialog extends Dialog {
 
         add(verticalLayout);
         getFooter().add(setDeleteButton());
-        getFooter().add(setCancelButton());
+        getFooter().add(new CancelButton(this));
     }
 
     private void beforeEdit() {
@@ -77,7 +77,7 @@ public class EditTeamDialog extends Dialog {
     }
 
     private Button setSaveButton() {
-        saveButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+        saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
 
         saveButton.getStyle().set("margin-left", "auto");
 
@@ -90,7 +90,7 @@ public class EditTeamDialog extends Dialog {
     }
 
     private Button setDeleteButton() {
-        deleteButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        deleteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
         deleteButton.getStyle().set("margin-right", "auto");
 
         deleteButton.addClickListener(e -> {
@@ -99,14 +99,6 @@ public class EditTeamDialog extends Dialog {
         });
 
         return deleteButton;
-    }
-
-    private Button setCancelButton() {
-        cancelButton.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
-        cancelButton.addClickListener(e -> {
-            close();
-        });
-        return cancelButton;
     }
 
     private Grid<Map.Entry<User, TeamRoles>> setGridContextMenu() {

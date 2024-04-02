@@ -5,11 +5,7 @@ import com.example.application.components.data.database.TaskDB;
 import com.example.application.components.dialogs.TaskDialog;
 import com.example.application.components.elements.components.CallbackValues;
 import com.example.application.components.elements.components.TaskDoneCallback;
-import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.checkbox.Checkbox;
-import com.vaadin.flow.component.dependency.JavaScript;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
 import java.time.LocalDate;

@@ -3,6 +3,7 @@ package com.example.application.components.dialogs;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.TeamDB;
+import com.example.application.components.elements.components.CancelButton;
 import com.example.application.views.main.TeamsSite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -13,7 +14,6 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 
 public class DeleteConfirmDialog extends Dialog {
     Button deleteButton = new Button("Delete");
-    Button cancelButton = new Button("Cancel", (e) -> close());
 
     public DeleteConfirmDialog() {
 
@@ -23,9 +23,8 @@ public class DeleteConfirmDialog extends Dialog {
         deleteButton.getStyle().set("margin-right", "auto");
 
 
-        cancelButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         getFooter().add(deleteButton);
-        getFooter().add(cancelButton);
+        getFooter().add(new CancelButton(this));
     }
 
     public Dialog deleteTeam(Team team) {

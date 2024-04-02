@@ -13,7 +13,7 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-
+//TODO: fix - proponuje tylko usunięcie taska
 /**
  *
  */

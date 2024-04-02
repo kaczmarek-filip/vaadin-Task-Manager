@@ -164,4 +164,18 @@ public class SQLParser {
                 "INNER JOIN users ON tasks.creatorUserID = users.ID " +
                 "WHERE user_ID = " + user.getId() + " AND team_ID = " + team.getId();
     }
+
+    public String addChat(User user1, User user2) {
+        return "INSERT INTO `chats`(`user1_ID`, `user2_ID`) VALUES ('" + user1.getId() + "','" + user2.getId() + "')";
+    }
+
+    public String getUserChats(User user) {
+//        return "SELECT * FROM `chats` WHERE user1_ID = " + user.getId() + " OR user2_ID = " + user.getId();
+        return "SELECT chats.*, user1.email AS user1_email, user1.displayName AS user1_displayName, " +
+                "user2.email AS user2_email, user2.displayName AS user2_displayName " +
+                "FROM `chats` " +
+                "INNER JOIN users AS user1 ON user1.ID = chats.user1_ID " +
+                "INNER JOIN users AS user2 ON user2.ID = chats.user2_ID " +
+                "WHERE user1.ID = " + user.getId() + " OR user2.ID = " + user.getId();
+    }
 }
