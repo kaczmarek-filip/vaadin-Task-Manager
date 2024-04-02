@@ -2,6 +2,7 @@ package com.example.application.components.elements;
 
 import com.example.application.components.data.User;
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.messages.MessageInput;
 import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
@@ -18,7 +19,6 @@ public class MessengerElement extends VerticalLayout{
 
     public MessengerElement() {
         setHeightFull();
-        setWidthFull();
     }
     public void removeView(){
         removeAll();
