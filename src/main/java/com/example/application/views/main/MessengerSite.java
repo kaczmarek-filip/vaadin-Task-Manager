@@ -1,6 +1,7 @@
 package com.example.application.views.main;
 
 
+import com.example.application.components.contents.MessengerSiteContent;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Nav;
@@ -17,5 +18,9 @@ import org.springframework.context.annotation.Bean;
 public class MessengerSite extends Navigation {
     public MessengerSite(){
         super("Messenger");
+
+        setContent(new MessengerSiteContent());
     }
+
+
 }
