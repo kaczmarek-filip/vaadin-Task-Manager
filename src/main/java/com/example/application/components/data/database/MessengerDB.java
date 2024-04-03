@@ -1,14 +1,11 @@
 package com.example.application.components.data.database;
 
-import com.example.application.components.data.Team;
-import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
 import com.vaadin.flow.component.notification.Notification;
 
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MessengerDB extends DatabaseConnection {
     public void addChat(User user1, User user2){
@@ -56,5 +53,17 @@ public class MessengerDB extends DatabaseConnection {
         }
 
         return userArrayList;
+    }
+    public void sendMessage(User userFrom, User userTo, String content, LocalDateTime localDateTime){
+        query = sqlParser.sendMessage(userFrom, userTo, content, localDateTime);
+
+        try {
+            statement.executeUpdate(query);
+
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+        }
     }
 }

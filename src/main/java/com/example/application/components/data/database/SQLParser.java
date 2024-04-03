@@ -5,6 +5,9 @@ import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -177,5 +180,15 @@ public class SQLParser {
                 "INNER JOIN users AS user1 ON user1.ID = chats.user1_ID " +
                 "INNER JOIN users AS user2 ON user2.ID = chats.user2_ID " +
                 "WHERE user1.ID = " + user.getId() + " OR user2.ID = " + user.getId();
+    }
+
+    public String sendMessage(User userFrom, User userTo, String content, LocalDateTime localDateTime) {
+        String dateTimeFormatter = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        return "INSERT INTO messages (chatID, user_ID, content, dateTime) " +
+                "SELECT c.chatID, " + userFrom.getId() + ", '" + content + "', '" + dateTimeFormatter + "' " +
+                "FROM chats c " +
+                "WHERE (c.user1_ID = " + userFrom.getId() + " AND c.user2_ID = " + userTo.getId() + ") " +
+                "OR (c.user1_ID = " + userTo.getId() + " AND c.user2_ID = " + userFrom.getId() + ")";
     }
 }
