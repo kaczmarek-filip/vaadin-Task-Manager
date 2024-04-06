@@ -1,10 +1,7 @@
 package com.example.application;
 
-import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.theme.Theme;
-import com.vaadin.flow.theme.lumo.Lumo;
-import com.vaadin.flow.theme.material.Material;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -26,5 +23,8 @@ public class Application implements AppShellConfigurator {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
+    //TODO: Dodać szyfrowanie haseł i wiadomości
+    //TODO: Dodać przykładową bazę danych
+    //TODO: 404 error
 
 }

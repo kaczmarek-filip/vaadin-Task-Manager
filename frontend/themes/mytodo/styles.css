@@ -158,17 +158,6 @@
     margin-top: 2vh;
     margin-right: 2vh;
 }
-.taskElementCheckbox{
-    /*!*--vaadin-checkbox-background: #bde9ff;*!*/
-    /*!*--vaadin-checkbox-checkmark-color: #001f2a;*!*/
-    /*--vaadin-checkbox-background-hover: red;*/
-    /*--vaadin-checkbox-background: red;*/
-
-    /*--vaadin-checkbox-checkmark-color: red;*/
-    /*--vaadin-checkbox-label-color: red;*/
-    /*--vaadin-checkbox-checkmark-char-indeterminate: red;*/
-    /*!*accent-color: red;*!*/
-}
 .taskDialogTime{
     font-size: 1.5rem;
     align-items: center;

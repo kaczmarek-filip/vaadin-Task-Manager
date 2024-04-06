@@ -30,17 +30,25 @@ public class TaskBlockElement extends Element implements TaskDoneCallback {
         title.addClassName("taskElementTitle");
         checkDate();
 
-        Div deadline = new Div(daysLeft + " days left");
+        Div deadline = new Div();
         deadline.addClassName("taskElementDeadline");
 
         isDoneChecker();
 
         HorizontalLayout horizontalLayout = new HorizontalLayout();
+        if (!task.isDone()){
+//            horizontalLayout.add(deadline);
+            deadline.setText(daysLeft + " days left");
+        } else {
+//            Div deadlineDone = new Div(task.getDeadline().toString());
+//            horizontalLayout.add(deadlineDone);
+            deadline.setText("Deadline: " + task.getFormattedDeadline());
+        }
         horizontalLayout.add(deadline);
 
         add(title);
-        if (!task.isDone())
-            add(horizontalLayout);
+//        if (!task.isDone())
+        add(horizontalLayout);
     }
 
     @Override
