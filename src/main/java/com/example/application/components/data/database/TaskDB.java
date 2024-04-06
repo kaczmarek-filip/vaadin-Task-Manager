@@ -83,30 +83,6 @@ public class TaskDB extends DatabaseConnection {
             Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
         }
     }
-    @Deprecated
-    public ArrayList<Task> getTeamTasks(Team team) {
-        query = sqlParser.getTeamTasks(team);
-        ArrayList<Task> taskArrayList = new ArrayList<>();
-
-        try (ResultSet resultSet = statement.executeQuery(query)) {
-
-            while (resultSet.next()) {
-                int DbTaskId = resultSet.getInt("ID");
-                String DbTitle = resultSet.getString("title");
-                String DbDescription = resultSet.getString("description");
-                LocalDate DbCreationDate = resultSet.getDate("creationDate").toLocalDate();
-                LocalDate DbDeadline = resultSet.getDate("deadline").toLocalDate();
-                boolean DbIsDone = resultSet.getBoolean("isDone");
-
-                taskArrayList.add(new Task(DbTaskId, DbIsDone, DbTitle, DbDescription, DbCreationDate, DbDeadline, User.getLoggedInUser())); //TODO: bez logged in user
-            }
-            statement.close();
-            connection.close();
-        } catch (Exception e) {
-            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
-        }
-        return taskArrayList;
-    }
 
     public Set<User> getTaskHolders(Task task){
         query = sqlParser.getTaskHolders(task);

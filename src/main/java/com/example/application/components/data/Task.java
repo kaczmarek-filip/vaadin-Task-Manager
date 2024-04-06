@@ -13,7 +13,6 @@ public class Task {
     private int id;
     private Team team;
     private String title;
-    //TODO: Uploading files
     private String description;
     private LocalDate creationDate;
     private LocalDate deadline;

@@ -13,7 +13,6 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-//TODO: fix - proponuje tylko usunięcie taska
 /**
  *
  */
@@ -32,6 +31,9 @@ public class TaskDialog extends Dialog {
         getHeader().add(cancelButton());
 
 
+        /*
+        Checking is user can delete task
+         */
         if (task.getHolders().contains(User.getLoggedInUser())){
             if (!task.isDone()) {
                 getFooter().add(doneButton());
@@ -39,8 +41,13 @@ public class TaskDialog extends Dialog {
                 getFooter().add(unDoneButton());
                 getFooter().add(deleteButton());
             }
-        } else if (task.getCreator().equals(User.getLoggedInUser())) {
-            getFooter().add(deleteButton());
+        } else if (task.getCreator().equals(User.getLoggedInUser()) && task.getHolders().isEmpty()) {
+            if (!task.isDone()) {
+                getFooter().add(doneButton());
+            } else {
+                getFooter().add(unDoneButton());
+                getFooter().add(deleteButton());
+            }
         }
 
     }

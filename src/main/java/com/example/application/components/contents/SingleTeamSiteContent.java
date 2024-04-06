@@ -24,7 +24,6 @@ public class SingleTeamSiteContent extends HorizontalLayout {
     private VerticalLayout mainContent() {
         VerticalLayout mainContent = new VerticalLayout();
         mainContent.setWidth("80%");
-//        mainContent.add(motto(), horizontalLayout());
         mainContent.add(motto(), memberTasks());
 
         return mainContent;
@@ -55,10 +54,8 @@ public class SingleTeamSiteContent extends HorizontalLayout {
         scroller.setScrollDirection(Scroller.ScrollDirection.VERTICAL);
         scroller.setWidth("20%");
 
-        for(int i = 0; i < 10; i++){
-            for(Map.Entry<User, TeamRoles> entry : Team.getAllTeamUsers(team.getId()).entrySet()){
-                membersList.add(new SingleTeamMemberElement(entry.getKey(), entry.getValue()));
-            }
+        for(Map.Entry<User, TeamRoles> entry : Team.getAllTeamUsers(team.getId()).entrySet()){
+            membersList.add(new SingleTeamMemberElement(entry.getKey(), entry.getValue()));
         }
 
 

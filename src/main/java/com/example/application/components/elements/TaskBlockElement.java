@@ -13,12 +13,12 @@ import java.time.temporal.ChronoUnit;
 
 public class TaskBlockElement extends Element implements TaskDoneCallback {
     private final Task task;
-    private long liczbaDni;
+    private final long daysLeft;
     public TaskBlockElement(Task task) {
         super("taskElement");
         this.task = task;
 
-        liczbaDni = ChronoUnit.DAYS.between(LocalDate.now(), task.getDeadline());
+        daysLeft = ChronoUnit.DAYS.between(LocalDate.now(), task.getDeadline());
 
         layout();
         listenerAction();
@@ -30,7 +30,7 @@ public class TaskBlockElement extends Element implements TaskDoneCallback {
         title.addClassName("taskElementTitle");
         checkDate();
 
-        Div deadline = new Div(liczbaDni + " days left");
+        Div deadline = new Div(daysLeft + " days left");
         deadline.addClassName("taskElementDeadline");
 
         isDoneChecker();
@@ -50,9 +50,9 @@ public class TaskBlockElement extends Element implements TaskDoneCallback {
         });
     }
     public void checkDate(){
-        if (liczbaDni <= 0){
+        if (daysLeft <= 0){
             getStyle().set("background-color", "#ba1a1a");
-        } else if (liczbaDni < 3) {
+        } else if (daysLeft < 3) {
             getStyle().set("background-color", "rgba(255, 86, 74, 0.6)");
         } else {
             getStyle().set("background-color", "#006783");

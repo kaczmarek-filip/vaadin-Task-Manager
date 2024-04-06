@@ -23,8 +23,6 @@ import java.util.Map;
 import java.util.Set;
 
 import static com.example.application.components.data.Team.mottoCharLimit;
-//TODO: Dodać możliwość dodawania użytkowników jak w tutorialu
-// https://vaadin.com/docs/latest/components/grid
 
 public class EditTeamDialog extends Dialog {
     private Button saveButton = new Button("Save");
@@ -117,7 +115,7 @@ public class EditTeamDialog extends Dialog {
         grid.addComponentColumn(entry -> {
             Select<TeamRoles> rolesSelect = new Select<>();
             Set<TeamRoles> rolesSet = EnumSet.allOf(TeamRoles.class);
-            rolesSet.remove(TeamRoles.OWNER); //TODO: Brak możliwości wybrania OWNER, ale żeby wyświetlał się przy nazwisku
+            rolesSet.remove(TeamRoles.OWNER);
             rolesSelect.setItems(rolesSet);
 //            rolesSelect.setItems(TeamRoles.values());
             rolesSelect.setValue(entry.getValue());
