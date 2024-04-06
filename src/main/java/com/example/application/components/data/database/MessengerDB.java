@@ -1,9 +1,11 @@
 package com.example.application.components.data.database;
 
+import com.example.application.components.data.Message;
 import com.example.application.components.data.User;
 import com.vaadin.flow.component.notification.Notification;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -65,5 +67,29 @@ public class MessengerDB extends DatabaseConnection {
         } catch (Exception e) {
             Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
         }
+    }
+    public ArrayList<Message> getMessages(User user1, User user2){
+        query = sqlParser.getMessages(user1, user2);
+        ArrayList<Message> messages = new ArrayList<>();
+
+        try (ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                int DbUserFromId = resultSet.getInt("user_ID");
+                String DbContent = resultSet.getString("content");
+//                LocalDateTime DbLocalDateTime = LocalDateTime.from(resultSet.getTime("dateTime").toLocalTime());
+                LocalDateTime localDateTime = resultSet.getTimestamp("dateTime").toLocalDateTime();
+
+                User user = new UserDB().getUserById(DbUserFromId);
+
+                messages.add(new Message(user, DbContent, localDateTime));
+            }
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+        }
+
+        return messages;
     }
 }

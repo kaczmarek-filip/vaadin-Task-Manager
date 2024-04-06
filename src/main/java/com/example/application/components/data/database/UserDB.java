@@ -93,4 +93,21 @@ public class UserDB extends DatabaseConnection {
 
         return allUsers;
     }
+    public User getUserById(int id){
+        query = sqlParser.getUserById(id);
+
+        try (ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                String DbEmail = resultSet.getString("email");
+                String DbDisplayName = resultSet.getString("displayName");
+                    return new User(id, DbDisplayName, DbEmail);
+            }
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
+        }
+        return null;
+    }
 }

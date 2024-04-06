@@ -191,4 +191,19 @@ public class SQLParser {
                 "WHERE (c.user1_ID = " + userFrom.getId() + " AND c.user2_ID = " + userTo.getId() + ") " +
                 "OR (c.user1_ID = " + userTo.getId() + " AND c.user2_ID = " + userFrom.getId() + ")";
     }
+
+    public String getMessages(User user1, User user2) {
+
+        return "SELECT m.content, m.user_ID, m.dateTime " +
+                "FROM messages m " +
+                "JOIN ( " +
+                "    SELECT chatID " +
+                "    FROM chats " +
+                "    WHERE (user1_ID = " + user1.getId() + " AND user2_ID = " + user2.getId() + ") " +
+                "       OR (user1_ID = " + user2.getId() + " AND user2_ID = " + user1.getId() + ") " +
+                ") c ON m.chatID = c.chatID; ";
+    }
+    public String getUserById(int id){
+        return "SELECT email, displayName FROM `users` WHERE ID = " + id;
+    }
 }
