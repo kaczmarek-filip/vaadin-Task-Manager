@@ -50,7 +50,9 @@ public class SingleTeamSite extends Navigation implements BeforeEnterObserver, H
         editButton.setVisible(true);
         makeTaskButton.setVisible(true);
 
-        if (Team.getUserTeamRole(User.getLoggedInUser(), teamId) != TeamRoles.OWNER) {
+        if (Team.getUserTeamRole(User.getLoggedInUser(), teamId) != TeamRoles.OWNER &&
+                Team.getUserTeamRole(User.getLoggedInUser(), teamId) != TeamRoles.ADMIN)
+        {
             editButton.setVisible(false);
             makeTaskButton.setVisible(false);
         }

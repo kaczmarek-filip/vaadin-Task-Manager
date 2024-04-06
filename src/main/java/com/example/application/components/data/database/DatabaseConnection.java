@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 
 public abstract class DatabaseConnection {
-    private final static String DbUrl = "jdbc:mysql://localhost/taskmanager";
+    private final static String DbUrl = "jdbc:mysql://localhost/taskmanagergenerated";
     private final static String DbUser = "root";
     private final static String DbPassword = "mysql";
     private final static String DbDriver = "com.mysql.cj.jdbc.Driver";
