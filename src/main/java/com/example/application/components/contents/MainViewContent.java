@@ -2,10 +2,12 @@ package com.example.application.components.contents;
 
 import com.example.application.components.data.Task;
 import com.example.application.components.data.User;
+import com.example.application.components.data.database.MessengerDB;
 import com.example.application.components.data.database.TaskDB;
 import com.example.application.components.elements.TaskBlockElement;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.Unit;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -69,6 +71,11 @@ public class MainViewContent extends HorizontalLayout {
         verticalLayout.setHeightFull();
         verticalLayout.setWidth(50, Unit.PERCENTAGE);
         verticalLayout.add(new Text("Nothing"));
+        Button button = new Button("Hibernate");
+        button.addClickListener(e -> {
+           new MessengerDB().testHibernate();
+        });
+        verticalLayout.add(button);
         return verticalLayout;
     }
 }

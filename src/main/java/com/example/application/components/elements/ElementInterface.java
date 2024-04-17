@@ -1,6 +1,6 @@
 package com.example.application.components.elements;
 
-public interface ElementInterface {
+interface ElementInterface {
 
     void layout();
 
