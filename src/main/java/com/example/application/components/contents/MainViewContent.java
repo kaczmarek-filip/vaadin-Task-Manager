@@ -5,6 +5,7 @@ import com.example.application.components.data.User;
 import com.example.application.components.data.database.TaskDB;
 import com.example.application.components.elements.TaskBlockElement;
 import com.example.application.services.EasyEncrypter;
+import com.example.application.services.encryption.Encrypter;
 import com.example.application.services.encryption.EncryptionMethod;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.Unit;
@@ -76,9 +77,9 @@ public class MainViewContent extends HorizontalLayout {
         Button button = new Button("Hibernate");
         button.addClickListener(e -> {
 //           new MessengerDB().testHibernate();
-            EasyEncrypter easyEncrypter = new EasyEncrypter(EncryptionMethod.GADERYPOLUKI);
-            String encoded = easyEncrypter.encode("testowanie szyfru");
-            Notification.show(encoded);
+//            EasyEncrypter easyEncrypter = new EasyEncrypter(EncryptionMethod.GADERYPOLUKI);
+//            String encoded = easyEncrypter.encode("testowanie szyfru");
+//            Notification.show(encoded);
         });
         verticalLayout.add(button);
         return verticalLayout;

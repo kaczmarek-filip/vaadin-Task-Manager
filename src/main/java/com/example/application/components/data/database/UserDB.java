@@ -1,6 +1,7 @@
 package com.example.application.components.data.database;
 
 import com.example.application.components.data.User;
+import com.example.application.services.encryption.Encrypter;
 import com.vaadin.flow.component.notification.Notification;
 
 import java.sql.ResultSet;
@@ -21,7 +22,7 @@ public class UserDB extends DatabaseConnection {
             statement.close();
             connection.close();
         } catch (Exception e) {
-            Notification.show(error, 5000, Notification.Position.BOTTOM_CENTER);
+            Notification.show(e.toString(), 5000, Notification.Position.BOTTOM_CENTER);
         }
     }
 
@@ -59,6 +60,8 @@ public class UserDB extends DatabaseConnection {
                 String DbEmail = resultSet.getString("email");
                 String DbPassword = resultSet.getString("password");
                 String DbDisplayName = resultSet.getString("displayName");
+
+                DbPassword = Encrypter.decrypt(DbPassword);
                 if (email.equals(DbEmail) && password.equals(DbPassword)) {
                     return new User(DbId, DbDisplayName, DbEmail);
                 }

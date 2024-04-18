@@ -4,8 +4,8 @@ import com.example.application.components.data.Task;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
+import com.example.application.services.encryption.Encrypter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class SQLParser {
      * @see DatabaseConnectionDeprecated
      */
     public String createUser(User user, String password) {
-        String query = "INSERT INTO `users`(`email`, `password`, `displayName`) VALUES ('" + user.getEmail() + "','" + password + "','" + user.getDisplayName() + "')";
+        String query = "INSERT INTO `users`(`email`, `password`, `displayName`) VALUES ('" + user.getEmail() + "','" + Encrypter.encrypt(password) + "','" + user.getDisplayName() + "')";
 
         return query;
     }
@@ -38,7 +38,8 @@ public class SQLParser {
      * @return query
      */
     public String loginUser(String email, String password) {
-        String query = "SELECT * FROM `users` WHERE email = '" + email + "' AND password = '" + password + "'";
+//        String query = "SELECT * FROM `users` WHERE email = '" + email + "' AND password = '" + password + "'";
+        String query = "SELECT * FROM `users` WHERE email = '" + email + "' AND password = '" + Encrypter.encrypt(password) + "'";
         return query;
     }
 
@@ -203,7 +204,8 @@ public class SQLParser {
                 "       OR (user1_ID = " + user2.getId() + " AND user2_ID = " + user1.getId() + ") " +
                 ") c ON m.chatID = c.chatID; ";
     }
-    public String getUserById(int id){
+
+    public String getUserById(int id) {
         return "SELECT email, displayName FROM `users` WHERE ID = " + id;
     }
 }
