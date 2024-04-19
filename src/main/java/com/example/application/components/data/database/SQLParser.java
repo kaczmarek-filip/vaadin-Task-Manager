@@ -5,6 +5,7 @@ import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
 import com.example.application.services.encryption.Encrypter;
+import com.example.application.services.encryption.StaticEncrypter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -185,6 +186,8 @@ public class SQLParser {
 
     public String sendMessage(User userFrom, User userTo, String content, LocalDateTime localDateTime) {
         String dateTimeFormatter = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        content = StaticEncrypter.encryptByStaticKey(content);
 
         return "INSERT INTO messages (chatID, user_ID, content, dateTime) " +
                 "SELECT c.chatID, " + userFrom.getId() + ", '" + content + "', '" + dateTimeFormatter + "' " +

@@ -1,4 +1,4 @@
-package com.example.application.services;
+package com.example.application.services.encryption;
 
 import com.example.application.services.encryption.EncryptionMethod;
 import com.example.application.services.encryption.Pair;

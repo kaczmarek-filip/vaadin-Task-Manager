@@ -3,6 +3,7 @@ package com.example.application.components.data.database;
 import com.example.application.components.data.Message;
 import com.example.application.components.data.Message2;
 import com.example.application.components.data.User;
+import com.example.application.services.encryption.StaticEncrypter;
 import com.vaadin.flow.component.notification.Notification;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -101,6 +102,8 @@ public class MessengerDB extends DatabaseConnection {
                 String DbContent = resultSet.getString("content");
 //                LocalDateTime DbLocalDateTime = LocalDateTime.from(resultSet.getTime("dateTime").toLocalTime());
                 LocalDateTime localDateTime = resultSet.getTimestamp("dateTime").toLocalDateTime();
+
+                DbContent = StaticEncrypter.decryptByStaticKey(DbContent);
 
                 User user = new UserDB().getUserById(DbUserFromId);
 

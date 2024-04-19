@@ -27,8 +27,5 @@ public class Application implements AppShellConfigurator {
         Encrypter.generateKey();
         new DBEncryption().startupEncrypt();
     }
-    //TODO: Dodać szyfrowanie haseł i wiadomości
-    //TODO: Dodać przykładową bazę danych
-    //TODO: 404 error
 
 }

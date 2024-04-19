@@ -4,14 +4,10 @@ import com.example.application.components.data.Task;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.TaskDB;
 import com.example.application.components.elements.TaskBlockElement;
-import com.example.application.services.EasyEncrypter;
-import com.example.application.services.encryption.Encrypter;
-import com.example.application.services.encryption.EncryptionMethod;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Paragraph;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
@@ -80,6 +76,7 @@ public class MainViewContent extends HorizontalLayout {
 //            EasyEncrypter easyEncrypter = new EasyEncrypter(EncryptionMethod.GADERYPOLUKI);
 //            String encoded = easyEncrypter.encode("testowanie szyfru");
 //            Notification.show(encoded);
+//            new OneTimeMessageEncryption().startupEncrypt();
         });
         verticalLayout.add(button);
         return verticalLayout;
