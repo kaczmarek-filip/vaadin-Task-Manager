@@ -1,6 +1,6 @@
 package com.example.application.components.data;
 
-import com.example.application.components.data.database.TaskDB;
+import com.example.application.components.data.database.sql.TaskDB;
 import lombok.Getter;
 import lombok.Setter;
 

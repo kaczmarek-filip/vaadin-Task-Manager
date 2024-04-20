@@ -2,7 +2,8 @@ package com.example.application.components.contents;
 
 import com.example.application.components.data.Task;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.TaskDB;
+import com.example.application.components.data.database.sql.MessengerDB;
+import com.example.application.components.data.database.sql.TaskDB;
 import com.example.application.components.elements.TaskBlockElement;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.Unit;
@@ -72,11 +73,7 @@ public class MainViewContent extends HorizontalLayout {
         verticalLayout.add(new Text("Nothing"));
         Button button = new Button("Hibernate");
         button.addClickListener(e -> {
-//           new MessengerDB().testHibernate();
-//            EasyEncrypter easyEncrypter = new EasyEncrypter(EncryptionMethod.GADERYPOLUKI);
-//            String encoded = easyEncrypter.encode("testowanie szyfru");
-//            Notification.show(encoded);
-//            new OneTimeMessageEncryption().startupEncrypt();
+           new MessengerDB().testHibernate();
         });
         verticalLayout.add(button);
         return verticalLayout;

@@ -1,7 +1,7 @@
 package com.example.application.components.elements;
 
 import com.example.application.components.data.Task;
-import com.example.application.components.data.database.TaskDB;
+import com.example.application.components.data.database.sql.TaskDB;
 import com.example.application.components.dialogs.TaskDialog;
 import com.example.application.components.elements.components.CallbackValues;
 import com.example.application.components.elements.components.TaskDoneCallback;

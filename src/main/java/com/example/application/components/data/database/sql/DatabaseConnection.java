@@ -1,5 +1,6 @@
-package com.example.application.components.data.database;
+package com.example.application.components.data.database.sql;
 
+import com.example.application.components.data.database.sql.SQLParser;
 import com.vaadin.flow.component.notification.Notification;
 
 import java.sql.Connection;

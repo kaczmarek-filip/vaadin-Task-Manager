@@ -1,4 +1,4 @@
-package com.example.application.components.data.database;
+package com.example.application.components.data.database.sql;
 
 import com.example.application.components.data.User;
 import com.example.application.services.encryption.Encrypter;
@@ -6,8 +6,8 @@ import com.vaadin.flow.component.notification.Notification;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
-public class UserDB extends DatabaseConnection {
+@Deprecated
+public class SQLUserDB extends DatabaseConnection {
     /**
      * Method to register user in database
      *

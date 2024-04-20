@@ -2,7 +2,7 @@ package com.example.application.components.elements;
 
 import com.example.application.components.data.Message;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.MessengerDB;
+import com.example.application.components.data.database.sql.MessengerDB;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.messages.MessageInput;
 import com.vaadin.flow.component.messages.MessageList;

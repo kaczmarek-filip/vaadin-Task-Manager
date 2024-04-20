@@ -1,4 +1,4 @@
-package com.example.application.components.data.database;
+package com.example.application.components.data.database.sql;
 
 import com.example.application.services.encryption.Encrypter;
 import lombok.SneakyThrows;
@@ -29,7 +29,7 @@ public class DBEncryption extends DatabaseConnection implements ApplicationListe
             sendToDatabase(map);
             logger.info("Passwords decrypted properly".toUpperCase());
         } catch (Exception e) {
-            logger.error(e.toString());
+            logger.error(error);
         }
 
 

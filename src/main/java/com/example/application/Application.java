@@ -1,6 +1,6 @@
 package com.example.application;
 
-import com.example.application.components.data.database.DBEncryption;
+import com.example.application.components.data.database.sql.DBEncryption;
 import com.example.application.services.encryption.Encrypter;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.theme.Theme;

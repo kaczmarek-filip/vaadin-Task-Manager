@@ -1,4 +1,4 @@
-package com.example.application.components.data.database;
+package com.example.application.components.data.database.sql;
 
 import com.example.application.components.data.Task;
 import com.example.application.components.data.Team;

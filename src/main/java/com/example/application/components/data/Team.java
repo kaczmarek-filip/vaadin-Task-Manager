@@ -1,6 +1,6 @@
 package com.example.application.components.data;
 
-import com.example.application.components.data.database.TeamDB;
+import com.example.application.components.data.database.sql.TeamDB;
 import lombok.Getter;
 
 import java.util.HashMap;

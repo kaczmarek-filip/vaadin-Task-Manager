@@ -14,6 +14,7 @@ import java.util.Base64;
  *
  * A new key is generated each time the application is started
  */
+//TODO: Zapisywanie poprzedniego klucza w JSON i przywracanie w razie awarii
 public class Encrypter {
     private static SecretKey secretKey;
 

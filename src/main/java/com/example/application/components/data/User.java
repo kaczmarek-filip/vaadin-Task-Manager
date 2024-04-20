@@ -1,7 +1,7 @@
 package com.example.application.components.data;
 
-import com.example.application.components.data.database.TeamDB;
-import com.example.application.components.data.database.UserDB;
+import com.example.application.components.data.database.sql.TeamDB;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,17 +11,20 @@ import java.util.ArrayList;
  * Singleton
  * User class
  */
-@Getter
-@Setter
+@Entity
+@Getter @Setter
+@Table(name = "users")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String displayName;
     private String email;
-//    private String password;
+    private String password;
 
     private static User instance;
 
-    private User() {
+    public User() {
     }
 
     /**
@@ -58,12 +61,6 @@ public class User {
         ArrayList<Team> teamsByUser = teamDB.findTeamsByUser(User.getLoggedInUser());
 
         return teamsByUser;
-    }
-
-    public static ArrayList<User> getAllUsers() {
-        ArrayList<User> allUsers = new UserDB().getAllUsers();
-
-        return allUsers;
     }
 
     @Override

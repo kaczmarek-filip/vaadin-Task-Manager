@@ -2,7 +2,8 @@ package com.example.application.components.dialogs;
 
 import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.TeamDB;
+import com.example.application.components.data.database.sql.TeamDB;
+import com.example.application.components.data.database.HibernateUser;
 import com.example.application.components.elements.components.CancelButton;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -11,7 +12,6 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class AddUserToTeamDialog extends Dialog {
     private Team team;
     private MultiSelectComboBox<User> userComboBoxField = new MultiSelectComboBox<>("Members");
-    private ArrayList<User> allUsersWithoutTeamUsers;
+    private List<User> allUsersWithoutTeamUsers;
     private TextArea selectedUsersArea = new TextArea("Selected Users");
     private Button saveButton = new Button("Save");
 
@@ -38,7 +38,7 @@ public class AddUserToTeamDialog extends Dialog {
     private MultiSelectComboBox<User> setUserComboBoxField() {
 
         List<User> selectedUsersArrayList = team.getUsersInTeam().keySet().stream().toList();
-        allUsersWithoutTeamUsers = User.getAllUsers();
+        allUsersWithoutTeamUsers = HibernateUser.getAllUsers();
         allUsersWithoutTeamUsers.remove(User.getLoggedInUser());
         allUsersWithoutTeamUsers.removeAll(selectedUsersArrayList);
 

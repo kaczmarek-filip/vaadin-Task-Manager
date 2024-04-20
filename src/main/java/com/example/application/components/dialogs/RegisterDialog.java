@@ -1,7 +1,7 @@
 package com.example.application.components.dialogs;
 
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.UserDB;
+import com.example.application.components.data.database.HibernateUser;
 import com.example.application.components.elements.components.CancelButton;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -73,12 +73,16 @@ public class RegisterDialog extends Dialog {
             Notification notification = new Notification("The password must contain at least 8 characters", 5000, Notification.Position.BOTTOM_CENTER);
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
             notification.open();
-        } else if (new UserDB().isEmailExists(user)) {
+//        } else if (new UserDB().isEmailExists(user)) {
+        } else if (HibernateUser.isEmailExists(emailValue)) {
+//        } else if (new UserDBHibernate().isEmailExists(emailValue)) {
             Notification notification = new Notification("There is already a user with the specified email", 5000, Notification.Position.BOTTOM_CENTER);
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
             notification.open();
         } else {
-            new UserDB().registerUser(user, passwordValue);
+//            new UserDB().registerUser(user, passwordValue);
+            //TODO: uprzątnąć tu trochę
+            HibernateUser.registerUser(user, passwordValue);
 
             close();
             Notification notification = new Notification("Successfully registered", 5000, Notification.Position.BOTTOM_CENTER);

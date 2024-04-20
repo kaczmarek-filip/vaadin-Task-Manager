@@ -1,13 +1,10 @@
-package com.example.application.components.data.database;
+package com.example.application.components.data.database.sql;
 
 import com.example.application.components.data.Message;
-import com.example.application.components.data.Message2;
 import com.example.application.components.data.User;
+import com.example.application.components.data.database.HibernateUser;
 import com.example.application.services.encryption.StaticEncrypter;
 import com.vaadin.flow.component.notification.Notification;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
@@ -63,21 +60,23 @@ public class MessengerDB extends DatabaseConnection {
     @Deprecated
     //TODO: Hibernate
     public void testHibernate(){
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        Message2 message2 = new Message2();
-        message2.setUser1_ID(1);
-        message2.setUser2_ID(2);
-        message2.setContent("blabla");
-        message2.setLocalDateTime(LocalDateTime.now());
-
-        session.save(message2);
-
-        session.getTransaction().commit();
-        session.close();
-        sessionFactory.close();
+//        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+//        Session session = sessionFactory.openSession();
+//        session.beginTransaction();
+//
+//        Message2 message2 = new Message2();
+//        message2.setUser1_ID(1);
+//        message2.setUser2_ID(2);
+//        message2.setContent("blabla");
+//        message2.setLocalDateTime(LocalDateTime.now());
+//
+//        session.save(message2);
+//
+//        session.getTransaction().commit();
+//        session.close();
+//        sessionFactory.close();
+//        new UserDBHibernate();
+        //tasdadsa
     }
     public void sendMessage(User userFrom, User userTo, String content, LocalDateTime localDateTime){
         query = sqlParser.sendMessage(userFrom, userTo, content, localDateTime);
@@ -105,7 +104,8 @@ public class MessengerDB extends DatabaseConnection {
 
                 DbContent = StaticEncrypter.decryptByStaticKey(DbContent);
 
-                User user = new UserDB().getUserById(DbUserFromId);
+//                User user = new UserDB().getUserById(DbUserFromId);
+                User user = HibernateUser.getUserById(DbUserFromId);
 
                 messages.add(new Message(user, DbContent, localDateTime));
             }

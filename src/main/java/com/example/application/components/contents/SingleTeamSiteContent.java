@@ -1,7 +1,7 @@
 package com.example.application.components.contents;
 
 import com.example.application.components.data.*;
-import com.example.application.components.data.database.TaskDB;
+import com.example.application.components.data.database.sql.TaskDB;
 import com.example.application.components.elements.SingleTeamMemberElement;
 import com.example.application.components.elements.TaskBlockElement;
 import com.vaadin.flow.component.html.H1;
