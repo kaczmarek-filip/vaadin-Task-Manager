@@ -1,5 +1,6 @@
 package com.example.application.components.data.database;
 
+import lombok.Setter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -21,5 +22,10 @@ public abstract class HibernateConnection {
     protected static void close() {
         session.close();
         sessionFactory.close();
+    }
+    public static void flush(){
+        start();
+        session.flush();
+        close();
     }
 }

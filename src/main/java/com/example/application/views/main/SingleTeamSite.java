@@ -4,7 +4,8 @@ package com.example.application.views.main;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
 import com.example.application.components.data.Team;
-import com.example.application.components.data.database.sql.TeamDB;
+import com.example.application.components.data.database.HibernateTeam;
+import com.example.application.components.data.database.sql.SQLTeamDB;
 import com.example.application.components.dialogs.EditTeamDialog;
 import com.example.application.components.dialogs.MakeTaskDialog;
 import com.example.application.components.contents.SingleTeamSiteContent;
@@ -44,7 +45,7 @@ public class SingleTeamSite extends Navigation implements BeforeEnterObserver, H
     @Override
     public void setParameter(BeforeEvent beforeEvent, String s) {
         teamId = Integer.parseInt(s);
-        team = new TeamDB().findTeamByTeamId(teamId);
+        team = HibernateTeam.findTeamByTeamId(teamId);
         siteTitle.setText(team.getName());
 
         editButton.setVisible(true);
@@ -65,7 +66,8 @@ public class SingleTeamSite extends Navigation implements BeforeEnterObserver, H
 
         ArrayList<Integer> teamIdsWithAccess = new ArrayList<>();
 
-        for (Team teams : User.getLoggedInUserTeams()) {
+//        for (Team teams : User.getLoggedInUserTeams()) {
+        for (Team teams : HibernateTeam.getUserTeams(User.getLoggedInUser())) {
             teamIdsWithAccess.add(teams.getId());
         }
 

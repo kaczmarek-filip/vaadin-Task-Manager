@@ -2,6 +2,7 @@ package com.example.application.views.main;
 
 import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
+import com.example.application.components.data.database.HibernateTeam;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -55,7 +56,7 @@ public class Navigation extends AppLayout  implements BeforeEnterObserver {
         SideNavItem teamLink = new SideNavItem("Team", TeamsSite.class, VaadinIcon.MALE.create());
         SideNavItem userLink = new SideNavItem("User", UserSite.class, VaadinIcon.USER_CARD.create());
 
-        for (Team team : User.getLoggedInUserTeams()){
+        for (Team team : HibernateTeam.getUserTeams(User.getLoggedInUser())){
             teamLink.addItem(new SideNavItem(team.getName(), "teams/team_id/" + team.getId(), VaadinIcon.ANGLE_RIGHT.create()));
         }
 

@@ -1,7 +1,9 @@
 package com.example.application.components.dialogs;
 
+import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.sql.TeamDB;
+import com.example.application.components.data.database.HibernateTeam;
+import com.example.application.components.data.database.sql.SQLTeamDB;
 import com.example.application.components.data.database.HibernateUser;
 import com.example.application.components.elements.components.CancelButton;
 import com.example.application.components.elements.components.TextAreaCounter;
@@ -52,7 +54,7 @@ public class CreateTeamDialog extends Dialog {
         String teamMotto = teamMottoField.getValue();
         Set<User> userComboBox = userComboBoxField.getSelectedItems();
 
-        new TeamDB().createTeam(teamName, teamMotto, User.getLoggedInUser(), userComboBox);
+        HibernateTeam.createTeam(teamName, teamMotto, User.getLoggedInUser(), userComboBox);
         close();
 
         Notification notification = new Notification("The team has been created", 5000, Notification.Position.BOTTOM_CENTER);

@@ -1,9 +1,11 @@
 package com.example.application.components.dialogs;
 
 import com.example.application.components.data.Team;
+import com.example.application.components.data.TeamMember;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.sql.TeamDB;
+import com.example.application.components.data.database.HibernateTeam;
+import com.example.application.components.data.database.sql.SQLTeamDB;
 import com.example.application.components.elements.components.CancelButton;
 import com.example.application.components.elements.components.TextAreaCounter;
 import com.vaadin.flow.component.UI;
@@ -18,9 +20,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 
-import java.util.EnumSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.example.application.components.data.Team.mottoCharLimit;
 
@@ -31,8 +31,9 @@ public class EditTeamDialog extends Dialog {
     private Team team;
     private TextField teamNameField = new TextField("Team name");
     private TextAreaCounter teamMottoField = new TextAreaCounter("Motto");
-    private Grid<Map.Entry<User, TeamRoles>> grid = new Grid<>();
-    private Set<Map.Entry<User, TeamRoles>> items;
+    private Grid<TeamMember> grid = new Grid<>();
+//    private Set<Map.Entry<User, TeamRoles>> items;
+    private Set<TeamMember> items;
 
     public EditTeamDialog(Team team) {
         this.team = team;
@@ -53,6 +54,7 @@ public class EditTeamDialog extends Dialog {
         horizontalLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
 
         VerticalLayout verticalLayout = new VerticalLayout(teamNameField, teamMottoField, horizontalLayout, setGridContextMenu());
+//        VerticalLayout verticalLayout = new VerticalLayout(teamNameField, teamMottoField, setGridContextMenu());
 
         add(verticalLayout);
         getFooter().add(setDeleteButton());
@@ -63,7 +65,8 @@ public class EditTeamDialog extends Dialog {
         String teamName = teamNameField.getValue();
         String teamMotto = teamMottoField.getValue();
 
-        new TeamDB().updateTeamInfo(team.getId(), teamName, teamMotto);
+//        new SQLTeamDB().updateTeamInfo(team.getId(), teamName, teamMotto);
+        HibernateTeam.updateInfo(team.getId(), teamName, teamMotto);
     }
 
     private Button setAddUserButton() {
@@ -99,35 +102,32 @@ public class EditTeamDialog extends Dialog {
         return deleteButton;
     }
 
-    private Grid<Map.Entry<User, TeamRoles>> setGridContextMenu() {
+    private Grid<TeamMember> setGridContextMenu() {
 
-        items = team.getUsersInTeam().entrySet();
-        items.remove(User.getLoggedInUser());
-        grid.setItems(items);
+        Grid<TeamMember> grid = new Grid<>();
+        List<TeamMember> list = team.getTeamMembers();
+        grid.setItems(list);
 
-//        grid.setSelectionMode(Grid.SelectionMode.MULTI);
-
-        grid.addColumn(entry -> entry.getKey().getDisplayName())
-                .setHeader("Display name");
-        grid.addColumn(entry -> entry.getKey().getEmail())
+        grid.addColumn(teamMember -> teamMember.getUser().getDisplayName())
+                        .setHeader("Display name");
+        grid.addColumn(teamMember -> teamMember.getUser().getEmail())
                 .setHeader("Email");
 
-        grid.addComponentColumn(entry -> {
+        grid.addComponentColumn(teamMember -> {
             Select<TeamRoles> rolesSelect = new Select<>();
             Set<TeamRoles> rolesSet = EnumSet.allOf(TeamRoles.class);
             rolesSet.remove(TeamRoles.OWNER);
             rolesSelect.setItems(rolesSet);
-//            rolesSelect.setItems(TeamRoles.values());
-            rolesSelect.setValue(entry.getValue());
+            rolesSelect.setValue(teamMember.getRole());
 
 
             rolesSelect.addValueChangeListener(event -> {
-                entry.setValue(event.getValue());
-
-                new TeamDB().updateUserRole(team, entry.getKey(), event.getValue());
+                teamMember.setRole(event.getValue());
+//                new SQLTeamDB().updateUserRole(team, teamMember.getUser(), event.getValue());
+                HibernateTeam.updateRole(team, teamMember.getUser(), event.getValue());
             });
 
-            if (entry.getValue() == TeamRoles.OWNER) {
+            if (teamMember.getRole() == TeamRoles.OWNER) {
                 rolesSelect.setReadOnly(true);
             }
 
@@ -135,18 +135,18 @@ public class EditTeamDialog extends Dialog {
         }).setHeader("User Role");
 
 
-        grid.addComponentColumn(entry -> {
+        grid.addComponentColumn(teamMember -> {
 
             Button button = new Button();
             button.setIcon(VaadinIcon.TRASH.create());
             button.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
-            if (entry.getValue() == TeamRoles.OWNER) {
+            if (teamMember.getRole() == TeamRoles.OWNER) {
                 button.setEnabled(false);
             }
 
             button.addClickListener(e -> {
-                new DeleteConfirmDialog().deleteUser(team, entry.getKey()).open();
+                new DeleteConfirmDialog().deleteUser(team, teamMember.getUser()).open();
             });
 
             return button;

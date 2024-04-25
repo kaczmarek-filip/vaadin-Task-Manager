@@ -2,8 +2,9 @@ package com.example.application.components.dialogs;
 
 import com.example.application.components.data.Task;
 import com.example.application.components.data.Team;
+import com.example.application.components.data.TeamMember;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.sql.TaskDB;
+import com.example.application.components.data.database.sql.SQLTaskDB;
 import com.example.application.components.elements.components.CancelButton;
 import com.example.application.components.elements.components.TextAreaCounter;
 import com.vaadin.flow.component.UI;
@@ -20,7 +21,9 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MakeTaskDialog extends Dialog {
     private boolean isOwnTask = false;
@@ -80,11 +83,16 @@ public class MakeTaskDialog extends Dialog {
 
     private Grid<User> setUserGrid() {
         userGrid = new Grid<>();
-        userGrid.setItems(team.getUsersInTeam().keySet());
+//        userGrid.setItems(team.getUsersInTeam().keySet());
+//        userGrid.setItems(team.getTeamMembers());
+        List<TeamMember> teamMembers = team.getTeamMembers();
+        List<User> users = teamMembers.stream().map(TeamMember::getUser).collect(Collectors.toList());
+        userGrid.setItems(users);
 
         userGrid.setSelectionMode(Grid.SelectionMode.MULTI);
 
         userGrid.addColumn(User::getDisplayName).setHeader("Team members");
+//        userGrid.addColumn(teamMember -> teamMember.getUser().getDisplayName()).setHeader("Team members");
 
         return userGrid;
     }
@@ -116,7 +124,7 @@ public class MakeTaskDialog extends Dialog {
 
                 if (!selectedUsers.isEmpty()) { // is one member at least
                     task = new Task(0, team, false, title, description, LocalDate.now(), deadline, User.getLoggedInUser(), selectedUsers);
-                    new TaskDB().createTask(task, false);
+                    new SQLTaskDB().createTask(task, false);
 
                     Notification notification = new Notification("Created successfully", 5000, Notification.Position.BOTTOM_CENTER);
                     notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
@@ -130,7 +138,7 @@ public class MakeTaskDialog extends Dialog {
 
             } else {
                 task = new Task(0, false, title, description, LocalDate.now(), deadline, User.getLoggedInUser());
-                new TaskDB().createTask(task, true);
+                new SQLTaskDB().createTask(task, true);
 
                 Notification notification = new Notification("Created successfully", 5000, Notification.Position.BOTTOM_CENTER);
                 notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);

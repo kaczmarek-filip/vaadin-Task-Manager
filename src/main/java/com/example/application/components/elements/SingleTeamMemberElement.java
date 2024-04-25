@@ -1,5 +1,6 @@
 package com.example.application.components.elements;
 
+import com.example.application.components.data.TeamMember;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
 
@@ -8,10 +9,10 @@ public class SingleTeamMemberElement extends Element{
     private User user;
     private TeamRoles teamRoles;
 
-    public SingleTeamMemberElement(User user, TeamRoles teamRoles) {
+    public SingleTeamMemberElement(TeamMember teamMember) {
         super("singleTeamMemberElement");
-        this.user = user;
-        this.teamRoles = teamRoles;
+        this.user = teamMember.getUser();
+        this.teamRoles = teamMember.getRole();
 
         layout();
     }

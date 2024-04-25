@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class TeamDB extends DatabaseConnection {
+public class SQLTeamDB extends DatabaseConnection {
     /**
      * @param user user for search
      * @return ArrayList of {@link Team}
@@ -31,7 +31,7 @@ public class TeamDB extends DatabaseConnection {
                 Map<User, TeamRoles> userTeamRolesMap = new HashMap<>();
                 userTeamRolesMap.put(user, DbRole);
 
-                userTeamsArrayList.add(new Team(DbTeamId, DbTeamName, DbTeamMotto, userTeamRolesMap));
+                userTeamsArrayList.add(new Team(DbTeamId, DbTeamName, DbTeamMotto, null));
             }
             statement.close();
             connection.close();
@@ -100,7 +100,7 @@ public class TeamDB extends DatabaseConnection {
                     userTeamRolesMap.put(new User(DbUserId, DbUserDisplayName, DbUserEmail), DbRole);
                 } while ((resultSet.next()));
 
-                return new Team(DbTeamId, DbTeamName, DbTeamMotto, userTeamRolesMap);
+                return new Team(DbTeamId, DbTeamName, DbTeamMotto, null);
             }
             statement.close();
             connection.close();

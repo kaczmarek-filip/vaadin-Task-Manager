@@ -1,6 +1,7 @@
 package com.example.application.components.data;
 
-import com.example.application.components.data.database.sql.TaskDB;
+import com.example.application.components.data.database.sql.SQLTaskDB;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -61,7 +62,7 @@ public class Task {
 
     public Set<User> getHolders() {
         if (holders == null){
-            holders = new TaskDB().getTaskHolders(this);
+            holders = new SQLTaskDB().getTaskHolders(this);
         }
 
         return holders;

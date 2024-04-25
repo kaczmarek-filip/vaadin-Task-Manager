@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class TaskDB extends DatabaseConnection {
+public class SQLTaskDB extends DatabaseConnection {
     public void createTask(Task task, boolean isOwn) {
         ArrayList<String> queryArrayList = new ArrayList<>();
 

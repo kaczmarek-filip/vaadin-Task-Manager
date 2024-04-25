@@ -1,11 +1,13 @@
 package com.example.application.components.data;
 
-import com.example.application.components.data.database.sql.TeamDB;
+import com.example.application.components.data.database.HibernateTeam;
+import com.example.application.components.data.database.sql.SQLTeamDB;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Singleton
@@ -56,12 +58,14 @@ public class User {
         instance = null;
     }
 
-    public static ArrayList<Team> getLoggedInUserTeams() {
-        TeamDB teamDB = new TeamDB();
-        ArrayList<Team> teamsByUser = teamDB.findTeamsByUser(User.getLoggedInUser());
-
-        return teamsByUser;
-    }
+//    @Deprecated
+//    public static List<Team> getLoggedInUserTeams() {
+////        SQLTeamDB SQLTeamDB = new SQLTeamDB();
+////        ArrayList<Team> teamsByUser = SQLTeamDB.findTeamsByUser(User.getLoggedInUser());
+//        List<Team> teamsByUser = HibernateTeam.getUserTeams(User.getLoggedInUser());
+//
+//        return teamsByUser;
+//    }
 
     @Override
     public boolean equals(Object obj) {

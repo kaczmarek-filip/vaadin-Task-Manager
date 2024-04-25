@@ -1,7 +1,8 @@
 package com.example.application.components.contents;
 
 import com.example.application.components.data.*;
-import com.example.application.components.data.database.sql.TaskDB;
+import com.example.application.components.data.database.HibernateTeam;
+import com.example.application.components.data.database.sql.SQLTaskDB;
 import com.example.application.components.elements.SingleTeamMemberElement;
 import com.example.application.components.elements.TaskBlockElement;
 import com.vaadin.flow.component.html.H1;
@@ -35,7 +36,7 @@ public class SingleTeamSiteContent extends HorizontalLayout {
 
         if (user.equals(User.getLoggedInUser())) horizontalLayout.getStyle().set("order", "-1");
 
-        for (Task task : new TaskDB().getUserTasks(user, team)) {
+        for (Task task : new SQLTaskDB().getUserTasks(user, team)) {
             horizontalLayout.add(new TaskBlockElement(task));
         }
 
@@ -54,8 +55,9 @@ public class SingleTeamSiteContent extends HorizontalLayout {
         scroller.setScrollDirection(Scroller.ScrollDirection.VERTICAL);
         scroller.setWidth("20%");
 
-        for(Map.Entry<User, TeamRoles> entry : Team.getAllTeamUsers(team.getId()).entrySet()){
-            membersList.add(new SingleTeamMemberElement(entry.getKey(), entry.getValue()));
+
+        for(TeamMember teamMember : HibernateTeam.findUsersInTeam(team.getId())){
+            membersList.add(new SingleTeamMemberElement(teamMember));
         }
 
 
@@ -65,12 +67,12 @@ public class SingleTeamSiteContent extends HorizontalLayout {
     private Scroller memberTasks(){
         VerticalLayout verticalLayout = new VerticalLayout();
 
-        for(Map.Entry<User, TeamRoles> entry : Team.getAllTeamUsers(team.getId()).entrySet()){
-            if (!new TaskDB().getUserTasks(entry.getKey(), team).isEmpty()){ // not display users without tasks
-                H1 h1 = new H1(entry.getKey().getDisplayName());
-                if (entry.getKey().equals(User.getLoggedInUser())) h1.getStyle().set("order", "-1");
+        for(TeamMember teamMember : HibernateTeam.findUsersInTeam(team.getId())){
+            if (!new SQLTaskDB().getUserTasks(teamMember.getUser(), team).isEmpty()){ // not display users without tasks
+                H1 h1 = new H1(teamMember.getUser().getDisplayName());
+                if (teamMember.getUser().equals(User.getLoggedInUser())) h1.getStyle().set("order", "-1");
                 verticalLayout.add(h1);
-                verticalLayout.add(userTasks(entry.getKey()));
+                verticalLayout.add(userTasks(teamMember.getUser()));
             }
         }
 

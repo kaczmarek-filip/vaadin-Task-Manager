@@ -14,10 +14,7 @@ public class TeamsUserRoleElement extends Element {
 
     @Override
     public void layout() {
-//        super.layout();
-
         setText(teamRole.toString());
-//        setText("MEMBER");
     }
 
     @Override

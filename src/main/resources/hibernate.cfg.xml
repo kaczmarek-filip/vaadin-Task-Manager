@@ -27,6 +27,8 @@
 
         <mapping class="com.example.application.components.data.Message2" />
         <mapping class="com.example.application.components.data.User" />
+        <mapping class="com.example.application.components.data.Team" />
+        <mapping class="com.example.application.components.data.TeamMember" />
 
 
     </session-factory>
