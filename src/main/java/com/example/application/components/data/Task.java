@@ -1,55 +1,58 @@
 package com.example.application.components.data;
 
-import com.example.application.components.data.database.sql.SQLTaskDB;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Set;
+import java.util.List;
 
+@Entity
+@Table(name = "tasks")
 @Getter
+@Setter
 public class Task {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "team_ID")
     private Team team;
+
     private String title;
     private String description;
     private LocalDate creationDate;
     private LocalDate deadline;
+
+    @ManyToOne
+    @JoinColumn(name = "creatorUserID")
     private User creator;
-    private Set<User> holders;
-    public static int descriptionMaxLength = 200;
-    @Setter
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "taskholders", joinColumns = @JoinColumn(name = "taskID"), inverseJoinColumns = @JoinColumn(name = "user_ID"))
+    private List<User> taskHolders;
+
+    public static final int descriptionMaxLength = 200;
     private boolean isDone;
+
+    @Transient
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-    /**
-     * Team's task
-     */
-    public Task(int id, Team team, boolean isDone, String title, String description, LocalDate creationDate, LocalDate deadline, User creator, Set<User> holders) {
-        this.id = id;
-        this.team = team;
-        this.isDone = isDone;
-        this.title = title;
-        this.description = description;
-        this.creationDate = creationDate;
-        this.deadline = deadline;
-        this.creator = creator;
-        this.holders = holders;
+    public Task() {
+
     }
 
-    /**
-     * User's own task
-     */
-    public Task(int id, boolean isDone, String title, String description, LocalDate creationDate, LocalDate deadline, User creator) {
-        this.id = id;
-        this.isDone = isDone;
+    public Task(String title, String description, LocalDate deadline) {
         this.title = title;
         this.description = description;
-        this.creationDate = creationDate;
         this.deadline = deadline;
-        this.creator = creator;
+    }
+
+    public void setAsTeamTask(Team team, List<User> taskHolders) {
+        this.team = team;
+        this.taskHolders = taskHolders;
     }
 
     public String getFormattedCreationDate() {
@@ -58,13 +61,5 @@ public class Task {
 
     public String getFormattedDeadline() {
         return deadline.format(formatter);
-    }
-
-    public Set<User> getHolders() {
-        if (holders == null){
-            holders = new SQLTaskDB().getTaskHolders(this);
-        }
-
-        return holders;
     }
 }

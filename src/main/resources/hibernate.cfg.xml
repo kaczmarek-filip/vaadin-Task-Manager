@@ -30,6 +30,7 @@
         <mapping class="com.example.application.components.data.Team" />
         <mapping class="com.example.application.components.data.TeamMember" />
         <mapping class="com.example.application.components.data.Chat" />
+        <mapping class="com.example.application.components.data.Task" />
 
 
     </session-factory>

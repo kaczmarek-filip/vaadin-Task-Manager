@@ -1,6 +1,7 @@
 package com.example.application.components.contents;
 
 import com.example.application.components.data.*;
+import com.example.application.components.data.database.HibernateTask;
 import com.example.application.components.data.database.HibernateTeam;
 import com.example.application.components.data.database.sql.SQLTaskDB;
 import com.example.application.components.elements.SingleTeamMemberElement;
@@ -36,7 +37,8 @@ public class SingleTeamSiteContent extends HorizontalLayout {
 
         if (user.equals(User.getLoggedInUser())) horizontalLayout.getStyle().set("order", "-1");
 
-        for (Task task : new SQLTaskDB().getUserTasks(user, team)) {
+
+        for (Task task : HibernateTask.getTasks(user, team)) {
             horizontalLayout.add(new TaskBlockElement(task));
         }
 
@@ -68,7 +70,7 @@ public class SingleTeamSiteContent extends HorizontalLayout {
         VerticalLayout verticalLayout = new VerticalLayout();
 
         for(TeamMember teamMember : HibernateTeam.findUsersInTeam(team.getId())){
-            if (!new SQLTaskDB().getUserTasks(teamMember.getUser(), team).isEmpty()){ // not display users without tasks
+            if (!HibernateTask.getTasks(teamMember.getUser(), team).isEmpty()){ // not display users without tasks
                 H1 h1 = new H1(teamMember.getUser().getDisplayName());
                 if (teamMember.getUser().equals(User.getLoggedInUser())) h1.getStyle().set("order", "-1");
                 verticalLayout.add(h1);

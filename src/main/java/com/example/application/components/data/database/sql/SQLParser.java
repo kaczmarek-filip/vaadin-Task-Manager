@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Set;
-
+@Deprecated
 public class SQLParser {
     /**
      * @param user {@link User} object to save in DB

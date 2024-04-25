@@ -2,6 +2,7 @@ package com.example.application.components.contents;
 
 import com.example.application.components.data.Task;
 import com.example.application.components.data.User;
+import com.example.application.components.data.database.HibernateTask;
 import com.example.application.components.data.database.sql.OneTimeMessageEncryption;
 import com.example.application.components.data.database.sql.SQLTaskDB;
 import com.example.application.components.elements.TaskBlockElement;
@@ -48,7 +49,8 @@ public class MainViewContent extends HorizontalLayout {
 
         ArrayList<Task> doneTasks = new ArrayList<>();
         ArrayList<Task> notDoneTasks = new ArrayList<>();
-        for (Task task : new SQLTaskDB().getOwnTasks(User.getLoggedInUser())){
+
+        for (Task task : HibernateTask.getTasks(User.getLoggedInUser(), null)){
             if (task.isDone()) {
                 doneTasks.add(task);
             } else {

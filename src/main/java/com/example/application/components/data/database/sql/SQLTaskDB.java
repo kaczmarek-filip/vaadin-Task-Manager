@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-
+@Deprecated
 public class SQLTaskDB extends DatabaseConnection {
     public void createTask(Task task, boolean isOwn) {
         ArrayList<String> queryArrayList = new ArrayList<>();

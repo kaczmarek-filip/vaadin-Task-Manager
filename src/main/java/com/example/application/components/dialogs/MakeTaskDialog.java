@@ -1,13 +1,10 @@
 package com.example.application.components.dialogs;
 
-import com.example.application.components.data.Task;
-import com.example.application.components.data.Team;
-import com.example.application.components.data.TeamMember;
-import com.example.application.components.data.User;
-import com.example.application.components.data.database.sql.SQLTaskDB;
+import com.example.application.components.data.*;
+import com.example.application.components.data.database.HibernateTask;
 import com.example.application.components.elements.components.CancelButton;
+import com.example.application.components.elements.components.MyNotification;
 import com.example.application.components.elements.components.TextAreaCounter;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
@@ -21,6 +18,7 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -33,7 +31,6 @@ public class MakeTaskDialog extends Dialog {
     private TextField titleTextField;
     private TextAreaCounter descriptionTextArea;
     private DatePicker deadlineDatePicker;
-    private MultiSelectComboBox<User> multiSelectComboBox;
     private Grid<User> userGrid;
 
     public MakeTaskDialog() {
@@ -83,8 +80,6 @@ public class MakeTaskDialog extends Dialog {
 
     private Grid<User> setUserGrid() {
         userGrid = new Grid<>();
-//        userGrid.setItems(team.getUsersInTeam().keySet());
-//        userGrid.setItems(team.getTeamMembers());
         List<TeamMember> teamMembers = team.getTeamMembers();
         List<User> users = teamMembers.stream().map(TeamMember::getUser).collect(Collectors.toList());
         userGrid.setItems(users);
@@ -92,7 +87,6 @@ public class MakeTaskDialog extends Dialog {
         userGrid.setSelectionMode(Grid.SelectionMode.MULTI);
 
         userGrid.addColumn(User::getDisplayName).setHeader("Team members");
-//        userGrid.addColumn(teamMember -> teamMember.getUser().getDisplayName()).setHeader("Team members");
 
         return userGrid;
     }
@@ -111,41 +105,33 @@ public class MakeTaskDialog extends Dialog {
         Task task;
 
         if (title.isEmpty()) {
-            Notification notification = new Notification("The title field must not be empty", 5000, Notification.Position.BOTTOM_CENTER);
-            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            notification.open();
+            MyNotification.show("The title field must not be empty", NotificationVariant.LUMO_SUCCESS, false);
         } else if (deadline == null) {
-            Notification notification = new Notification("The deadline field must not be empty", 5000, Notification.Position.BOTTOM_CENTER);
-            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            notification.open();
+            MyNotification.show("The deadline field must not be empty", NotificationVariant.LUMO_SUCCESS, false);
         } else {
             if (!isOwnTask) { // if created on SingleTeamSite
                 Set<User> selectedUsers = userGrid.getSelectedItems();
 
                 if (!selectedUsers.isEmpty()) { // is one member at least
-                    task = new Task(0, team, false, title, description, LocalDate.now(), deadline, User.getLoggedInUser(), selectedUsers);
-                    new SQLTaskDB().createTask(task, false);
+                    task = new Task(title, description, deadline);
+                    task.setAsTeamTask(team, new ArrayList<>(selectedUsers));
 
-                    Notification notification = new Notification("Created successfully", 5000, Notification.Position.BOTTOM_CENTER);
-                    notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-                    notification.open();
+                    HibernateTask.createTask(task);
+
+                    MyNotification.show("Created successfully", NotificationVariant.LUMO_SUCCESS, true);
                     close();
                 } else {
-                    Notification notification = new Notification("You must choose at least one person", 5000, Notification.Position.BOTTOM_CENTER);
-                    notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-                    notification.open();
+                    MyNotification.show("You must choose at least one person", NotificationVariant.LUMO_ERROR, false);
                 }
 
             } else {
-                task = new Task(0, false, title, description, LocalDate.now(), deadline, User.getLoggedInUser());
-                new SQLTaskDB().createTask(task, true);
+                task = new Task(title, description, deadline);
+                HibernateTask.createTask(task);
 
-                Notification notification = new Notification("Created successfully", 5000, Notification.Position.BOTTOM_CENTER);
-                notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-                notification.open();
+                MyNotification.show("Created successfully", NotificationVariant.LUMO_SUCCESS, true);
                 close();
             }
         }
-        UI.getCurrent().getPage().reload();
+//
     }
 }

@@ -1,6 +1,7 @@
 package com.example.application.components.elements;
 
 import com.example.application.components.data.Task;
+import com.example.application.components.data.database.HibernateTask;
 import com.example.application.components.data.database.sql.SQLTaskDB;
 import com.example.application.components.dialogs.TaskDialog;
 import com.example.application.components.elements.components.CallbackValues;
@@ -75,10 +76,10 @@ public class TaskBlockElement extends Element implements TaskDoneCallback {
         } else if (callbackValues == CallbackValues.UNDONE){
             task.setDone(false);
         } else if (callbackValues == CallbackValues.DELETE) {
-            new SQLTaskDB().deleteTask(task);
+            HibernateTask.delete(task);
             setVisible(false);
         }
-        new SQLTaskDB().setIsDone(task);
+        HibernateTask.setIsDone(task);
         isDoneChecker();
     }
 

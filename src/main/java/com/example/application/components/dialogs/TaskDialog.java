@@ -2,6 +2,7 @@ package com.example.application.components.dialogs;
 
 import com.example.application.components.data.Task;
 import com.example.application.components.data.User;
+import com.example.application.components.data.database.HibernateTask;
 import com.example.application.components.elements.components.CallbackValues;
 import com.example.application.components.elements.components.TaskDoneCallback;
 import com.vaadin.flow.component.Html;
@@ -34,14 +35,8 @@ public class TaskDialog extends Dialog {
         /*
         Checking is user can delete task
          */
-        if (task.getHolders().contains(User.getLoggedInUser())){
-            if (!task.isDone()) {
-                getFooter().add(doneButton());
-            } else {
-                getFooter().add(unDoneButton());
-                getFooter().add(deleteButton());
-            }
-        } else if (task.getCreator().equals(User.getLoggedInUser()) && task.getHolders().isEmpty()) {
+        if (HibernateTask.getHolders(task).contains(User.getLoggedInUser()) ||
+                (task.getCreator().equals(User.getLoggedInUser()) && HibernateTask.getHolders(task).isEmpty())) {
             if (!task.isDone()) {
                 getFooter().add(doneButton());
             } else {
