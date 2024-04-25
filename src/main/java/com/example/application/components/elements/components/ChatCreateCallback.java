@@ -1,7 +1,7 @@
 package com.example.application.components.elements.components;
 
-import com.example.application.components.data.User;
+import com.example.application.components.data.Chat;
 
 public interface ChatCreateCallback {
-    void onSave(User user);
+    void onSave(Chat chat);
 }

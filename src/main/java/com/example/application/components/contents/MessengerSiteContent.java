@@ -1,7 +1,8 @@
 package com.example.application.components.contents;
 
+import com.example.application.components.data.Chat;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.sql.MessengerDB;
+import com.example.application.components.data.database.HibernateChat;
 import com.example.application.components.elements.ChatPersonElement;
 import com.example.application.components.elements.MessengerElement;
 import com.example.application.components.elements.components.ChatCreateCallback;
@@ -15,6 +16,7 @@ public class MessengerSiteContent extends HorizontalLayout implements ChatCreate
     private final static int scrollerWithInPercent = 20;
     private final static int messengerWidthInPercent = 80;
     private VerticalLayout verticalLayout = new VerticalLayout();
+
     public MessengerSiteContent() {
         setWidthFull();
         setHeightFull();
@@ -23,16 +25,14 @@ public class MessengerSiteContent extends HorizontalLayout implements ChatCreate
         messengerElement.setWidth(messengerWidthInPercent, Unit.PERCENTAGE);
         add(messengerElement);
     }
-    private Scroller chatsScroller(){
+
+    private Scroller chatsScroller() {
         Scroller scroller = new Scroller();
 
-//        for (int i = 0; i < 10; i++) {
-            for (User user : new MessengerDB().getUserChats(User.getLoggedInUser())){
+        for (Chat chat : HibernateChat.getChats(User.getLoggedInUser())) {
+            verticalLayout.add(new ChatPersonElement(messengerElement, chat));
 
-                verticalLayout.add(new ChatPersonElement(messengerElement, user));
-
-            }
-//        }
+        }
         scroller.setWidth(scrollerWithInPercent, Unit.PERCENTAGE);
 
         scroller.setScrollDirection(Scroller.ScrollDirection.VERTICAL);
@@ -41,7 +41,7 @@ public class MessengerSiteContent extends HorizontalLayout implements ChatCreate
     }
 
     @Override
-    public void onSave(User user) {
-        verticalLayout.add(new ChatPersonElement(messengerElement, user));
+    public void onSave(Chat chat) {
+        verticalLayout.add(new ChatPersonElement(messengerElement, chat));
     }
 }

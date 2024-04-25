@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
+@Deprecated
 public class SQLTeamDB extends DatabaseConnection {
     /**
      * @param user user for search

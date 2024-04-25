@@ -9,8 +9,8 @@ import com.vaadin.flow.component.notification.Notification;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-public class MessengerDB extends DatabaseConnection {
+@Deprecated
+public class SQLMessengerDB extends DatabaseConnection {
     public void addChat(User user1, User user2){
         query = sqlParser.addChat(user1, user2);
 
@@ -57,27 +57,6 @@ public class MessengerDB extends DatabaseConnection {
 
         return userArrayList;
     }
-    @Deprecated
-    //TODO: Hibernate
-    public void testHibernate(){
-//        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-//        Session session = sessionFactory.openSession();
-//        session.beginTransaction();
-//
-//        Message2 message2 = new Message2();
-//        message2.setUser1_ID(1);
-//        message2.setUser2_ID(2);
-//        message2.setContent("blabla");
-//        message2.setLocalDateTime(LocalDateTime.now());
-//
-//        session.save(message2);
-//
-//        session.getTransaction().commit();
-//        session.close();
-//        sessionFactory.close();
-//        new UserDBHibernate();
-        //tasdadsa
-    }
     public void sendMessage(User userFrom, User userTo, String content, LocalDateTime localDateTime){
         query = sqlParser.sendMessage(userFrom, userTo, content, localDateTime);
 
@@ -107,7 +86,7 @@ public class MessengerDB extends DatabaseConnection {
 //                User user = new UserDB().getUserById(DbUserFromId);
                 User user = HibernateUser.getUserById(DbUserFromId);
 
-                messages.add(new Message(user, DbContent, localDateTime));
+//                messages.add(new Message(user, DbContent, localDateTime));
             }
             statement.close();
             connection.close();

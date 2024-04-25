@@ -1,7 +1,41 @@
 package com.example.application.components.data;
 
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-public record Message(User userFrom, String content, LocalDateTime localDateTime) {}
+@Entity
+@Table(name = "messages")
+@Setter
+@Getter
+public final class Message {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "chatID")
+    private Chat chat;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sender_ID")
+    private User sender;
+
+    private String content;
+
+    @Column(name = "dateTime")
+    private LocalDateTime localDateTime;
+
+    public Message(Chat chat, User sender, String content, LocalDateTime localDateTime) {
+        this.chat = chat;
+        this.sender = sender;
+        this.content = content;
+        this.localDateTime = localDateTime;
+    }
+
+    public Message() {
+
+    }
+}

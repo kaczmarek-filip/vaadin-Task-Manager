@@ -1,8 +1,10 @@
 package com.example.application.components.elements;
 
+import com.example.application.components.data.Chat;
 import com.example.application.components.data.Message;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.sql.MessengerDB;
+import com.example.application.components.data.database.HibernateMessage;
+import com.example.application.components.data.database.sql.SQLMessengerDB;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.messages.MessageInput;
 import com.vaadin.flow.component.messages.MessageList;
@@ -17,7 +19,7 @@ import java.util.List;
 @Component
 public class MessengerElement extends VerticalLayout{
     private MessageList messageList;
-    private User user;
+    private Chat chat;
     private ZoneId zoneId = ZoneId.of("Europe/Warsaw");
 
     public MessengerElement() {
@@ -27,8 +29,8 @@ public class MessengerElement extends VerticalLayout{
         removeAll();
     }
 
-    public void setView(User user){
-        this.user = user;
+    public void setView(Chat chat){
+        this.chat = chat;
         messageVerticalLayout();
     }
     private void messageVerticalLayout(){
@@ -36,7 +38,7 @@ public class MessengerElement extends VerticalLayout{
         add(chatWith(), messageList(), messageInput());
     }
     private Text chatWith(){
-        return new Text("Chat with " + user.getDisplayName());
+        return new Text("Chat with " + chat.getUserTo().getDisplayName());
     }
     private MessageList messageList(){
         messageList = new MessageList();
@@ -45,11 +47,9 @@ public class MessengerElement extends VerticalLayout{
 
         ArrayList<MessageListItem> messageListItems = new ArrayList<>();
 
-        for(Message message : new MessengerDB().getMessages(User.getLoggedInUser(), user)){
-            MessageListItem item = new MessageListItem(message.content(), message.localDateTime().atZone(zoneId).toInstant(), message.userFrom().getDisplayName());
-            if (message.userFrom().equals(User.getLoggedInUser())){
-                item.setUserColorIndex(2);
-            }
+        for (Message message : HibernateMessage.getMessages(chat)){
+            MessageListItem item = new MessageListItem(message.getContent(), message.getLocalDateTime().atZone(zoneId).toInstant(), message.getSender().getDisplayName());
+            if (message.getSender().equals(User.getLoggedInUser())) item.setUserColorIndex(2);
             messageListItems.add(item);
         }
 
@@ -68,7 +68,9 @@ public class MessengerElement extends VerticalLayout{
             items.add(item2);
             messageList.setItems(items);
 
-            new MessengerDB().sendMessage(User.getInstance(), user, e.getValue(), LocalDateTime.now());
+
+            Message message = new Message(chat, User.getLoggedInUser(), e.getValue(), LocalDateTime.now());
+            HibernateMessage.sendMessage(message);
         });
 
         return messageInput;

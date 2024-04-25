@@ -25,10 +25,11 @@
             mysql
         </property>
 
-        <mapping class="com.example.application.components.data.Message2" />
+        <mapping class="com.example.application.components.data.Message" />
         <mapping class="com.example.application.components.data.User" />
         <mapping class="com.example.application.components.data.Team" />
         <mapping class="com.example.application.components.data.TeamMember" />
+        <mapping class="com.example.application.components.data.Chat" />
 
 
     </session-factory>

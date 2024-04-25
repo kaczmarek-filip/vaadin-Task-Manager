@@ -1,14 +1,15 @@
 package com.example.application.components.elements;
 
+import com.example.application.components.data.Chat;
 import com.example.application.components.data.User;
 
 public class ChatPersonElement extends Element{
-    private final User user;
+    private final Chat chat;
     private final MessengerElement messengerElement;
 
-    public ChatPersonElement(MessengerElement messengerElement, User user) {
+    public ChatPersonElement(MessengerElement messengerElement, Chat chat) {
         super("chatScrollerElement");
-        this.user = user;
+        this.chat = chat;
         this.messengerElement = messengerElement;
 
         layout();
@@ -18,6 +19,7 @@ public class ChatPersonElement extends Element{
     @Override
     public void layout() {
         setWidthFull();
+        User user = chat.getUserTo();
         setText(user.getDisplayName());
     }
 
@@ -25,7 +27,7 @@ public class ChatPersonElement extends Element{
     public void listenerAction() {
         addClickListener(e -> {
             messengerElement.removeView();
-            messengerElement.setView(user);
+            messengerElement.setView(chat);
         });
     }
 }
