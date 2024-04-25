@@ -11,7 +11,7 @@ import java.util.List;
 public class HibernateMessage extends HibernateConnection {
     public static List<Message> getMessages(Chat chat) {
         start();
-        Query<Message> query = session.createQuery("FROM Message WHERE chat.id = :id");
+        Query<Message> query = session.createQuery("FROM Message WHERE chat.id = :id ORDER BY localDateTime");
         query.setParameter("id", chat.getId());
         List<Message> messageList = query.getResultList();
         messageList.forEach(message -> message.setContent(StaticEncrypter.decryptByStaticKey(message.getContent())));
