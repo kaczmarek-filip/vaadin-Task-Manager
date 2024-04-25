@@ -1,4 +1,4 @@
-package com.example.application.components.data.database;
+package com.example.application.components.data.database.hibernate;
 
 import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamMember;
@@ -9,7 +9,7 @@ import org.hibernate.query.Query;
 import java.util.List;
 import java.util.Set;
 
-public class HibernateTeam extends HibernateConnection {
+public class TeamDAO extends HibernateConnection {
     public static List<TeamMember> findUsersInTeam(int id) {
         start();
         Query<TeamMember> query = session.createQuery("FROM TeamMember WHERE team.id = :id");

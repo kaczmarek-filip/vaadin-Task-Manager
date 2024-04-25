@@ -1,4 +1,4 @@
-package com.example.application.components.data.database;
+package com.example.application.components.data.database.hibernate;
 
 import com.example.application.components.data.User;
 import com.example.application.services.encryption.Encrypter;
@@ -6,7 +6,7 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class HibernateUser extends HibernateConnection {
+public class UserDAO extends HibernateConnection {
     public static void registerUser(User user, String password) {
         start();
 

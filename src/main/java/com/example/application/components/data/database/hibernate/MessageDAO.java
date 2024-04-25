@@ -1,4 +1,4 @@
-package com.example.application.components.data.database;
+package com.example.application.components.data.database.hibernate;
 
 import com.example.application.components.data.Chat;
 import com.example.application.components.data.Message;
@@ -8,7 +8,7 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class HibernateMessage extends HibernateConnection {
+public class MessageDAO extends HibernateConnection {
     public static List<Message> getMessages(Chat chat) {
         start();
         Query<Message> query = session.createQuery("FROM Message WHERE chat.id = :id ORDER BY localDateTime");

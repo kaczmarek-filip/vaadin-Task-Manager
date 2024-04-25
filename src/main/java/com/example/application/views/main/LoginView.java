@@ -2,7 +2,7 @@ package com.example.application.views.main;
 
 
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.HibernateUser;
+import com.example.application.components.data.database.hibernate.UserDAO;
 import com.example.application.components.dialogs.RegisterDialog;
 import com.example.application.components.elements.ForgotPassword;
 import com.vaadin.flow.component.Key;
@@ -75,7 +75,7 @@ public class LoginView extends VerticalLayout {
 //        UserDB userDB = new UserDB();
 
 //        User loggedInUser = userDB.loginUser(email, password);
-        User loggedInUser = HibernateUser.loginUser(email, password);
+        User loggedInUser = UserDAO.loginUser(email, password);
 
         if (loggedInUser != null) {
             Notification notification = new Notification("Logged in", 5000, Notification.Position.BOTTOM_CENTER);

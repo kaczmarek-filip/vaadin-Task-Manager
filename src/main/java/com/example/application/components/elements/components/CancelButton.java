@@ -1,6 +1,5 @@
 package com.example.application.components.elements.components;
 
-import com.example.application.components.data.database.HibernateConnection;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;

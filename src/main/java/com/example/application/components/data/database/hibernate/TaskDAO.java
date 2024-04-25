@@ -1,16 +1,15 @@
-package com.example.application.components.data.database;
+package com.example.application.components.data.database.hibernate;
 
 import com.example.application.components.data.Task;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
-import org.hibernate.LockMode;
 import org.hibernate.query.Query;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HibernateTask extends HibernateConnection {
+public class TaskDAO extends HibernateConnection {
     public static void createTask(Task task) {
         start();
         task.setCreationDate(LocalDate.now());

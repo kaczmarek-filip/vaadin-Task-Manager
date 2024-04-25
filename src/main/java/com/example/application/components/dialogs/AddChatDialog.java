@@ -2,8 +2,8 @@ package com.example.application.components.dialogs;
 
 import com.example.application.components.data.Chat;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.HibernateChat;
-import com.example.application.components.data.database.HibernateUser;
+import com.example.application.components.data.database.hibernate.ChatDAO;
+import com.example.application.components.data.database.hibernate.UserDAO;
 import com.example.application.components.elements.components.CancelButton;
 import com.example.application.components.elements.components.ChatCreateCallback;
 import com.vaadin.flow.component.Unit;
@@ -39,7 +39,7 @@ public class AddChatDialog extends Dialog {
 
         button.addClickListener(e -> {
             User selectedUser = userComboBoxField.getValue();
-            Chat chat = HibernateChat.addChat(selectedUser, User.getLoggedInUser());
+            Chat chat = ChatDAO.addChat(selectedUser, User.getLoggedInUser());
             close();
             callback.onSave(chat);
         });
@@ -47,9 +47,9 @@ public class AddChatDialog extends Dialog {
     }
 
     private ComboBox<User> setUserComboBoxField() {
-        List<User> allUsersList = HibernateUser.getAllUsers();
+        List<User> allUsersList = UserDAO.getAllUsers();
         allUsersList.remove(User.getLoggedInUser());
-        List<Chat> chats = HibernateChat.getChats(User.getLoggedInUser());
+        List<Chat> chats = ChatDAO.getChats(User.getLoggedInUser());
         chats.forEach(chat ->
                 allUsersList.remove(chat.getUserTo())
         );

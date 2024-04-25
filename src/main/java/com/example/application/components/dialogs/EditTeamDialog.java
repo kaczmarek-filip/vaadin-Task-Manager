@@ -3,9 +3,7 @@ package com.example.application.components.dialogs;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamMember;
 import com.example.application.components.data.TeamRoles;
-import com.example.application.components.data.User;
-import com.example.application.components.data.database.HibernateTeam;
-import com.example.application.components.data.database.sql.SQLTeamDB;
+import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.components.elements.components.CancelButton;
 import com.example.application.components.elements.components.TextAreaCounter;
 import com.vaadin.flow.component.UI;
@@ -65,8 +63,7 @@ public class EditTeamDialog extends Dialog {
         String teamName = teamNameField.getValue();
         String teamMotto = teamMottoField.getValue();
 
-//        new SQLTeamDB().updateTeamInfo(team.getId(), teamName, teamMotto);
-        HibernateTeam.updateInfo(team.getId(), teamName, teamMotto);
+        TeamDAO.updateInfo(team.getId(), teamName, teamMotto);
     }
 
     private Button setAddUserButton() {
@@ -123,8 +120,7 @@ public class EditTeamDialog extends Dialog {
 
             rolesSelect.addValueChangeListener(event -> {
                 teamMember.setRole(event.getValue());
-//                new SQLTeamDB().updateUserRole(team, teamMember.getUser(), event.getValue());
-                HibernateTeam.updateRole(team, teamMember.getUser(), event.getValue());
+                TeamDAO.updateRole(team, teamMember.getUser(), event.getValue());
             });
 
             if (teamMember.getRole() == TeamRoles.OWNER) {

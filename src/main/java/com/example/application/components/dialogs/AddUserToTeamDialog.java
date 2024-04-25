@@ -3,9 +3,8 @@ package com.example.application.components.dialogs;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamMember;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.HibernateTeam;
-import com.example.application.components.data.database.sql.SQLTeamDB;
-import com.example.application.components.data.database.HibernateUser;
+import com.example.application.components.data.database.hibernate.TeamDAO;
+import com.example.application.components.data.database.hibernate.UserDAO;
 import com.example.application.components.elements.components.CancelButton;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -40,7 +39,7 @@ public class AddUserToTeamDialog extends Dialog {
     private MultiSelectComboBox<User> setUserComboBoxField() {
 
         List<User> selectedUsersArrayList = team.getTeamMembers().stream().map(TeamMember::getUser).toList();
-        allUsersWithoutTeamUsers = HibernateUser.getAllUsers();
+        allUsersWithoutTeamUsers = UserDAO.getAllUsers();
         allUsersWithoutTeamUsers.remove(User.getLoggedInUser());
         allUsersWithoutTeamUsers.removeAll(selectedUsersArrayList);
 
@@ -65,8 +64,7 @@ public class AddUserToTeamDialog extends Dialog {
         saveButton.addClickListener(e -> {
             Set<User> userComboBox = userComboBoxField.getSelectedItems();
 
-//            new SQLTeamDB().insertUsersIntoTeam(team.getId(), userComboBox);
-            HibernateTeam.addUsers(team, userComboBox);
+            TeamDAO.addUsers(team, userComboBox);
 
             UI.getCurrent().getPage().reload();
         });

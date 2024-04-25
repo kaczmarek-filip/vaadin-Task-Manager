@@ -3,8 +3,7 @@ package com.example.application.components.elements;
 import com.example.application.components.data.Chat;
 import com.example.application.components.data.Message;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.HibernateMessage;
-import com.example.application.components.data.database.sql.SQLMessengerDB;
+import com.example.application.components.data.database.hibernate.MessageDAO;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.messages.MessageInput;
 import com.vaadin.flow.component.messages.MessageList;
@@ -47,7 +46,7 @@ public class MessengerElement extends VerticalLayout{
 
         ArrayList<MessageListItem> messageListItems = new ArrayList<>();
 
-        for (Message message : HibernateMessage.getMessages(chat)){
+        for (Message message : MessageDAO.getMessages(chat)){
             MessageListItem item = new MessageListItem(message.getContent(), message.getLocalDateTime().atZone(zoneId).toInstant(), message.getSender().getDisplayName());
             if (message.getSender().equals(User.getLoggedInUser())) item.setUserColorIndex(2);
             messageListItems.add(item);
@@ -70,7 +69,7 @@ public class MessengerElement extends VerticalLayout{
 
 
             Message message = new Message(chat, User.getLoggedInUser(), e.getValue(), LocalDateTime.now());
-            HibernateMessage.sendMessage(message);
+            MessageDAO.sendMessage(message);
         });
 
         return messageInput;

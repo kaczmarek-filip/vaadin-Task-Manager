@@ -1,6 +1,5 @@
 package com.example.application.components.data.database.sql;
 
-import com.example.application.components.data.database.sql.SQLParser;
 import com.vaadin.flow.component.notification.Notification;
 
 import java.sql.Connection;
@@ -16,7 +15,7 @@ abstract class DatabaseConnection {
     protected Connection connection;
     protected Statement statement;
     protected String query;
-    protected SQLParser sqlParser = new SQLParser();
+//    protected SQLParser sqlParser = new SQLParser();
 
     protected final String error = "Database connection error";
     public DatabaseConnection() {

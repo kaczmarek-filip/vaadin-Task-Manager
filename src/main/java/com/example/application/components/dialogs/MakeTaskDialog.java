@@ -1,18 +1,16 @@
 package com.example.application.components.dialogs;
 
 import com.example.application.components.data.*;
-import com.example.application.components.data.database.HibernateTask;
+import com.example.application.components.data.database.hibernate.TaskDAO;
 import com.example.application.components.elements.components.CancelButton;
 import com.example.application.components.elements.components.MyNotification;
 import com.example.application.components.elements.components.TextAreaCounter;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
@@ -116,7 +114,7 @@ public class MakeTaskDialog extends Dialog {
                     task = new Task(title, description, deadline);
                     task.setAsTeamTask(team, new ArrayList<>(selectedUsers));
 
-                    HibernateTask.createTask(task);
+                    TaskDAO.createTask(task);
 
                     MyNotification.show("Created successfully", NotificationVariant.LUMO_SUCCESS, true);
                     close();
@@ -126,7 +124,7 @@ public class MakeTaskDialog extends Dialog {
 
             } else {
                 task = new Task(title, description, deadline);
-                HibernateTask.createTask(task);
+                TaskDAO.createTask(task);
 
                 MyNotification.show("Created successfully", NotificationVariant.LUMO_SUCCESS, true);
                 close();

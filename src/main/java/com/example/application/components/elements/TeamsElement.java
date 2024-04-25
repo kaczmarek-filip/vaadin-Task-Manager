@@ -1,12 +1,9 @@
 package com.example.application.components.elements;
 
 import com.example.application.components.data.*;
-import com.example.application.components.data.database.HibernateTeam;
+import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.notification.Notification;
-
-import java.util.Map;
 
 public class TeamsElement extends Element {
 
@@ -29,11 +26,11 @@ public class TeamsElement extends Element {
         membersDiv.setClassName("teamsMembersDiv");
 
 
-        for(TeamMember teamMember : HibernateTeam.findUsersInTeam(team.getId())){
+        for(TeamMember teamMember : TeamDAO.findUsersInTeam(team.getId())){
             membersDiv.add(new TeamsMemberElement(teamMember));
         }
 
-        add(new TeamsUserRoleElement(HibernateTeam.getUserRole(team, User.getLoggedInUser())));
+        add(new TeamsUserRoleElement(TeamDAO.getUserRole(team, User.getLoggedInUser())));
         add(title);
         add(membersDiv);
     }

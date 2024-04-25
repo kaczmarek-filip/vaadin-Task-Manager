@@ -1,13 +1,8 @@
 package com.example.application.components.data;
 
-import com.example.application.components.data.database.HibernateTeam;
-import com.example.application.components.data.database.sql.SQLTeamDB;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Singleton

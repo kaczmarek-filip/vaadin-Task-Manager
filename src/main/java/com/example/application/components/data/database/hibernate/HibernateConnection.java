@@ -1,4 +1,4 @@
-package com.example.application.components.data.database;
+package com.example.application.components.data.database.hibernate;
 
 import lombok.Setter;
 import org.hibernate.Session;

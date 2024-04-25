@@ -1,17 +1,14 @@
 package com.example.application.components.contents;
 
 import com.example.application.components.data.*;
-import com.example.application.components.data.database.HibernateTask;
-import com.example.application.components.data.database.HibernateTeam;
-import com.example.application.components.data.database.sql.SQLTaskDB;
+import com.example.application.components.data.database.hibernate.TaskDAO;
+import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.components.elements.SingleTeamMemberElement;
 import com.example.application.components.elements.TaskBlockElement;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-
-import java.util.Map;
 
 public class SingleTeamSiteContent extends HorizontalLayout {
     private Team team;
@@ -38,7 +35,7 @@ public class SingleTeamSiteContent extends HorizontalLayout {
         if (user.equals(User.getLoggedInUser())) horizontalLayout.getStyle().set("order", "-1");
 
 
-        for (Task task : HibernateTask.getTasks(user, team)) {
+        for (Task task : TaskDAO.getTasks(user, team)) {
             horizontalLayout.add(new TaskBlockElement(task));
         }
 
@@ -58,7 +55,7 @@ public class SingleTeamSiteContent extends HorizontalLayout {
         scroller.setWidth("20%");
 
 
-        for(TeamMember teamMember : HibernateTeam.findUsersInTeam(team.getId())){
+        for(TeamMember teamMember : TeamDAO.findUsersInTeam(team.getId())){
             membersList.add(new SingleTeamMemberElement(teamMember));
         }
 
@@ -69,8 +66,8 @@ public class SingleTeamSiteContent extends HorizontalLayout {
     private Scroller memberTasks(){
         VerticalLayout verticalLayout = new VerticalLayout();
 
-        for(TeamMember teamMember : HibernateTeam.findUsersInTeam(team.getId())){
-            if (!HibernateTask.getTasks(teamMember.getUser(), team).isEmpty()){ // not display users without tasks
+        for(TeamMember teamMember : TeamDAO.findUsersInTeam(team.getId())){
+            if (!TaskDAO.getTasks(teamMember.getUser(), team).isEmpty()){ // not display users without tasks
                 H1 h1 = new H1(teamMember.getUser().getDisplayName());
                 if (teamMember.getUser().equals(User.getLoggedInUser())) h1.getStyle().set("order", "-1");
                 verticalLayout.add(h1);

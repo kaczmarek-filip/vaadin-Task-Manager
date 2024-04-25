@@ -1,4 +1,4 @@
-package com.example.application.components.data.database;
+package com.example.application.components.data.database.hibernate;
 
 import com.example.application.components.data.Chat;
 import com.example.application.components.data.User;
@@ -6,7 +6,7 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class HibernateChat extends HibernateConnection {
+public class ChatDAO extends HibernateConnection {
     public static List<Chat> getChats(User user) {
         start();
         Query<Chat> query = session.createQuery("FROM Chat WHERE user1.id = :id OR user2.id = :id");

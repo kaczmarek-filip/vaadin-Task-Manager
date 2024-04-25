@@ -1,14 +1,11 @@
 package com.example.application.components.data;
 
-import com.example.application.components.data.database.HibernateTeam;
-import com.example.application.components.data.database.sql.SQLTeamDB;
+import com.example.application.components.data.database.hibernate.TeamDAO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Getter @Setter
 @Entity
@@ -36,7 +33,7 @@ public class Team {
 
     public static TeamRoles getUserTeamRole(User user, int teamId) {
 
-        for (TeamMember teamMember : HibernateTeam.findUsersInTeam(teamId)) {
+        for (TeamMember teamMember : TeamDAO.findUsersInTeam(teamId)) {
             User entryKey = teamMember.getUser();
             TeamRoles entryValue = teamMember.getRole();
 

@@ -2,7 +2,7 @@ package com.example.application.components.contents;
 
 import com.example.application.components.data.Chat;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.HibernateChat;
+import com.example.application.components.data.database.hibernate.ChatDAO;
 import com.example.application.components.elements.ChatPersonElement;
 import com.example.application.components.elements.MessengerElement;
 import com.example.application.components.elements.components.ChatCreateCallback;
@@ -29,7 +29,7 @@ public class MessengerSiteContent extends HorizontalLayout implements ChatCreate
     private Scroller chatsScroller() {
         Scroller scroller = new Scroller();
 
-        for (Chat chat : HibernateChat.getChats(User.getLoggedInUser())) {
+        for (Chat chat : ChatDAO.getChats(User.getLoggedInUser())) {
             verticalLayout.add(new ChatPersonElement(messengerElement, chat));
 
         }
