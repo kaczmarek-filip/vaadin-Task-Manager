@@ -1,5 +1,7 @@
 package com.example.application.components.data.database.hibernate;
 
+import com.example.application.components.elements.components.MyNotification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import lombok.Setter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,9 +12,14 @@ public abstract class HibernateConnection {
     protected static Session session;
 
     protected static void start() {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
-        session = sessionFactory.openSession();
-        session.beginTransaction();
+        try {
+            sessionFactory = new Configuration().configure().buildSessionFactory();
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+        } catch (Exception e) {
+            MyNotification.show("Database connection error", NotificationVariant.LUMO_ERROR, false);
+        }
+
     }
 
     protected static void commit() {

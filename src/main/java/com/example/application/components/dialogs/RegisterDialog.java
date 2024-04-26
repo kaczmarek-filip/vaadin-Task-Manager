@@ -3,6 +3,7 @@ package com.example.application.components.dialogs;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.UserDAO;
 import com.example.application.components.elements.components.CancelButton;
+import com.example.application.components.elements.components.MyNotification;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -61,33 +62,22 @@ public class RegisterDialog extends Dialog {
         User user = new User(0, displayNameValue, emailValue);
 
         if (!password.getValue().equals(confirmPassword.getValue())) {
-            Notification notification = new Notification("Passwords are not the same", 5000, Notification.Position.BOTTOM_CENTER);
-            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            notification.open();
+            MyNotification.show("Passwords are not the same", NotificationVariant.LUMO_ERROR, false);
 
         } else if (email.getValue().isEmpty() || displayName.getValue().isEmpty() || password.getValue().isEmpty()) {
-            Notification notification = new Notification("Some fields are empty", 5000, Notification.Position.BOTTOM_CENTER);
-            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            notification.open();
+            MyNotification.show("Some fields are empty", NotificationVariant.LUMO_ERROR, false);
+
         } else if (password.getValue().length() < 8) {
-            Notification notification = new Notification("The password must contain at least 8 characters", 5000, Notification.Position.BOTTOM_CENTER);
-            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            notification.open();
-//        } else if (new UserDB().isEmailExists(user)) {
+            MyNotification.show("The password must contain at least 8 characters", NotificationVariant.LUMO_ERROR, false);
+
         } else if (UserDAO.isEmailExists(emailValue)) {
-//        } else if (new UserDBHibernate().isEmailExists(emailValue)) {
-            Notification notification = new Notification("There is already a user with the specified email", 5000, Notification.Position.BOTTOM_CENTER);
-            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            notification.open();
+            MyNotification.show("There is already a user with the specified email", NotificationVariant.LUMO_ERROR, false);
+
         } else {
-//            new UserDB().registerUser(user, passwordValue);
-            //TODO: uprzątnąć tu trochę
             UserDAO.registerUser(user, passwordValue);
 
+            MyNotification.show("Successfully registered", NotificationVariant.LUMO_SUCCESS, false);
             close();
-            Notification notification = new Notification("Successfully registered", 5000, Notification.Position.BOTTOM_CENTER);
-            notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-            notification.open();
         }
 
 

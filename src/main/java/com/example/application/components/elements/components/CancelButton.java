@@ -17,8 +17,6 @@ public class CancelButton extends Button{
 
         addClickListener(e -> {
             dialog.close();
-//            HibernateConnection.flush();
-            //TODO: Callback po którym jeszcze raz wczytujemy informacje
         });
         addThemeVariants(ButtonVariant.LUMO_ERROR);
     }
