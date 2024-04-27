@@ -1,5 +1,6 @@
 package com.example.application.views.main;
 
+import com.example.application.components.contents.UserSiteContent;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -12,5 +13,7 @@ import com.vaadin.flow.router.Route;
 public class UserSite extends Navigation{
     public UserSite() {
         super("User");
+        UserSiteContent userSiteContent = new UserSiteContent();
+        setContent(userSiteContent);
     }
 }
