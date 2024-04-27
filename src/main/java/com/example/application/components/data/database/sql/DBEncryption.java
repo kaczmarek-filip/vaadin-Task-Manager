@@ -60,7 +60,10 @@ public class DBEncryption extends DatabaseConnection implements ApplicationListe
         }
     }
 
-    public void startupEncrypt() {
+    /**
+     * @throws Exception if can't decode passwords
+     */
+    public void startupEncrypt() throws Exception{
         try {
             Map<Integer, String> map = getAllPass();
             map.replaceAll((integer, s) -> Encrypter.encrypt(s));
@@ -68,6 +71,7 @@ public class DBEncryption extends DatabaseConnection implements ApplicationListe
             logger.info("Passwords encrypted properly".toUpperCase());
         } catch (Exception e) {
             logger.error(e.toString());
+            throw e;
         }
 
     }

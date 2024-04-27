@@ -3,6 +3,7 @@ package com.example.application.components.data.database.hibernate;
 import com.example.application.components.data.Chat;
 import com.example.application.components.data.Message;
 import com.example.application.components.data.User;
+import com.example.application.services.encryption.AesKeys;
 import com.example.application.services.encryption.StaticEncrypter;
 import org.hibernate.query.Query;
 
@@ -14,7 +15,7 @@ public class MessageDAO extends HibernateConnection {
         Query<Message> query = session.createQuery("FROM Message WHERE chat.id = :id ORDER BY localDateTime");
         query.setParameter("id", chat.getId());
         List<Message> messageList = query.getResultList();
-        messageList.forEach(message -> message.setContent(StaticEncrypter.decryptByStaticKey(message.getContent())));
+        messageList.forEach(message -> message.setContent(StaticEncrypter.decryptByStaticKey(AesKeys.MESSAGE, message.getContent())));
         close();
         return messageList;
     }
@@ -25,7 +26,7 @@ public class MessageDAO extends HibernateConnection {
         User sender = session.get(User.class, message.getSender().getId());
         message.setChat(chat);
         message.setSender(sender);
-        message.setContent(StaticEncrypter.encryptByStaticKey(message.getContent()));
+        message.setContent(StaticEncrypter.encryptByStaticKey(AesKeys.MESSAGE, message.getContent()));
         session.persist(message);
         close();
     }
