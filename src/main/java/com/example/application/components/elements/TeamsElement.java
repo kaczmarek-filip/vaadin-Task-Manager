@@ -4,6 +4,7 @@ import com.example.application.components.data.*;
 import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.orderedlayout.Scroller;
 
 public class TeamsElement extends Element {
 
@@ -24,15 +25,19 @@ public class TeamsElement extends Element {
 
         Div membersDiv = new Div();
         membersDiv.setClassName("teamsMembersDiv");
+        Scroller scroller = new Scroller();
+        scroller.setScrollDirection(Scroller.ScrollDirection.VERTICAL);
+        scroller.setHeight("25vh");
 
 
         for(TeamMember teamMember : TeamDAO.findUsersInTeam(team.getId())){
             membersDiv.add(new TeamsMemberElement(teamMember));
         }
 
+        scroller.setContent(membersDiv);
         add(new TeamsUserRoleElement(TeamDAO.getUserRole(team, User.getLoggedInUser())));
         add(title);
-        add(membersDiv);
+        add(scroller);
     }
 
     @Override
