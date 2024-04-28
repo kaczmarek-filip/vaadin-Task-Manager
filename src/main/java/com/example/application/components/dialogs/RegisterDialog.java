@@ -4,6 +4,8 @@ import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.UserDAO;
 import com.example.application.components.elements.components.CancelButton;
 import com.example.application.components.elements.components.MyNotification;
+import com.example.application.services.LoginService;
+import com.example.application.views.main.MainView;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -75,6 +77,8 @@ public class RegisterDialog extends Dialog {
 
         } else {
             UserDAO.registerUser(user, passwordValue);
+            LoginService.login(emailValue, passwordValue);
+            getUI().ifPresent(ui -> ui.navigate(MainView.class));
 
             MyNotification.show("Successfully registered", NotificationVariant.LUMO_SUCCESS, false);
             close();
