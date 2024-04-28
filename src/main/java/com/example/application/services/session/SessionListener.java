@@ -15,7 +15,7 @@ public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent se) {
         System.err.println("Sesja utworzona");
-        se.getSession().setMaxInactiveInterval(10);
+        se.getSession().setMaxInactiveInterval(24 * 60 * 60);
 
         startTime = Instant.now();
     }
