@@ -9,7 +9,6 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
@@ -18,6 +17,7 @@ import com.vaadin.flow.component.textfield.TextField;
 /**
  * Register dialog with user
  */
+//TODO: Dodać automatyczne logowanie użytkownika po rejestracji
 public class RegisterDialog extends Dialog {
     private Button registerButton;
 

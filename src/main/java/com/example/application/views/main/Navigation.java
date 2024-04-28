@@ -3,6 +3,7 @@ package com.example.application.views.main;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.TeamDAO;
+import com.example.application.services.LoginService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -72,13 +73,7 @@ public class Navigation extends AppLayout  implements BeforeEnterObserver {
         logOut.setText("Log out");
         logOut.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
         logOut.addClickListener(e -> {
-
-            User.logOut();
-            UI.getCurrent().navigate("/login");
-
-            Notification notification = new Notification("Logged out", 5000, Notification.Position.BOTTOM_CENTER);
-            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            notification.open();
+            LoginService.logout();
         });
         return logOut;
     }
@@ -90,8 +85,6 @@ public class Navigation extends AppLayout  implements BeforeEnterObserver {
         return paragraph;
     }
     protected Button addTopNavButton(Button button){
-//        Button button = new Button(buttonText);
-//        button.addThemeVariants(buttonVariant);
         button.addClassName("customNavButton");
         addToNavbar(button);
         return button;

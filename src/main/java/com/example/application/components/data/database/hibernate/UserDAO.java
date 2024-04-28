@@ -53,4 +53,11 @@ public class UserDAO extends HibernateConnection {
         close();
         return user;
     }
+    public static void setOnline(boolean online) {
+        start();
+        Query query = session.createQuery("UPDATE User SET online = :online WHERE id = :id");
+        query.setParameter("online", online).setParameter("id", User.getLoggedInUser().getId());
+        query.executeUpdate();
+        close();
+    }
 }

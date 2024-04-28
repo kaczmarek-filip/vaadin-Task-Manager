@@ -1,5 +1,6 @@
 package com.example.application.components.data;
 
+import com.example.application.components.data.database.hibernate.UserDAO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import lombok.Setter;
 @Entity
 @Getter @Setter
 @Table(name = "users")
+//TODO: Dodać awatary użytkowników
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +20,7 @@ public class User {
     private String displayName;
     private String email;
     private String password;
+    private boolean online;
 
     private static User instance;
 
@@ -34,7 +37,7 @@ public class User {
         this.displayName = displayName;
         this.email = email;
     }
-
+    @Deprecated
     public static synchronized User getInstance() {
         if (instance == null) {
             instance = new User();
@@ -53,14 +56,6 @@ public class User {
         instance = null;
     }
 
-//    @Deprecated
-//    public static List<Team> getLoggedInUserTeams() {
-////        SQLTeamDB SQLTeamDB = new SQLTeamDB();
-////        ArrayList<Team> teamsByUser = SQLTeamDB.findTeamsByUser(User.getLoggedInUser());
-//        List<Team> teamsByUser = HibernateTeam.getUserTeams(User.getLoggedInUser());
-//
-//        return teamsByUser;
-//    }
 
     @Override
     public boolean equals(Object obj) {
