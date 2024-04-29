@@ -173,6 +173,11 @@
 .myMessage{
     margin-left: auto;
     margin-right: 0;
+    background-color: #a5daff;
+    border-radius: 5px;
+}
+.message{
+    margin-bottom: 0.5vh;
 }
 .chatScrollerElement{
     font-size: 1.2rem;

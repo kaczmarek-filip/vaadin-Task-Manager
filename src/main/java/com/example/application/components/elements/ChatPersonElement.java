@@ -6,7 +6,7 @@ import com.example.application.components.data.User;
 public class ChatPersonElement extends Element{
     private final Chat chat;
     private final MessengerElement messengerElement;
-
+//TODO: dodanie ikonki aktywności
     public ChatPersonElement(MessengerElement messengerElement, Chat chat) {
         super("chatScrollerElement");
         this.chat = chat;
