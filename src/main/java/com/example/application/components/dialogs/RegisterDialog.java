@@ -19,7 +19,6 @@ import com.vaadin.flow.component.textfield.TextField;
 /**
  * Register dialog with user
  */
-//TODO: Dodać automatyczne logowanie użytkownika po rejestracji
 public class RegisterDialog extends Dialog {
     private Button registerButton;
 

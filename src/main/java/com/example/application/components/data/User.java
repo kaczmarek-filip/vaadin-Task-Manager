@@ -1,6 +1,5 @@
 package com.example.application.components.data;
 
-import com.example.application.components.data.database.hibernate.UserDAO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,9 +9,9 @@ import lombok.Setter;
  * User class
  */
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @Table(name = "users")
-//TODO: Dodać awatary użytkowników
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +20,7 @@ public class User {
     private String email;
     private String password;
     private boolean online;
+    private byte[] avatar;
 
     private static User instance;
 
@@ -37,6 +37,7 @@ public class User {
         this.displayName = displayName;
         this.email = email;
     }
+
     @Deprecated
     public static synchronized User getInstance() {
         if (instance == null) {
