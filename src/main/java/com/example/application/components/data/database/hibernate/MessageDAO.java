@@ -30,4 +30,13 @@ public class MessageDAO extends HibernateConnection {
         session.persist(message);
         close();
     }
+
+    public static void setRead(int messageId) {
+        start();
+        Message message = session.get(Message.class, messageId);
+        message.setRead(true);
+        session.update(message);
+        commit();
+        close();
+    }
 }

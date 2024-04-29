@@ -174,10 +174,16 @@
     margin-left: auto;
     margin-right: 0;
     background-color: #a5daff;
-    border-radius: 5px;
 }
 .message{
     margin-bottom: 0.5vh;
+    border-radius: 5px;
+}
+.currentChat{
+    background-color: #47a730d6 !important;
+}
+.notRead{
+    background-color: #ef1414ad !important;
 }
 .chatScrollerElement{
     font-size: 1.2rem;

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public final class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "chatID")
@@ -27,6 +27,8 @@ public final class Message {
 
     @Column(name = "dateTime")
     private LocalDateTime localDateTime;
+
+    private boolean isRead;
 
     public Message(Chat chat, User sender, String content, LocalDateTime localDateTime) {
         this.chat = chat;

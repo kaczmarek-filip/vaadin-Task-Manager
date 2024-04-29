@@ -56,9 +56,12 @@ public class MessengerElement extends VerticalLayout {
             MessageListItem item = new MessageListItem(message.getContent(), message.getLocalDateTime().atZone(zoneId).toInstant(), message.getSender().getDisplayName());
             item.setUserImageResource(BlobConverter.getAvatar(message.getSender()));
             item.addClassNames("message");
-            if (message.getSender().equals(User.getLoggedInUser())){
+            if (message.getSender().equals(User.getLoggedInUser())) {
                 item.setUserName("You");
                 item.addClassNames("myMessage");
+            }
+            if (!message.isRead() && !message.getSender().equals(User.getLoggedInUser())) {
+                item.addClassNames("notRead");
             }
             messageListItems.add(item);
         }
@@ -85,5 +88,14 @@ public class MessengerElement extends VerticalLayout {
         });
 
         return messageInput;
+    }
+
+    void setRead() {
+        List<Message> messages = MessageDAO.getMessages(chat);
+        for (Message message : messages) {
+            if (!message.getSender().equals(User.getLoggedInUser())) {
+                MessageDAO.setRead(message.getId());
+            }
+        }
     }
 }

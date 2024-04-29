@@ -1,6 +1,7 @@
 package com.example.application.components.data.database.hibernate;
 
 import com.example.application.components.data.Chat;
+import com.example.application.components.data.Message;
 import com.example.application.components.data.User;
 import org.hibernate.query.Query;
 
@@ -24,5 +25,19 @@ public class ChatDAO extends HibernateConnection {
         session.persist(chat);
         close();
         return chat;
+    }
+
+    public static boolean isHaveUnreadMessages(Chat chat) {
+        start();
+        Query query = session.createQuery("FROM Message WHERE chat.id = :chatId AND isRead = false ");
+        query.setParameter("chatId", chat.getId());
+        List<Message> messageList = query.getResultList();
+        close();
+        for (Message message : messageList) {
+            if (!message.isRead() && !message.getSender().equals(User.getLoggedInUser())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

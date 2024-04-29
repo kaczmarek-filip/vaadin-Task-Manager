@@ -27,7 +27,6 @@ public class MessengerSiteContent extends HorizontalLayout implements ChatCreate
     }
 
     private Scroller chatsScroller() {
-        //TODO: Pozycjonowanie
         Scroller scroller = new Scroller();
 
         for (Chat chat : ChatDAO.getChats(User.getLoggedInUser())) {

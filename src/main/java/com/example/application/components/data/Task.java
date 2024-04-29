@@ -12,6 +12,7 @@ import java.util.List;
 @Table(name = "tasks")
 @Getter
 @Setter
+//TODO: Teamowe taski z podziałem na wykonane zadania
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

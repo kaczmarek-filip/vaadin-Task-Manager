@@ -11,4 +11,9 @@ public class MyNotification {
         notification.addThemeVariants(notificationVariant);
         notification.open();
     }
+    public static void test(String text){
+        Notification notification = new Notification(text, 5000, Notification.Position.BOTTOM_CENTER);
+        notification.addThemeVariants(NotificationVariant.LUMO_PRIMARY);
+        notification.open();
+    }
 }
