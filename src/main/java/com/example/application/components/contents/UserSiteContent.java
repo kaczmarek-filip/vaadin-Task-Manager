@@ -5,6 +5,7 @@ import com.example.application.components.data.database.hibernate.UserDAO;
 import com.example.application.services.BlobConverter;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.details.Details;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -45,13 +46,14 @@ public class UserSiteContent extends HorizontalLayout {
         Avatar avatar = new Avatar();
         avatar.setImageResource(BlobConverter.getAvatar(User.getLoggedInUser()));
 
-        rightSide.add(menuBar, getUpload(), avatar);
+        Paragraph hint = new Paragraph("Maximum file size: 1 MB");
+        rightSide.add(menuBar, hint, getUpload(), avatar);
         return rightSide;
     }
 
     private static Upload getUpload() {
         MemoryBuffer memoryBuffer = new MemoryBuffer();
-        //TODO: Hint
+
         Upload upload = new Upload(memoryBuffer);
         upload.setDropAllowed(true);
         upload.setAcceptedFileTypes("image/jpeg", "image/png");

@@ -10,6 +10,8 @@ public class ChatPersonElement extends Element {
     private static ChatPersonElement lastClickedButton = null;
 
     //TODO: dodanie ikonki aktywności
+
+    //TODO: Pozycjonowanie po ostatnich wiadomościach
     public ChatPersonElement(MessengerElement messengerElement, Chat chat) {
         super("chatScrollerElement");
         this.chat = chat;
