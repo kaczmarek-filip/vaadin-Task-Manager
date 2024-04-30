@@ -1,4 +1,4 @@
-package com.example.application.components.elements;
+package com.example.application.components.elements.colors;
 
 public class MessagesColors {
     public static final String notRead = "#ef1414ad";

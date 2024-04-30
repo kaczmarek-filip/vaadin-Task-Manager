@@ -20,6 +20,7 @@ public class SingleTeamMemberElement extends Element{
     @Override
     public void layout() {
         setText(user.getDisplayName() + " " + teamRoles);
+        add(ActiveDot.get(user));
     }
 
     @Override
