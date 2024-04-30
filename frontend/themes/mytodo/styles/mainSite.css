@@ -1,0 +1,16 @@
+.deadlineElement {
+    width: 80%;
+    /*width: fit-content;*/
+    text-align: left;
+    padding: 2%;
+    background-color: #88B04B;
+    border-radius: 15px 15px 5px 5px;
+    opacity: 0.9;
+}
+.deadlineSpan{
+    margin-left: 10%;
+}
+.toDoDoneLabel{
+    font-weight: bold;
+    padding-left: 5%;
+}
