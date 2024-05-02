@@ -1,10 +1,12 @@
-package com.example.application.components.elements;
+package com.example.application.components.elements.teams;
 
 import com.example.application.components.data.TeamMember;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
+import com.example.application.components.elements.ActiveDot;
+import com.example.application.components.elements.Element;
 
-public class SingleTeamMemberElement extends Element{
+public class SingleTeamMemberElement extends Element {
 
     private User user;
     private TeamRoles teamRoles;

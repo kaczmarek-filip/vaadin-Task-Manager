@@ -27,10 +27,11 @@ public class TaskDAO extends HibernateConnection {
         session.flush();
         close();
     }
-    public static List<Task> getTasks(User user, Team team){
+
+    public static List<Task> getTasks(User user, Team team) {
         start();
         Query<Task> query;
-        if (team == null){
+        if (team == null) {
             query = session.createQuery("FROM Task WHERE creator.id = :id AND team = null ORDER BY deadline");
         } else {
             query = session.createQuery("FROM Task t JOIN t.taskHolders u WHERE u.id = :id AND t.team.id = :teamId ORDER BY t.deadline");
@@ -42,19 +43,22 @@ public class TaskDAO extends HibernateConnection {
         close();
         return taskList;
     }
-    public static void setIsDone(Task task){
+
+    public static void setIsDone(Task task) {
         start();
         session.update(task);
         commit();
         close();
     }
-    public static void delete(Task task){
+
+    public static void delete(Task task) {
         start();
         session.delete(task);
         commit();
         close();
     }
-    public static List<User> getHolders(Task task){
+
+    public static List<User> getHolders(Task task) {
         start();
         Query<User> query = session.createQuery("SELECT t.taskHolders FROM Task t WHERE t.id = :id");
         query.setParameter("id", task.getId());
@@ -62,4 +66,5 @@ public class TaskDAO extends HibernateConnection {
         close();
         return userList;
     }
+
 }

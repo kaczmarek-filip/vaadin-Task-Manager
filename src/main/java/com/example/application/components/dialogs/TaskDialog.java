@@ -3,6 +3,7 @@ package com.example.application.components.dialogs;
 import com.example.application.components.data.Task;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.TaskDAO;
+import com.example.application.components.elements.tasks.AbstractTaskBlockElement;
 import com.example.application.components.elements.components.CallbackValues;
 import com.example.application.components.elements.components.TaskDoneCallback;
 import com.vaadin.flow.component.Html;
@@ -21,8 +22,8 @@ public class TaskDialog extends Dialog {
     private Task task;
     private TaskDoneCallback callback;
 
-    public TaskDialog(Task task, TaskDoneCallback callback) {
-        this.task = task;
+    public TaskDialog(AbstractTaskBlockElement taskBlockElement, TaskDoneCallback callback) {
+        this.task = taskBlockElement.getTask();
         this.callback = callback;
         setHeaderTitle(task.getTitle());
 
@@ -37,7 +38,7 @@ public class TaskDialog extends Dialog {
          */
         if (TaskDAO.getHolders(task).contains(User.getLoggedInUser()) ||
                 (task.getCreator().equals(User.getLoggedInUser()) && TaskDAO.getHolders(task).isEmpty())) {
-            if (!task.isDone()) {
+            if (!taskBlockElement.isDone()) {
                 getFooter().add(doneButton());
             } else {
                 getFooter().add(unDoneButton());

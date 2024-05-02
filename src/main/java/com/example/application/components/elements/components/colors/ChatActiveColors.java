@@ -1,4 +1,4 @@
-package com.example.application.components.elements.colors;
+package com.example.application.components.elements.components.colors;
 
 public class ChatActiveColors {
     public static String online = "#4CAF50";

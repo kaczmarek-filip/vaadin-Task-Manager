@@ -35,6 +35,9 @@ public class Task {
     @JoinTable(name = "taskholders", joinColumns = @JoinColumn(name = "taskID"), inverseJoinColumns = @JoinColumn(name = "user_ID"))
     private List<User> taskHolders;
 
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<TaskHolder> holders;
+
     public static final int descriptionMaxLength = 200;
     private boolean isDone;
 

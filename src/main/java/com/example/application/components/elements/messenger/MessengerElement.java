@@ -1,4 +1,4 @@
-package com.example.application.components.elements;
+package com.example.application.components.elements.messenger;
 
 import com.example.application.components.data.Chat;
 import com.example.application.components.data.Message;

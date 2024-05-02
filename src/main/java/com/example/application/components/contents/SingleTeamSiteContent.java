@@ -1,10 +1,13 @@
 package com.example.application.components.contents;
 
-import com.example.application.components.data.*;
+import com.example.application.components.data.Task;
+import com.example.application.components.data.Team;
+import com.example.application.components.data.TeamMember;
+import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.TaskDAO;
 import com.example.application.components.data.database.hibernate.TeamDAO;
-import com.example.application.components.elements.SingleTeamMemberElement;
-import com.example.application.components.elements.TaskBlockElement;
+import com.example.application.components.elements.teams.SingleTeamMemberElement;
+import com.example.application.components.elements.tasks.TeamTaskBlockElement;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
@@ -36,7 +39,7 @@ public class SingleTeamSiteContent extends HorizontalLayout {
 
 
         for (Task task : TaskDAO.getTasks(user, team)) {
-            horizontalLayout.add(new TaskBlockElement(task));
+            horizontalLayout.add(new TeamTaskBlockElement(task, user));
         }
 
         return horizontalLayout;

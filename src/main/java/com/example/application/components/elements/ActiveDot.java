@@ -1,7 +1,7 @@
 package com.example.application.components.elements;
 
 import com.example.application.components.data.User;
-import com.example.application.components.elements.colors.ChatActiveColors;
+import com.example.application.components.elements.components.colors.ChatActiveColors;
 import com.vaadin.flow.component.html.Div;
 
 public class ActiveDot {

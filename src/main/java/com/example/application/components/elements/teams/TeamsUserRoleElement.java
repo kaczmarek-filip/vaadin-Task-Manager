@@ -1,6 +1,7 @@
-package com.example.application.components.elements;
+package com.example.application.components.elements.teams;
 
 import com.example.application.components.data.TeamRoles;
+import com.example.application.components.elements.Element;
 
 public class TeamsUserRoleElement extends Element {
     private TeamRoles teamRole;

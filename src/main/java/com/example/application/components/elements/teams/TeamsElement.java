@@ -1,7 +1,8 @@
-package com.example.application.components.elements;
+package com.example.application.components.elements.teams;
 
 import com.example.application.components.data.*;
 import com.example.application.components.data.database.hibernate.TeamDAO;
+import com.example.application.components.elements.Element;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.Scroller;

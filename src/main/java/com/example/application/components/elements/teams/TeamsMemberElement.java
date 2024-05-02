@@ -1,11 +1,9 @@
-package com.example.application.components.elements;
+package com.example.application.components.elements.teams;
 
 import com.example.application.components.data.TeamMember;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.example.application.components.elements.Element;
 
 public class TeamsMemberElement extends Element {
     private User teamUser;

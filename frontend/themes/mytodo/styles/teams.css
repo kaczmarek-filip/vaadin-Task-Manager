@@ -54,7 +54,7 @@
     justify-content: space-between;
 }
 .TeamsMemberOwner::before, .TeamsMemberOwner::after{
-    content: url('components/crown.svg');
+    content: url('../components/crown.svg');
     width: 24px;
     height: 24px;
 }
