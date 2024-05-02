@@ -1,7 +1,11 @@
 package com.example.application.components.dialogs;
 
-import com.example.application.components.data.*;
+import com.example.application.components.data.Task;
+import com.example.application.components.data.Team;
+import com.example.application.components.data.TeamMember;
+import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.TaskDAO;
+import com.example.application.components.data.database.hibernate.TaskHolderDAO;
 import com.example.application.components.elements.components.CancelButton;
 import com.example.application.components.elements.components.MyNotification;
 import com.example.application.components.elements.components.TextAreaCounter;
@@ -112,9 +116,10 @@ public class MakeTaskDialog extends Dialog {
 
                 if (!selectedUsers.isEmpty()) { // is one member at least
                     task = new Task(title, description, deadline);
-                    task.setAsTeamTask(team, new ArrayList<>(selectedUsers));
+                    task.setTeam(team);
 
                     TaskDAO.createTask(task);
+                    TaskHolderDAO.createHolders(new ArrayList<>(selectedUsers), task);
 
                     MyNotification.show("Created successfully", NotificationVariant.LUMO_SUCCESS, true);
                     close();

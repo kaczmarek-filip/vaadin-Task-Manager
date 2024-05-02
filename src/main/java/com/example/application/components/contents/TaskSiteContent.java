@@ -16,7 +16,7 @@ public class TaskSiteContent extends HorizontalLayout {
     }
 
     private void generateTasks() {
-        for (Task task : TaskDAO.getTasks(User.getLoggedInUser(), null)) {
+        for (Task task : TaskDAO.getTasks(User.getLoggedInUser())) {
             add(new SingleTaskBlockElement(task));
         }
     }

@@ -12,7 +12,6 @@ import java.util.List;
 @Table(name = "tasks")
 @Getter
 @Setter
-//TODO: Teamowe taski z podziałem na wykonane zadania
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,11 +30,7 @@ public class Task {
     @JoinColumn(name = "creatorUserID")
     private User creator;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "taskholders", joinColumns = @JoinColumn(name = "taskID"), inverseJoinColumns = @JoinColumn(name = "user_ID"))
-    private List<User> taskHolders;
-
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "task", fetch = FetchType.EAGER)
     private List<TaskHolder> holders;
 
     public static final int descriptionMaxLength = 200;
@@ -54,16 +49,20 @@ public class Task {
         this.deadline = deadline;
     }
 
-    public void setAsTeamTask(Team team, List<User> taskHolders) {
-        this.team = team;
-        this.taskHolders = taskHolders;
-    }
-
     public String getFormattedCreationDate() {
         return creationDate.format(formatter);
     }
 
     public String getFormattedDeadline() {
         return deadline.format(formatter);
+    }
+
+    public TaskHolder getHolderFromUser(User user) {
+        for (TaskHolder holder : holders) {
+            if (holder.getUser().equals(user)) {
+                return holder;
+            }
+        }
+        return null;
     }
 }

@@ -2,10 +2,9 @@ package com.example.application.components.dialogs;
 
 import com.example.application.components.data.Task;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.hibernate.TaskDAO;
-import com.example.application.components.elements.tasks.AbstractTaskBlockElement;
 import com.example.application.components.elements.components.CallbackValues;
 import com.example.application.components.elements.components.TaskDoneCallback;
+import com.example.application.components.elements.tasks.AbstractTaskBlockElement;
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -36,8 +35,9 @@ public class TaskDialog extends Dialog {
         /*
         Checking is user can delete task
          */
-        if (TaskDAO.getHolders(task).contains(User.getLoggedInUser()) ||
-                (task.getCreator().equals(User.getLoggedInUser()) && TaskDAO.getHolders(task).isEmpty())) {
+        if (task.getHolderFromUser(User.getLoggedInUser()) != null ||
+//                (task.getCreator().equals(User.getLoggedInUser()) && task.getHolders().isEmpty())) {
+                (task.getCreator().equals(User.getLoggedInUser()))) {
             if (!taskBlockElement.isDone()) {
                 getFooter().add(doneButton());
             } else {

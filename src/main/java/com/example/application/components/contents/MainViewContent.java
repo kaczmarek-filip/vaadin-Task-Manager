@@ -48,7 +48,7 @@ public class MainViewContent extends HorizontalLayout {
         ArrayList<Task> doneTasks = new ArrayList<>();
         ArrayList<Task> notDoneTasks = new ArrayList<>();
 
-        for (Task task : TaskDAO.getTasks(User.getLoggedInUser(), null)){
+        for (Task task : TaskDAO.getTasks(User.getLoggedInUser())) {
             if (task.isDone()) {
                 doneTasks.add(task);
             } else {
