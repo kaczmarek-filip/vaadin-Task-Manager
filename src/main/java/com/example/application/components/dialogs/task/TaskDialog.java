@@ -1,4 +1,4 @@
-package com.example.application.components.dialogs;
+package com.example.application.components.dialogs.task;
 
 import com.example.application.components.data.Task;
 import com.example.application.components.data.User;
@@ -17,6 +17,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 /**
  *
  */
+//TODO: Zrobić w abstrakcję
 public class TaskDialog extends Dialog {
     private Task task;
     private TaskDoneCallback callback;

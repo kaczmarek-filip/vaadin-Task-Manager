@@ -5,8 +5,8 @@ import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.components.data.database.hibernate.UserDAO;
 import com.example.application.components.elements.components.CancelButton;
 import com.example.application.components.elements.components.TextAreaCounter;
+import com.example.application.views.main.TeamsSite;
 import com.vaadin.flow.component.Key;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
@@ -16,6 +16,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.Set;
@@ -29,6 +30,8 @@ public class CreateTeamDialog extends Dialog {
     private TextAreaCounter teamMottoField = new TextAreaCounter("Motto");
     private MultiSelectComboBox<User> userComboBoxField = new MultiSelectComboBox<>("Members");
     private TextArea selectedUsersArea = new TextArea("Selected Users");
+    @Setter
+    private TeamsSite parent;
 
     public CreateTeamDialog() {
         setHeaderTitle("Create team");
@@ -59,7 +62,7 @@ public class CreateTeamDialog extends Dialog {
         notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
         notification.open();
 
-        UI.getCurrent().getPage().reload();
+        parent.OnChangeReload();
     }
 
     private Button setCreateButton() {
@@ -78,15 +81,6 @@ public class CreateTeamDialog extends Dialog {
         List<User> allUsersList = UserDAO.getAllUsers();
         allUsersList.remove(User.getLoggedInUser());
 
-        userComboBoxField.setItems(allUsersList);
-        userComboBoxField.setItemLabelGenerator(User::getDisplayName);
-        userComboBoxField.setSelectedItemsOnTop(true);
-
-        userComboBoxField.addValueChangeListener(e -> {
-            String selectedUsersText = e.getValue().stream().map(User::getDisplayName).collect(Collectors.joining(" "));
-            selectedUsersArea.setValue(selectedUsersText);
-        });
-
-        return userComboBoxField;
+        return AddUserToTeamDialog.getUserMultiSelectComboBox(userComboBoxField, allUsersList, selectedUsersArea);
     }
 }

@@ -37,8 +37,5 @@ public class SingleTeamMemberElement extends Element {
     @Override
     public void listenerAction() {
         //TODO: Dodać jakiś listener
-        addClickListener(divClickEvent -> {
-           getStyle().set("height", getHeight()+ "20px");
-        });
     }
 }

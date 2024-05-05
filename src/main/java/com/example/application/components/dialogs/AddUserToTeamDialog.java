@@ -2,6 +2,7 @@ package com.example.application.components.dialogs;
 
 import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamMember;
+import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.components.data.database.hibernate.UserDAO;
@@ -12,6 +13,7 @@ import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.textfield.TextArea;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.Set;
@@ -23,6 +25,9 @@ public class AddUserToTeamDialog extends Dialog {
     private List<User> allUsersWithoutTeamUsers;
     private TextArea selectedUsersArea = new TextArea("Selected Users");
     private Button saveButton = new Button("Save");
+
+    @Setter
+    private EditTeamDialog parent;
 
     public AddUserToTeamDialog(Team team){
         this.team = team;
@@ -43,6 +48,10 @@ public class AddUserToTeamDialog extends Dialog {
         allUsersWithoutTeamUsers.remove(User.getLoggedInUser());
         allUsersWithoutTeamUsers.removeAll(selectedUsersArrayList);
 
+        return getUserMultiSelectComboBox(userComboBoxField, allUsersWithoutTeamUsers, selectedUsersArea);
+    }
+
+    public static MultiSelectComboBox<User> getUserMultiSelectComboBox(MultiSelectComboBox<User> userComboBoxField, List<User> allUsersWithoutTeamUsers, TextArea selectedUsersArea) {
         userComboBoxField.setItems(allUsersWithoutTeamUsers);
 
         userComboBoxField.setItemLabelGenerator(User::getDisplayName);
@@ -55,6 +64,7 @@ public class AddUserToTeamDialog extends Dialog {
 
         return userComboBoxField;
     }
+
     private TextArea setSelectedUsersArea() {
         selectedUsersArea.setReadOnly(true);
 
@@ -64,9 +74,17 @@ public class AddUserToTeamDialog extends Dialog {
         saveButton.addClickListener(e -> {
             Set<User> userComboBox = userComboBoxField.getSelectedItems();
 
-            TeamDAO.addUsers(team, userComboBox);
+            for(User user : userComboBox){
+                TeamMember teamMember = new TeamMember();
+                teamMember.setUser(user);
+                teamMember.setTeam(team);
+                teamMember.setRole(TeamRoles.MEMBER);
+                team.getTeamMembers().add(teamMember);
+                TeamDAO.addUsers(teamMember);
+            }
 
-            UI.getCurrent().getPage().reload();
+            parent.OnChangeReload();
+            close();
         });
         return saveButton;
     }

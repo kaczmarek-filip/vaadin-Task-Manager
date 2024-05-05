@@ -17,7 +17,7 @@ public class Team {
     private String name;
     private String motto;
 
-    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
     private List<TeamMember> teamMembers;
     public static int mottoCharLimit = 200;
 

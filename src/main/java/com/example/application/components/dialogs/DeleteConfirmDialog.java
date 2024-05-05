@@ -1,7 +1,9 @@
 package com.example.application.components.dialogs;
 
 import com.example.application.components.data.Team;
+import com.example.application.components.data.TeamMember;
 import com.example.application.components.data.User;
+import com.example.application.components.data.database.hibernate.HibernateConnection;
 import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.components.elements.components.CancelButton;
 import com.example.application.views.main.TeamsSite;
@@ -11,9 +13,13 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
+import lombok.Setter;
 
 public class DeleteConfirmDialog extends Dialog {
     Button deleteButton = new Button("Delete");
+
+    @Setter
+    private EditTeamDialog parent;
 
     public DeleteConfirmDialog() {
 
@@ -59,7 +65,8 @@ public class DeleteConfirmDialog extends Dialog {
             close();
 
 
-            UI.getCurrent().getPage().reload();
+            HibernateConnection.refresh(team);
+            parent.OnChangeReload();
         });
 
         return this;

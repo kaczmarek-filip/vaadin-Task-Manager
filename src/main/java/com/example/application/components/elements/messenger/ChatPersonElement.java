@@ -13,6 +13,8 @@ public class ChatPersonElement extends Element {
     private static ChatPersonElement lastClickedButton = null;
 
     //TODO: Pozycjonowanie po ostatnich wiadomościach
+
+    //TODO: Delete chats
     public ChatPersonElement(MessengerElement messengerElement, Chat chat) {
         super("chatScrollerElement");
         this.chat = chat;

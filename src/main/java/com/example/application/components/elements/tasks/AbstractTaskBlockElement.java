@@ -1,7 +1,7 @@
 package com.example.application.components.elements.tasks;
 
 import com.example.application.components.data.Task;
-import com.example.application.components.dialogs.TaskDialog;
+import com.example.application.components.dialogs.task.TaskDialog;
 import com.example.application.components.elements.Element;
 import com.example.application.components.elements.components.TaskDoneCallback;
 import com.vaadin.flow.component.html.Div;

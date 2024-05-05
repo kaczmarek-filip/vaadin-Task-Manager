@@ -10,7 +10,7 @@ import com.vaadin.flow.component.orderedlayout.Scroller;
 public class TeamsElement extends Element {
 
     private final Team team;
-
+    //TODO: dodać trzy kropki jako interakcję
     public TeamsElement(Team team) {
         super("teamsElement");
         this.team = team;

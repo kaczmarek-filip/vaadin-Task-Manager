@@ -1,13 +1,16 @@
 package com.example.application.views.main;
 
 
-import com.example.application.components.dialogs.MakeTaskDialog;
+import com.example.application.components.dialogs.makeTask.MakeOwnTaskDialog;
 import com.example.application.components.contents.TaskSiteContent;
+import com.example.application.components.elements.components.OnSaveReload;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.router.Route;
 
 @Route("tasks")
-public class TasksSite extends Navigation {
+public class TasksSite extends Navigation implements OnSaveReload {
+
+    private TaskSiteContent content;
     /**
      * Default constructor
      */
@@ -15,10 +18,20 @@ public class TasksSite extends Navigation {
         super("Tasks");
         Button button = new Button("Make own task");
         button.addClickListener(e -> {
-            new MakeTaskDialog().onlyOwnTask().open();
+            MakeOwnTaskDialog dialog = new MakeOwnTaskDialog();
+            dialog.setParent(this);
+            dialog.open();
         });
         addTopNavButton(button);
 
-        setContent(new TaskSiteContent());
+        content = new TaskSiteContent();
+        setContent(content);
+    }
+
+    @Override
+    public void OnChangeReload() {
+        remove(content);
+        content = new TaskSiteContent();
+        setContent(content);
     }
 }

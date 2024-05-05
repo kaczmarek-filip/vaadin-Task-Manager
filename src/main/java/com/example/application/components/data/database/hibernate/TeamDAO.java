@@ -70,16 +70,10 @@ public class TeamDAO extends HibernateConnection {
         close();
     }
 
-    public static void addUsers(Team team, Set<User> userSet) {
+//    public static void addUsers(Team team, Set<User> userSet) {
+    public static void addUsers(TeamMember teamMember) {
         start();
-
-        for (User user : userSet) {
-            TeamMember teamMember = new TeamMember();
-            teamMember.setUser(user);
-            teamMember.setRole(TeamRoles.MEMBER);
-            teamMember.setTeam(team);
-            session.save(teamMember);
-        }
+        session.save(teamMember);
         commit();
         close();
     }

@@ -35,4 +35,9 @@ public abstract class HibernateConnection {
         session.flush();
         close();
     }
+    public static void refresh(Object object){
+        start();
+        session.refresh(object);
+        close();
+    }
 }

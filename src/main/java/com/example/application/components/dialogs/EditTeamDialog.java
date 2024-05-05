@@ -3,35 +3,45 @@ package com.example.application.components.dialogs;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamMember;
 import com.example.application.components.data.TeamRoles;
+import com.example.application.components.data.database.hibernate.HibernateConnection;
 import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.components.elements.components.CancelButton;
+import com.example.application.components.elements.components.MyNotification;
+import com.example.application.components.elements.components.OnSaveReload;
 import com.example.application.components.elements.components.TextAreaCounter;
+import com.example.application.views.main.SingleTeamSite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
+import lombok.Setter;
 
 import java.util.*;
 
 import static com.example.application.components.data.Team.mottoCharLimit;
 
-public class EditTeamDialog extends Dialog {
+public class EditTeamDialog extends Dialog implements OnSaveReload {
     private Button saveButton = new Button("Save");
     private Button deleteButton = new Button("Delete");
     private Button addUserButton = new Button("Add users");
     private Team team;
     private TextField teamNameField = new TextField("Team name");
     private TextAreaCounter teamMottoField = new TextAreaCounter("Motto");
+
     private Grid<TeamMember> grid = new Grid<>();
-//    private Set<Map.Entry<User, TeamRoles>> items;
-    private Set<TeamMember> items;
+    private VerticalLayout verticalLayout = new VerticalLayout();
+    private HorizontalLayout horizontalLayout;
+
+    @Setter
+    private SingleTeamSite parent;
 
     public EditTeamDialog(Team team) {
         this.team = team;
@@ -47,16 +57,20 @@ public class EditTeamDialog extends Dialog {
         teamMottoField.setWidthFull();
         teamMottoField.setCounter(mottoCharLimit);
 
-        HorizontalLayout horizontalLayout = new HorizontalLayout(setAddUserButton(), setSaveButton());
+        horizontalLayout = new HorizontalLayout(setAddUserButton(), setSaveButton());
         horizontalLayout.setWidthFull();
         horizontalLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
 
-        VerticalLayout verticalLayout = new VerticalLayout(teamNameField, teamMottoField, horizontalLayout, setGridContextMenu());
-//        VerticalLayout verticalLayout = new VerticalLayout(teamNameField, teamMottoField, setGridContextMenu());
+        verticalLayout.add(teamNameField, teamMottoField, horizontalLayout, setGridContextMenu());
+
+        CancelButton cancelButton = new CancelButton(this);
+        cancelButton.addClickListener(e -> {
+           parent.OnChangeReload();
+        });
 
         add(verticalLayout);
         getFooter().add(setDeleteButton());
-        getFooter().add(new CancelButton(this));
+        getFooter().add(cancelButton);
     }
 
     private void beforeEdit() {
@@ -64,11 +78,15 @@ public class EditTeamDialog extends Dialog {
         String teamMotto = teamMottoField.getValue();
 
         TeamDAO.updateInfo(team.getId(), teamName, teamMotto);
+        team.setName(teamName);
+        team.setMotto(teamMotto);
     }
 
     private Button setAddUserButton() {
         addUserButton.addClickListener(e -> {
-            new AddUserToTeamDialog(team).open();
+            AddUserToTeamDialog addUserToTeamDialog = new AddUserToTeamDialog(team);
+            addUserToTeamDialog.setParent(this);
+            addUserToTeamDialog.open();
         });
         addUserButton.getStyle().set("margin-right", "auto");
         return addUserButton;
@@ -81,7 +99,8 @@ public class EditTeamDialog extends Dialog {
 
         saveButton.addClickListener(e -> {
             beforeEdit();
-            UI.getCurrent().getPage().reload();
+//            UI.getCurrent().getPage().reload();
+            MyNotification.show("Saved", NotificationVariant.LUMO_SUCCESS, false);
         });
 
         return saveButton;
@@ -101,7 +120,7 @@ public class EditTeamDialog extends Dialog {
 
     private Grid<TeamMember> setGridContextMenu() {
 
-        Grid<TeamMember> grid = new Grid<>();
+//        Grid<TeamMember> grid = new Grid<>();
         List<TeamMember> list = team.getTeamMembers();
         grid.setItems(list);
 
@@ -142,12 +161,21 @@ public class EditTeamDialog extends Dialog {
             }
 
             button.addClickListener(e -> {
-                new DeleteConfirmDialog().deleteUser(team, teamMember.getUser()).open();
+                DeleteConfirmDialog deleteConfirmDialog = new DeleteConfirmDialog();
+                deleteConfirmDialog.setParent(this);
+                deleteConfirmDialog.deleteUser(team, teamMember.getUser()).open();
             });
 
             return button;
         }).setFlexGrow(0);
 
         return grid;
+    }
+
+    @Override
+    public void OnChangeReload() {
+        verticalLayout.removeAll();
+        grid.removeAllColumns();
+        verticalLayout.add(teamNameField, teamMottoField, horizontalLayout, setGridContextMenu());
     }
 }
