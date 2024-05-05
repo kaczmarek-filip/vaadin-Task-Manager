@@ -6,6 +6,7 @@ import com.example.application.components.data.database.hibernate.ChatDAO;
 import com.example.application.components.elements.ActiveDot;
 import com.example.application.components.elements.Element;
 import com.example.application.components.elements.components.colors.MessagesColors;
+import com.vaadin.flow.component.contextmenu.ContextMenu;
 
 public class ChatPersonElement extends Element {
     private final Chat chat;
@@ -14,7 +15,6 @@ public class ChatPersonElement extends Element {
 
     //TODO: Pozycjonowanie po ostatnich wiadomościach
 
-    //TODO: Delete chats
     public ChatPersonElement(MessengerElement messengerElement, Chat chat) {
         super("chatScrollerElement");
         this.chat = chat;
@@ -22,6 +22,19 @@ public class ChatPersonElement extends Element {
 
         layout();
         listenerAction();
+        contextMenu();
+    }
+
+    private void contextMenu() {
+        ContextMenu contextMenu = new ContextMenu();
+        contextMenu.setTarget(this);
+        contextMenu.addItem("Delete", menuItemClickEvent -> {
+            ChatDAO.delete(chat);
+            setVisible(false);
+        });
+
+
+        add(contextMenu);
     }
 
     @Override

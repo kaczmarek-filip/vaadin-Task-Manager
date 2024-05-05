@@ -40,4 +40,10 @@ public class ChatDAO extends HibernateConnection {
         }
         return false;
     }
+    public static void delete(Chat chat) {
+        start();
+        session.delete(chat);
+        commit();
+        close();
+    }
 }
