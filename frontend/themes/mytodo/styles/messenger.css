@@ -1,12 +1,10 @@
 .myMessage{
     margin-left: auto !important;
-    margin-right: 1%;
     /*background-color: #a5daff;*/
     background-color: var(--lumo-secondary-color-10pct);
 }
 .message{
-    margin-bottom: 0.5vh;
-    margin-left: 1%;
+    margin: 0.5vh 1%;
     border-radius: 25px;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.08), 0 1px 5px 0 rgba(0, 0, 0, 0.1);
     width: fit-content;

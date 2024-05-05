@@ -31,6 +31,7 @@ public class ChatPersonElement extends Element {
         contextMenu.addItem("Delete", menuItemClickEvent -> {
             ChatDAO.delete(chat);
             setVisible(false);
+            //TODO: Delete confirmation
         });
 
 

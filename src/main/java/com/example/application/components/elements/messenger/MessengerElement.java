@@ -19,9 +19,9 @@ import java.util.List;
 
 @Component
 public class MessengerElement extends VerticalLayout {
+
     private MessageList messageList;
     private Chat chat;
-    private ZoneId zoneId = ZoneId.of("Europe/Warsaw");
 
     public MessengerElement() {
         setHeightFull();
@@ -42,10 +42,6 @@ public class MessengerElement extends VerticalLayout {
         add(messageList(), messageInput());
     }
 
-    private Text chatWith() {
-        return new Text("Chat with " + chat.getUserTo().getDisplayName());
-    }
-
     private MessageList messageList() {
         messageList = new MessageList();
         messageList.setHeightFull();
@@ -54,16 +50,8 @@ public class MessengerElement extends VerticalLayout {
         ArrayList<MessageListItem> messageListItems = new ArrayList<>();
 
         for (Message message : MessageDAO.getMessages(chat)) {
-            MessageListItem item = new MessageListItem(message.getContent(), message.getLocalDateTime().atZone(zoneId).toInstant(), message.getSender().getDisplayName());
-            item.setUserImageResource(BlobConverter.getAvatar(message.getSender()));
-            item.addClassNames("message");
-            if (message.getSender().equals(User.getLoggedInUser())) {
-                item.setUserName("You");
-                item.addClassNames("myMessage");
-            }
-            if (!message.isRead() && !message.getSender().equals(User.getLoggedInUser())) {
-                item.addClassNames("notRead");
-            }
+
+            MessageItem item = new MessageItem(message);
             messageListItems.add(item);
         }
 
@@ -76,15 +64,13 @@ public class MessengerElement extends VerticalLayout {
         messageInput.setWidthFull();
 
         messageInput.addSubmitListener(e -> {
-            MessageListItem item2 = new MessageListItem(e.getValue(), LocalDateTime.now().atZone(zoneId).toInstant(), "You");
-            item2.setUserImageResource(BlobConverter.getAvatar(User.getLoggedInUser()));
-            item2.addClassNames("myMessage", "message");
+            Message message = new Message(chat, User.getLoggedInUser(), e.getValue(), LocalDateTime.now());
+            MessageItem item = new MessageItem(message);
+
             List<MessageListItem> items = new ArrayList<>(messageList.getItems());
-            items.add(item2);
+            items.add(item);
             messageList.setItems(items);
 
-
-            Message message = new Message(chat, User.getLoggedInUser(), e.getValue(), LocalDateTime.now());
             MessageDAO.sendMessage(message);
         });
 
