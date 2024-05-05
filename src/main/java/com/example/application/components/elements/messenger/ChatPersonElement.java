@@ -3,9 +3,9 @@ package com.example.application.components.elements.messenger;
 import com.example.application.components.data.Chat;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.ChatDAO;
+import com.example.application.components.dialogs.DeleteConfirmDialog;
 import com.example.application.components.elements.ActiveDot;
 import com.example.application.components.elements.Element;
-import com.example.application.components.elements.components.colors.MessagesColors;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 
 public class ChatPersonElement extends Element {
@@ -29,9 +29,15 @@ public class ChatPersonElement extends Element {
         ContextMenu contextMenu = new ContextMenu();
         contextMenu.setTarget(this);
         contextMenu.addItem("Delete", menuItemClickEvent -> {
-            ChatDAO.delete(chat);
-            setVisible(false);
-            //TODO: Delete confirmation
+
+            DeleteConfirmDialog dialog = new DeleteConfirmDialog("Delete the chat?", "All messages from this conversation will be deleted");
+            dialog.setAction(buttonClickEvent -> {
+                ChatDAO.delete(chat);
+                setVisible(false);
+                dialog.close();
+                messengerElement.removeView();
+            });
+            dialog.open();
         });
 
 

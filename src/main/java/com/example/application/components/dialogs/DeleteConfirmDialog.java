@@ -7,6 +7,8 @@ import com.example.application.components.data.database.hibernate.HibernateConne
 import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.components.elements.components.CancelButton;
 import com.example.application.views.main.TeamsSite;
+import com.vaadin.flow.component.ClickEvent;
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -70,5 +72,18 @@ public class DeleteConfirmDialog extends Dialog {
         });
 
         return this;
+    }
+
+    public DeleteConfirmDialog(String header, String content) {
+        setHeaderTitle(header);
+        add(content);
+        getFooter().add(new CancelButton(this));
+    }
+    public void setAction(ComponentEventListener<ClickEvent<Button>> componentEventListener){
+        Button deleteButton = new Button("Delete");
+        deleteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
+
+        deleteButton.addClickListener(componentEventListener);
+        getFooter().add(deleteButton);
     }
 }
