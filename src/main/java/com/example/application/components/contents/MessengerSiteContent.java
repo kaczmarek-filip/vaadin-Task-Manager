@@ -20,6 +20,8 @@ public class MessengerSiteContent extends HorizontalLayout implements ChatCreate
     public MessengerSiteContent() {
         setWidthFull();
         setHeightFull();
+        getStyle().set("gap", "0");
+
 
         add(chatsScroller());
         messengerElement.setWidth(messengerWidthInPercent, Unit.PERCENTAGE);

@@ -11,6 +11,7 @@ public class TeamsUserRoleElement extends Element {
         this.teamRole = teamRole;
         layout();
         listenerAction();
+        setColor();
     }
 
     @Override
@@ -21,5 +22,14 @@ public class TeamsUserRoleElement extends Element {
     @Override
     public void listenerAction() {
 
+    }
+    private void setColor(){
+        if(teamRole.equals(TeamRoles.OWNER)){
+            addClassName("teams-owner");
+        } else if (teamRole.equals(TeamRoles.ADMIN)) {
+            addClassName("teams-admin");
+        } else if (teamRole.equals(TeamRoles.MODERATOR)) {
+            addClassName("teams-moderator");
+        }
     }
 }

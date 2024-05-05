@@ -28,9 +28,7 @@ public class ChatPersonElement extends Element {
         User user = chat.getUserTo();
         setText(user.getDisplayName());
 
-        if (ChatDAO.isHaveUnreadMessages(chat)) {
-            getElement().getStyle().set("background-color", MessagesColors.notRead).set("order", "-1");
-        }
+        setChatColor();
         add(ActiveDot.get(chat.getUserTo()));
 
         setColors();
@@ -51,8 +49,20 @@ public class ChatPersonElement extends Element {
                 lastClickedButton.removeClassName("currentChat");
             }
             addClassName("currentChat");
-            getElement().getStyle().set("background-color", MessagesColors.standard);
             lastClickedButton = this;
         });
+    }
+    private void setChatColor(){
+
+        boolean isUnRead = ChatDAO.isHaveUnreadMessages(chat);
+        if (isUnRead) {
+            addClassName("notRead");
+            getElement().getStyle().set("order", "-1");
+
+            addClickListener(event -> {
+                removeClassName("notRead");
+            });
+        }
+
     }
 }

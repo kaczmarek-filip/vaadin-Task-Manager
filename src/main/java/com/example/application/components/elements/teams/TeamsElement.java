@@ -22,23 +22,10 @@ public class TeamsElement extends Element {
     public void layout() {
 
         H1 title = new H1(team.getName());
-        title.getStyle().set("text-align", "center");
-
-        Div membersDiv = new Div();
-        membersDiv.setClassName("teamsMembersDiv");
-        Scroller scroller = new Scroller();
-        scroller.setScrollDirection(Scroller.ScrollDirection.VERTICAL);
-        scroller.setHeight("25vh");
-
-
-        for(TeamMember teamMember : TeamDAO.findUsersInTeam(team.getId())){
-            membersDiv.add(new TeamsMemberElement(teamMember));
-        }
-
-        scroller.setContent(membersDiv);
+        title.addClassName("teamsTitle");
         add(new TeamsUserRoleElement(TeamDAO.getUserRole(team, User.getLoggedInUser())));
         add(title);
-        add(scroller);
+        //TODO: Dodać ikonkę informującą o tym, czy są jakieś taski do zrobienia
     }
 
     @Override

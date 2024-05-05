@@ -59,7 +59,8 @@ public abstract class AbstractTaskBlockElement extends Element implements TaskDo
 
     protected void isDoneChecker(){
         if (done){
-            getStyle().set("background-color", "#03C03C");
+            addClassName("task-done");
+            removeClassNames("task-late task-almost-late");
             getStyle().set("order", "1");
         } else {
             checkDate();
@@ -68,12 +69,12 @@ public abstract class AbstractTaskBlockElement extends Element implements TaskDo
     }
 
     private void checkDate(){
+        removeClassName("task-done");
+
         if (daysLeft <= 0){
-            getStyle().set("background-color", "#ba1a1a");
+            addClassName("task-late");
         } else if (daysLeft < 3) {
-            getStyle().set("background-color", "rgba(255, 86, 74, 0.6)");
-        } else {
-            getStyle().set("background-color", "#006783");
+            addClassName("task-almost-late");
         }
     }
 }

@@ -36,7 +36,6 @@ public class TaskDialog extends Dialog {
         Checking is user can delete task
          */
         if (task.getHolderFromUser(User.getLoggedInUser()) != null ||
-//                (task.getCreator().equals(User.getLoggedInUser()) && task.getHolders().isEmpty())) {
                 (task.getCreator().equals(User.getLoggedInUser()))) {
             if (!taskBlockElement.isDone()) {
                 getFooter().add(doneButton());
@@ -58,10 +57,10 @@ public class TaskDialog extends Dialog {
         date.addClassName("taskDialogTime");
 
         Html html = new Html("<pre>" + task.getDescription() + "</pre>");
-        html.getStyle().set("width", "-webkit-fill-available").set("padding", "2%");
+        html.getStyle().set("width", "-webkit-fill-available").set("padding", "2%").set("text-wrap", "wrap");
 
 
-        verticalLayout.getStyle().set("width", "28rem").set("max-width", "100%");
+        verticalLayout.getStyle().set("width", "28rem").set("max-width", "100%").set("margin", "auto");
         verticalLayout.add(date, html);
         return verticalLayout;
     }

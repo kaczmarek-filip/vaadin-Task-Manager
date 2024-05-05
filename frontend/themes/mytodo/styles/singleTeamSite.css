@@ -1,10 +1,19 @@
 .singleTeamMemberElement{
-    background-color: cornflowerblue;
+    /*background-color: cornflowerblue;*/
     width: 100%;
-    border-radius: 10px;
-    padding: 2% 5%;
+    /*border-radius: 10px;*/
+    /*padding: 2% 5%;*/
+    /*box-sizing: border-box;*/
+    /*position: relative;*/
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.08), 0 1px 5px 0 rgba(0, 0, 0, 0.1);
+    border: none;
+    margin-bottom: 0 !important;
+    border-radius: 5px !important;
+    padding: 8px 16px;
+    cursor: pointer;
     box-sizing: border-box;
     position: relative;
+    transition: all 0.5s ease-in-out;
 }
 
 .singleTeamMotto{
@@ -13,3 +22,20 @@
     padding: 2%;
     text-align: center;
 }
+
+/*.chatScrollerElement{*/
+/*    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.08), 0 1px 5px 0 rgba(0, 0, 0, 0.1);*/
+/*    border: none;*/
+/*    margin-bottom: 0 !important;*/
+/*    border-radius: 5px !important;*/
+/*    padding: 8px 16px;*/
+/*    cursor: pointer;*/
+/*    box-sizing: border-box;*/
+/*    position: relative;*/
+/*    transition: all 0.5s ease-in-out;*/
+/*}*/
+/*.chatScrollerElement:hover {*/
+/*    !*background-color: #4c62ba;*!*/
+/*    background-color: var(--blue);*/
+/*    color: white;*/
+/*}*/

@@ -38,7 +38,8 @@ public class MessengerElement extends VerticalLayout {
 
     private void messageVerticalLayout() {
         setHeightFull();
-        add(chatWith(), messageList(), messageInput());
+        getStyle().set("padding", "0");
+        add(messageList(), messageInput());
     }
 
     private Text chatWith() {

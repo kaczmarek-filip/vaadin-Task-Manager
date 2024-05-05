@@ -8,14 +8,23 @@
     align-content: flex-start;
 }
 .taskElement{
-    background-color: #006783;
-    padding: 1%;
+    padding: 2%;
     border-radius: 5px;
-    color: #ffffff;
+    /*color: #072140;*/
+    color: var(--blue);
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease-in-out;
+    border: 2px solid transparent;
+}
+:root {
+    --hover-color: var(--primary);
+}
+.taskElement:hover{
+    border-color: var(--hover-color);
+    box-shadow: 0 1px 20px 0 var(--hover-color);
 }
 .taskElementTitle{
     text-align: center;
-    /*margin-bottom: 2vh;*/
     font-weight: bold;
 }
 .taskElementDeadline{
@@ -30,4 +39,16 @@
     color: white;
     padding: 1% 2%;
     border-radius: 5px;
+}
+.task-late {
+    /*border-color: rgb(170, 7, 17);*/
+    border-color: var(--red);
+}
+.task-almost-late {
+    /*border-color: #253b73;*/
+    border-color: var(--secondary);
+}
+.task-done {
+    /*border-color: #509837;*/
+    border-color: var(--green);
 }

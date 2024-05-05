@@ -6,3 +6,53 @@
 @import "styles/singleTeamSite.css";
 @import "styles/tasks.css";
 @import "styles/messenger.css";
+@import "media.css";
+
+:podglad {
+    --never-touch-primary: #22AED1;
+    --never-touch-secondary: #F3C98B;
+    --never-touch-red: #F56960;
+    --never-touch-blue: #28536B;
+    --never-touch-green: #379634;
+    /*--never-touch-green: #388659;*/
+    /*--never-touch-green: #7BE0AD;*/
+    --never-touch-amber: #FFBF00;
+}
+
+:root {
+    --primary-color: 34, 174, 209;
+    --secondary-color: 243, 201, 139;
+    --red-color: 245, 105, 96;
+    --blue-color: 40, 83, 107;
+    --green-color: 55, 150, 52;
+    --amber-color: 255, 191, 0;
+
+    --primary: rgba(var(--primary-color), 1);
+    --secondary: rgba(var(--secondary-color), 1);
+    --red: rgba(var(--red-color), 1);
+    --blue: rgba(var(--blue-color), 1);
+    --green: rgba(var(--green-color), 1);
+    --amber: rgba(var(--amber-color), 1);
+}
+
+/*
+    Custom theme
+ */
+:root {
+    /*--lumo-primary-color: var(--primary);*/
+    --lumo-success-color: rgba(var(--green-color), 1);
+    --lumo-success-text-color: rgba(var(--green-color), 1);
+    --lumo-error-color: rgba(var(--red-color), 1);
+    --lumo-error-text-color: rgba(var(--red-color), 1);
+
+
+    --lumo-primary-color: rgba(var(--primary-color), 1);
+    --lumo-primary-color-10pct: rgba(var(--primary-color), 0.1);
+    --lumo-primary-color-50pct: rgba(var(--primary-color), 0.5);
+    --lumo-primary-text-color: var(--primary);
+
+    --lumo-secondary-color: rgba(var(--blue-color), 1);
+    --lumo-secondary-color-10pct: rgba(var(--blue-color), 0.1);
+    --lumo-secondary-color-50pct: rgba(var(--blue-color), 0.5);
+    --lumo-secondary-text-color: var(--blue);
+}
