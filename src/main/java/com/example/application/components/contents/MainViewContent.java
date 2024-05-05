@@ -3,7 +3,7 @@ package com.example.application.components.contents;
 import com.example.application.components.data.Task;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.TaskDAO;
-import com.example.application.components.elements.tasks.SingleTaskBlockElement;
+import com.example.application.components.elements.tasks.OwnTaskBlockElement;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
@@ -33,7 +33,7 @@ public class MainViewContent extends HorizontalLayout {
             if (i >= limit) {
                 break;
             }
-            horizontalLayout.add(new SingleTaskBlockElement(task));
+            horizontalLayout.add(new OwnTaskBlockElement(task));
             i++;
         }
 

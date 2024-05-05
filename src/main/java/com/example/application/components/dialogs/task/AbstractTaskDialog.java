@@ -1,56 +1,29 @@
 package com.example.application.components.dialogs.task;
 
 import com.example.application.components.data.Task;
-import com.example.application.components.data.User;
-import com.example.application.components.elements.components.CallbackValues;
-import com.example.application.components.elements.components.TaskDoneCallback;
-import com.example.application.components.elements.tasks.AbstractTaskBlockElement;
+import com.example.application.components.elements.components.CancelButton;
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-/**
- *
- */
-//TODO: Zrobić w abstrakcję
-public class TaskDialog extends Dialog {
-    private Task task;
-    private TaskDoneCallback callback;
+public abstract class AbstractTaskDialog extends Dialog {
 
-    public TaskDialog(AbstractTaskBlockElement taskBlockElement, TaskDoneCallback callback) {
-        this.task = taskBlockElement.getTask();
-        this.callback = callback;
+    protected Task task;
+
+    public AbstractTaskDialog(Task task) {
+        this.task = task;
         setHeaderTitle(task.getTitle());
 
         add(setLayout());
         setMinHeight("200");
         setMinWidth("500");
-        getHeader().add(cancelButton());
-
-
-        /*
-        Checking is user can delete task
-         */
-        if (task.getHolderFromUser(User.getLoggedInUser()) != null ||
-                (task.getCreator().equals(User.getLoggedInUser()))) {
-            if (!taskBlockElement.isDone()) {
-                getFooter().add(doneButton());
-            } else {
-                getFooter().add(unDoneButton());
-                getFooter().add(deleteButton());
-            }
-        }
-
+        getHeader().add(new CancelButton(this).crossButton());
     }
 
-    /**
-     * @return {@link VerticalLayout}
-     */
     private VerticalLayout setLayout() {
         VerticalLayout verticalLayout = new VerticalLayout();
 
@@ -66,34 +39,29 @@ public class TaskDialog extends Dialog {
         return verticalLayout;
     }
 
-    private Button cancelButton() {
-        Button button = new Button(new Icon("lumo", "cross"));
-        button.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-        button.addClickListener(e -> {
-            close();
-        });
-        return button;
-    }
-
     private Button doneButton() {
         Button button = new Button("Done");
         button.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
         button.addClickListener(e -> {
             close();
-            callback.onSave(CallbackValues.DONE);
+            onDoneButton();
         });
         return button;
     }
+
+    protected abstract void onDoneButton();
 
     private Button unDoneButton() {
         Button button = new Button("Undone");
         button.addThemeVariants(ButtonVariant.LUMO_ERROR);
         button.addClickListener(e -> {
             close();
-            callback.onSave(CallbackValues.UNDONE);
+            onUnDoneButton();
         });
         return button;
     }
+
+    protected abstract void onUnDoneButton();
 
     private Button deleteButton() {
         Button button = new Button(VaadinIcon.TRASH.create());
@@ -101,8 +69,19 @@ public class TaskDialog extends Dialog {
         button.getStyle().set("margin-left", "auto");
         button.addClickListener(e -> {
             close();
-            callback.onSave(CallbackValues.DELETE);
+            onDeleteButton();
         });
         return button;
+    }
+
+    protected abstract void onDeleteButton();
+
+    protected void canEdit(boolean isDone) {
+        if (!isDone) {
+            getFooter().add(doneButton());
+        } else {
+            getFooter().add(unDoneButton());
+            getFooter().add(deleteButton());
+        }
     }
 }

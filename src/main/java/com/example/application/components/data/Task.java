@@ -57,7 +57,7 @@ public class Task {
         return deadline.format(formatter);
     }
 
-    public TaskHolder getHolderFromUser(User user) {
+    public TaskHolder isUserInHolders(User user) {
         for (TaskHolder holder : holders) {
             if (holder.getUser().equals(user)) {
                 return holder;
