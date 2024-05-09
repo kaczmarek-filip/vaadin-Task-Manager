@@ -20,7 +20,7 @@ public class LoginService {
             SessionVaadin.loginUser(UserDAO.getUserById(loggedInUser.getId()));
 
             UserDAO.setOnline(true);
-            System.err.println(SessionVaadin.getUser().getDisplayName());
+            System.err.println("Zalogowano: " + SessionVaadin.getUser().getDisplayName());
 
             return true;
 

@@ -11,23 +11,23 @@ import java.util.List;
 public class TaskHolderDAO extends HibernateConnection {
 
     public static void setIsPartDone(TaskHolder taskHolder) {
-        start_old();
+        start();
         session.update(taskHolder);
         commit();
-        close_old();
+        close();
     }
 
     public static List<Task> getTasks(User user, Team team) {
-        start_old();
+        start();
         Query<Task> query = session.createQuery("FROM Task t JOIN t.holders h WHERE h.user.id = :userId AND t.team.id = :teamId ORDER BY t.deadline", Task.class);
         query.setParameter("userId", user.getId()).setParameter("teamId", team.getId());
         List<Task> tasks = query.getResultList();
-        close_old();
+        close();
         return tasks;
     }
 
     public static void createHolders(List<User> users, Task task) {
-        start_old();
+        start();
         for (User user : users) {
             TaskHolder taskHolder = new TaskHolder();
             taskHolder.setUser(user);
@@ -35,13 +35,13 @@ public class TaskHolderDAO extends HibernateConnection {
             session.save(taskHolder);
         }
         commit();
-        close_old();
+        close();
     }
 
     public static void deleteTask(TaskHolder taskHolder) {
-        start_old();
+        start();
         session.delete(taskHolder);
         commit();
-        close_old();
+        close();
     }
 }

@@ -1,6 +1,5 @@
 package com.example.application;
 
-import com.example.application.components.data.database.hibernate.HibernateConnection;
 import com.example.application.components.data.database.sql.DBEncryption;
 import com.example.application.services.encryption.Encrypter;
 import com.vaadin.flow.component.page.AppShellConfigurator;
@@ -11,10 +10,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * The entry point of the Spring Boot application.
- *
+ * <p>
  * Use the @PWA annotation make the application installable on phones, tablets
  * and some desktop browsers.
- *
  */
 @SpringBootApplication
 //@Theme(value = "myTheme")
@@ -32,8 +30,6 @@ public class Application implements AppShellConfigurator {
             Encrypter.keyRecovery();
         }
         Encrypter.saveKey();
-
-//        HibernateConnection.start();
     }
 
 }

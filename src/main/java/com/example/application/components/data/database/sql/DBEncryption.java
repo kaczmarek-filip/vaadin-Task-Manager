@@ -24,7 +24,6 @@ public class DBEncryption extends DatabaseConnection implements ApplicationListe
      */
     @Override
     public void onApplicationEvent(ContextClosedEvent event) {
-        HibernateConnection.close();
         try {
             Map<Integer, String> map = getAllPass();
             map.replaceAll((integer, s) -> Encrypter.decrypt(s));

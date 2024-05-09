@@ -17,8 +17,6 @@ public class MainView extends Navigation{
 
     public MainView() {
         super("Main");
-
-
     }
 
     @Override

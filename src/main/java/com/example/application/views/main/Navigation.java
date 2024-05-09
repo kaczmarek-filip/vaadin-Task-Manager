@@ -1,15 +1,12 @@
 package com.example.application.views.main;
 
-import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
-import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.services.LoginService;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.sidenav.SideNav;
@@ -78,18 +75,9 @@ public class Navigation extends AppLayout implements BeforeEnterObserver {
         return logOut;
     }
 
-    @Deprecated
-    private Paragraph loggedInUser() {
-        Paragraph paragraph = new Paragraph(User.getLoggedInUser().getDisplayName());
-        paragraph.addClassName("loggedInUser");
-        paragraph.getElement().getStyle().set("font-size", LumoUtility.FontSize.LARGE);
-        return paragraph;
-    }
-
-    protected Button addTopNavButton(Button button) {
+    protected void addTopNavButton(Button button) {
         button.addClassName("customNavButton");
         addToNavbar(button);
-        return button;
     }
 
     /**

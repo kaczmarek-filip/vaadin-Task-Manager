@@ -6,15 +6,12 @@ import com.example.application.components.data.database.hibernate.ChatDAO;
 import com.example.application.components.dialogs.DeleteConfirmDialog;
 import com.example.application.components.elements.ActiveDot;
 import com.example.application.components.elements.Element;
-import com.example.application.components.elements.components.MyNotification;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.server.VaadinSession;
-import org.springframework.transaction.annotation.Transactional;
 
 public class ChatPersonElement extends Element {
     private final Chat chat;
     private final MessengerElement messengerElement;
-//    private ChatPersonElement lastClickedButton = null;
 
     //TODO: Pozycjonowanie po ostatnich wiadomościach
 
@@ -76,11 +73,11 @@ public class ChatPersonElement extends Element {
                 ((ChatPersonElement) VaadinSession.getCurrent().getAttribute("lastClickedButton")).removeClassName("currentChat");
             }
             addClassName("currentChat");
-//            lastClickedButton = this;
             VaadinSession.getCurrent().setAttribute("lastClickedButton", this);
         });
     }
-    private void setChatColor(){
+
+    private void setChatColor() {
 
         boolean isUnRead = ChatDAO.isHaveUnreadMessages(chat);
         if (isUnRead) {

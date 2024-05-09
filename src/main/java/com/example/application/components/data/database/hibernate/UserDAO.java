@@ -10,21 +10,21 @@ import java.util.List;
 
 public class UserDAO extends HibernateConnection {
     public static void registerUser(User user, String password) {
-        start_old();
+        start();
 
         user.setPassword(Encrypter.encrypt(password));
         session.persist(user);
 
-        close_old();
+        close();
     }
 
     public static boolean isEmailExists(String email) {
-        start_old();
+        start();
         try {
             Query query = session.createQuery("SELECT COUNT(*) FROM User WHERE email = :email");
             query.setParameter("email", email);
             Long count = (Long) query.uniqueResult();
-            close_old();
+            close();
             return count > 0;
         } catch (Exception e) {
             return false;
@@ -32,59 +32,59 @@ public class UserDAO extends HibernateConnection {
     }
 
     public static User loginUser(String email, String password) {
-        start_old();
+        start();
         Query<User> query = session.createQuery("FROM User WHERE email = :email AND password = :password");
         query.setParameter("email", email);
         query.setParameter("password", Encrypter.encrypt(password));
         User user = query.uniqueResult();
-        close_old();
+        close();
         return user;
     }
 
     public static List<User> getAllUsers() {
-        start_old();
+        start();
         Query<User> query = session.createQuery("FROM User ");
         List<User> users = query.list();
-        close_old();
+        close();
         return users;
     }
 
     @Deprecated
     public static User getUserById(int id) {
-        start_old();
+        start();
         Query<User> query = session.createQuery("FROM User WHERE id = :id");
         query.setParameter("id", id);
         User user = query.uniqueResult();
-        close_old();
+        close();
         return user;
     }
 
     public static void setOnline(boolean online) {
-        start_old();
+        start();
         Query query = session.createQuery("UPDATE User SET online = :online WHERE id = :id");
         query.setParameter("online", online).setParameter("id", SessionVaadin.getUser().getId());
         query.executeUpdate();
-        close_old();
+        close();
     }
 
     @SneakyThrows
     public static void updateAvatar(byte[] bytes) {
-        start_old();
+        start();
 
         User user = session.get(User.class, User.getLoggedInUser().getId());
         user.setAvatar(bytes);
         session.update(user);
 
         commit();
-        close_old();
+        close();
     }
 
     public static byte[] getAvatar(User user) {
-        start_old();
+        start();
 
         byte[] avatar = session.get(User.class, user.getId()).getAvatar();
 
-        close_old();
+        close();
         return avatar;
     }
 }

@@ -4,8 +4,6 @@ import com.example.application.components.data.Chat;
 import com.example.application.components.data.Message;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.MessageDAO;
-import com.example.application.services.encryption.AesKeys;
-import com.example.application.services.encryption.StaticEncrypter;
 import com.vaadin.flow.component.messages.MessageInput;
 import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;

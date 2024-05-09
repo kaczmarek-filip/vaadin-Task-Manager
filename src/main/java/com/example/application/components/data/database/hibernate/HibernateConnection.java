@@ -5,26 +5,19 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.server.VaadinSession;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 public abstract class HibernateConnection {
     private static SessionFactory sessionFactory;
     protected static Session session;
 
-    protected static void start_old() {
+    protected static void start() {
         try {
-//            sessionFactory = new Configuration().configure().buildSessionFactory();
-//            session = sessionFactory.openSession();
             sessionFactory = (SessionFactory) VaadinSession.getCurrent().getAttribute("hibernateSession");
             session = sessionFactory.openSession();
             session.beginTransaction();
         } catch (Exception e) {
-//            MyNotification.show("Database connection error", NotificationVariant.LUMO_ERROR, false);
-            MyNotification.show(e.toString(), NotificationVariant.LUMO_ERROR, false);
+            MyNotification.show("Database connection error", NotificationVariant.LUMO_ERROR, false);
         }
-
-    }
-    public static void start(){
 
     }
 
@@ -32,7 +25,7 @@ public abstract class HibernateConnection {
         session.getTransaction().commit();
     }
 
-    protected static void close_old() {
+    protected static void close() {
         session.close();
 //        sessionFactory.close();
     }
@@ -42,11 +35,8 @@ public abstract class HibernateConnection {
         close();
     }
     public static void refresh(Object object){
-        start_old();
+        start();
         session.refresh(object);
-        close_old();
-    }
-    public static void close(){
-
+        close();
     }
 }
