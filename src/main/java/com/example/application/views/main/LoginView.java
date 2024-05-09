@@ -15,6 +15,8 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
+import org.hibernate.cfg.Configuration;
 
 @Route("login")
 @PageTitle("Login")
@@ -57,7 +59,9 @@ public class LoginView extends VerticalLayout {
         add(horizontalLayout);
         add(new ForgotPassword().display());
 
-
+        // Tworzenie sesji hibernate dla użytkownika
+        VaadinSession.getCurrent().setAttribute("hibernateSession", new Configuration().configure().buildSessionFactory());
+        System.err.println(VaadinSession.getCurrent());
     }
 
     private VerticalLayout setLayout() {

@@ -2,6 +2,7 @@ package com.example.application.components.data.database.hibernate;
 
 import com.example.application.components.elements.components.MyNotification;
 import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.server.VaadinSession;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -12,11 +13,14 @@ public abstract class HibernateConnection {
 
     protected static void start_old() {
         try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
+//            sessionFactory = new Configuration().configure().buildSessionFactory();
+//            session = sessionFactory.openSession();
+            sessionFactory = (SessionFactory) VaadinSession.getCurrent().getAttribute("hibernateSession");
             session = sessionFactory.openSession();
             session.beginTransaction();
         } catch (Exception e) {
-            MyNotification.show("Database connection error", NotificationVariant.LUMO_ERROR, false);
+//            MyNotification.show("Database connection error", NotificationVariant.LUMO_ERROR, false);
+            MyNotification.show(e.toString(), NotificationVariant.LUMO_ERROR, false);
         }
 
     }
@@ -30,7 +34,7 @@ public abstract class HibernateConnection {
 
     protected static void close_old() {
         session.close();
-        sessionFactory.close();
+//        sessionFactory.close();
     }
     public static void flush(){
         start();

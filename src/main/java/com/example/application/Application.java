@@ -33,7 +33,7 @@ public class Application implements AppShellConfigurator {
         }
         Encrypter.saveKey();
 
-        HibernateConnection.start();
+//        HibernateConnection.start();
     }
 
 }
