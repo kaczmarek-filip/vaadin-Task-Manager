@@ -2,7 +2,6 @@ package com.example.application.components.data.database.hibernate;
 
 import com.example.application.components.elements.components.MyNotification;
 import com.vaadin.flow.component.notification.NotificationVariant;
-import lombok.Setter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -11,7 +10,7 @@ public abstract class HibernateConnection {
     private static SessionFactory sessionFactory;
     protected static Session session;
 
-    protected static void start() {
+    protected static void start_old() {
         try {
             sessionFactory = new Configuration().configure().buildSessionFactory();
             session = sessionFactory.openSession();
@@ -21,12 +20,15 @@ public abstract class HibernateConnection {
         }
 
     }
+    public static void start(){
+
+    }
 
     protected static void commit() {
         session.getTransaction().commit();
     }
 
-    protected static void close() {
+    protected static void close_old() {
         session.close();
         sessionFactory.close();
     }
@@ -36,8 +38,11 @@ public abstract class HibernateConnection {
         close();
     }
     public static void refresh(Object object){
-        start();
+        start_old();
         session.refresh(object);
-        close();
+        close_old();
+    }
+    public static void close(){
+
     }
 }

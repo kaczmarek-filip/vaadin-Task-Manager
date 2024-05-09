@@ -4,8 +4,8 @@ import com.example.application.components.data.Chat;
 import com.example.application.components.data.Message;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.MessageDAO;
-import com.example.application.services.BlobConverter;
-import com.vaadin.flow.component.Text;
+import com.example.application.services.encryption.AesKeys;
+import com.example.application.services.encryption.StaticEncrypter;
 import com.vaadin.flow.component.messages.MessageInput;
 import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
@@ -13,7 +13,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 

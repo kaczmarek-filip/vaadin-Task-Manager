@@ -1,5 +1,6 @@
 package com.example.application;
 
+import com.example.application.components.data.database.hibernate.HibernateConnection;
 import com.example.application.components.data.database.sql.DBEncryption;
 import com.example.application.services.encryption.Encrypter;
 import com.vaadin.flow.component.page.AppShellConfigurator;
@@ -31,6 +32,8 @@ public class Application implements AppShellConfigurator {
             Encrypter.keyRecovery();
         }
         Encrypter.saveKey();
+
+        HibernateConnection.start();
     }
 
 }

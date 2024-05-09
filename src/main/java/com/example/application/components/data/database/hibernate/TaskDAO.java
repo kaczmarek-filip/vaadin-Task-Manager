@@ -9,37 +9,37 @@ import java.util.List;
 
 public class TaskDAO extends HibernateConnection {
     public static void createTask(Task task) {
-        start();
+        start_old();
         task.setCreationDate(LocalDate.now());
         task.setCreator(User.getLoggedInUser());
 
         session.persist(task);
         session.flush();
-        close();
+        close_old();
     }
 
     public static List<Task> getTasks(User user) {
-        start();
+        start_old();
         Query<Task> query = session.createQuery("FROM Task WHERE creator.id = :id AND team = null ORDER BY deadline");
         query.setParameter("id", user.getId());
         List<Task> taskList = query.getResultList();
         commit();
-        close();
+        close_old();
         return taskList;
     }
 
     public static void setIsDone(Task task) {
-        start();
+        start_old();
         session.update(task);
         commit();
-        close();
+        close_old();
     }
 
     public static void delete(Task task) {
-        start();
+        start_old();
         session.delete(task);
         commit();
-        close();
+        close_old();
     }
 
 }

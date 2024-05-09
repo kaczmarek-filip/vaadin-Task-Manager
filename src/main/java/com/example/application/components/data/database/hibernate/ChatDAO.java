@@ -9,30 +9,30 @@ import java.util.List;
 
 public class ChatDAO extends HibernateConnection {
     public static List<Chat> getChats(User user) {
-        start();
+        start_old();
         Query<Chat> query = session.createQuery("FROM Chat WHERE user1.id = :id OR user2.id = :id");
         query.setParameter("id", user.getId());
         List<Chat> chatList = query.getResultList();
-        close();
+        close_old();
         return chatList;
     }
 
     public static Chat addChat(User user1, User user2) {
-        start();
+        start_old();
         Chat chat = new Chat();
         chat.setUser1(user1);
         chat.setUser2(user2);
         session.persist(chat);
-        close();
+        close_old();
         return chat;
     }
 
     public static boolean isHaveUnreadMessages(Chat chat) {
-        start();
-        Query query = session.createQuery("FROM Message WHERE chat.id = :chatId AND isRead = false ");
+        start_old();
+        Query<Message> query = session.createQuery("FROM Message WHERE chat.id = :chatId AND isRead = false ");
         query.setParameter("chatId", chat.getId());
         List<Message> messageList = query.getResultList();
-        close();
+        close_old();
         for (Message message : messageList) {
             if (!message.isRead() && !message.getSender().equals(User.getLoggedInUser())) {
                 return true;
@@ -41,9 +41,9 @@ public class ChatDAO extends HibernateConnection {
         return false;
     }
     public static void delete(Chat chat) {
-        start();
+        start_old();
         session.delete(chat);
         commit();
-        close();
+        close_old();
     }
 }

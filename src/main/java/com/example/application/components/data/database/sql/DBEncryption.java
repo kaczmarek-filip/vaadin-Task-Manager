@@ -1,5 +1,6 @@
 package com.example.application.components.data.database.sql;
 
+import com.example.application.components.data.database.hibernate.HibernateConnection;
 import com.example.application.services.encryption.Encrypter;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ public class DBEncryption extends DatabaseConnection implements ApplicationListe
      */
     @Override
     public void onApplicationEvent(ContextClosedEvent event) {
+        HibernateConnection.close();
         try {
             Map<Integer, String> map = getAllPass();
             map.replaceAll((integer, s) -> Encrypter.decrypt(s));
