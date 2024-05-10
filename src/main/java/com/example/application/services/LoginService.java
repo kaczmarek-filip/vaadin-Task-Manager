@@ -3,6 +3,7 @@ package com.example.application.services;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.UserDAO;
 import com.example.application.components.elements.components.MyNotification;
+import com.example.application.services.session.SessionVaadin;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import org.springframework.stereotype.Component;
@@ -16,11 +17,11 @@ public class LoginService {
         if (loggedInUser != null) {
             MyNotification.show("Logged in", NotificationVariant.LUMO_SUCCESS, false);
 
-            User.getInstance().setId(loggedInUser.getId());
-            User.getInstance().setDisplayName(loggedInUser.getDisplayName());
-            User.getInstance().setEmail(loggedInUser.getEmail());
+            SessionVaadin.loginUser(UserDAO.getUserById(loggedInUser.getId()));
 
             UserDAO.setOnline(true);
+            System.err.println("Zalogowano: " + SessionVaadin.getUser().getDisplayName());
+
             return true;
 
         } else {

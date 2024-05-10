@@ -2,10 +2,9 @@ package com.example.application.components.data.database.hibernate;
 
 import com.example.application.components.elements.components.MyNotification;
 import com.vaadin.flow.component.notification.NotificationVariant;
-import lombok.Setter;
+import com.vaadin.flow.server.VaadinSession;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 public abstract class HibernateConnection {
     private static SessionFactory sessionFactory;
@@ -13,7 +12,7 @@ public abstract class HibernateConnection {
 
     protected static void start() {
         try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
+            sessionFactory = (SessionFactory) VaadinSession.getCurrent().getAttribute("hibernateSession");
             session = sessionFactory.openSession();
             session.beginTransaction();
         } catch (Exception e) {
@@ -28,7 +27,7 @@ public abstract class HibernateConnection {
 
     protected static void close() {
         session.close();
-        sessionFactory.close();
+//        sessionFactory.close();
     }
     public static void flush(){
         start();

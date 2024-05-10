@@ -2,6 +2,7 @@ package com.example.application.services.session;
 
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.UserDAO;
+import com.vaadin.flow.server.VaadinSession;
 import jakarta.servlet.http.HttpSessionEvent;
 import jakarta.servlet.http.HttpSessionListener;
 
@@ -14,7 +15,7 @@ public class SessionListener implements HttpSessionListener {
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        System.err.println("Sesja utworzona");
+        System.err.println("Sesja HTTP utworzona");
         se.getSession().setMaxInactiveInterval(24 * 60 * 60);
 
         startTime = Instant.now();
@@ -25,6 +26,8 @@ public class SessionListener implements HttpSessionListener {
         System.err.println("Session expired");
         UserDAO.setOnline(false);
         User.logOut();
+
+        VaadinSession.getCurrent().close();
 
         endTime = Instant.now();
         Duration duration = Duration.between(startTime, endTime);

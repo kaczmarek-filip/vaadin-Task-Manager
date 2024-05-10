@@ -2,6 +2,7 @@ package com.example.application.components.data.database.hibernate;
 
 import com.example.application.components.data.User;
 import com.example.application.services.encryption.Encrypter;
+import com.example.application.services.session.SessionVaadin;
 import lombok.SneakyThrows;
 import org.hibernate.query.Query;
 
@@ -61,7 +62,7 @@ public class UserDAO extends HibernateConnection {
     public static void setOnline(boolean online) {
         start();
         Query query = session.createQuery("UPDATE User SET online = :online WHERE id = :id");
-        query.setParameter("online", online).setParameter("id", User.getLoggedInUser().getId());
+        query.setParameter("online", online).setParameter("id", SessionVaadin.getUser().getId());
         query.executeUpdate();
         close();
     }

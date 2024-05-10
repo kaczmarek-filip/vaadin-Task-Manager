@@ -1,6 +1,9 @@
 package com.example.application.views.main;
 
 import com.example.application.components.contents.MainViewContent;
+import com.example.application.services.session.SessionVaadin;
+import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -14,7 +17,16 @@ public class MainView extends Navigation{
 
     public MainView() {
         super("Main");
+    }
 
-        setContent(new MainViewContent());
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+
+        if (SessionVaadin.getUser() == null) {
+            UI.getCurrent().navigate(LoginView.class);
+        } else {
+            setContent(new MainViewContent());
+        }
     }
 }

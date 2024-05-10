@@ -1,5 +1,6 @@
 package com.example.application.components.data;
 
+import com.example.application.services.session.SessionVaadin;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +23,6 @@ public class User {
     private boolean online;
     private byte[] avatar;
 
-    private static User instance;
-
     public User() {
     }
 
@@ -38,23 +37,12 @@ public class User {
         this.email = email;
     }
 
-    @Deprecated
-    public static synchronized User getInstance() {
-        if (instance == null) {
-            instance = new User();
-        }
-        return instance;
-    }
-
-    /**
-     * @return Singleton {@link User}
-     */
     public static User getLoggedInUser() {
-        return User.getInstance();
+        return SessionVaadin.getUser();
     }
 
     public static void logOut() {
-        instance = null;
+        SessionVaadin.logout();
     }
 
 

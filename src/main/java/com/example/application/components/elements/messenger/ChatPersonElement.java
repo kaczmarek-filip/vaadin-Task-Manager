@@ -7,11 +7,11 @@ import com.example.application.components.dialogs.DeleteConfirmDialog;
 import com.example.application.components.elements.ActiveDot;
 import com.example.application.components.elements.Element;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
+import com.vaadin.flow.server.VaadinSession;
 
 public class ChatPersonElement extends Element {
     private final Chat chat;
     private final MessengerElement messengerElement;
-    private static ChatPersonElement lastClickedButton = null;
 
     //TODO: Pozycjonowanie po ostatnich wiadomościach
 
@@ -19,6 +19,8 @@ public class ChatPersonElement extends Element {
         super("chatScrollerElement");
         this.chat = chat;
         this.messengerElement = messengerElement;
+
+        VaadinSession.getCurrent().setAttribute("lastClickedButton", null);
 
         layout();
         listenerAction();
@@ -67,14 +69,15 @@ public class ChatPersonElement extends Element {
 
     private void setColors() {
         addClickListener(event -> {
-            if (lastClickedButton != null) {
-                lastClickedButton.removeClassName("currentChat");
+            if (VaadinSession.getCurrent().getAttribute("lastClickedButton") != null) {
+                ((ChatPersonElement) VaadinSession.getCurrent().getAttribute("lastClickedButton")).removeClassName("currentChat");
             }
             addClassName("currentChat");
-            lastClickedButton = this;
+            VaadinSession.getCurrent().setAttribute("lastClickedButton", this);
         });
     }
-    private void setChatColor(){
+
+    private void setChatColor() {
 
         boolean isUnRead = ChatDAO.isHaveUnreadMessages(chat);
         if (isUnRead) {

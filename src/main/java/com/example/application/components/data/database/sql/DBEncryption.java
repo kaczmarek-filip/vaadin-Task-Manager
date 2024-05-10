@@ -1,5 +1,6 @@
 package com.example.application.components.data.database.sql;
 
+import com.example.application.components.data.database.hibernate.HibernateConnection;
 import com.example.application.services.encryption.Encrypter;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;

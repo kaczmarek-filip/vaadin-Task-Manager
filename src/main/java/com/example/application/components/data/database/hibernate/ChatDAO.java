@@ -29,7 +29,7 @@ public class ChatDAO extends HibernateConnection {
 
     public static boolean isHaveUnreadMessages(Chat chat) {
         start();
-        Query query = session.createQuery("FROM Message WHERE chat.id = :chatId AND isRead = false ");
+        Query<Message> query = session.createQuery("FROM Message WHERE chat.id = :chatId AND isRead = false ");
         query.setParameter("chatId", chat.getId());
         List<Message> messageList = query.getResultList();
         close();

@@ -1,19 +1,17 @@
 package com.example.application.views.main;
 
+import com.example.application.components.contents.MainViewContent;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.services.LoginService;
-import com.vaadin.flow.component.UI;
+import com.example.application.services.session.SessionVaadin;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
@@ -24,13 +22,15 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 
 /**
  * Navigation
+ *
  * @see AppLayout
  */
-public class Navigation extends AppLayout  implements BeforeEnterObserver {
+public class Navigation extends AppLayout implements BeforeEnterObserver {
     protected H1 siteTitle = new H1();
 
     /**
      * Default constructor
+     *
      * @param siteName Name displayed in upper left corner
      */
     public Navigation(String siteName) {
@@ -49,7 +49,7 @@ public class Navigation extends AppLayout  implements BeforeEnterObserver {
         setPrimarySection(Section.DRAWER);
     }
 
-    private SideNav setNavigation(){
+    private SideNav setNavigation() {
         SideNav nav = new SideNav();
         SideNavItem mainSiteLink = new SideNavItem("Main", MainView.class, VaadinIcon.MENU.create());
         SideNavItem taskLink = new SideNavItem("Tasks", TasksSite.class, VaadinIcon.TASKS.create());
@@ -57,16 +57,19 @@ public class Navigation extends AppLayout  implements BeforeEnterObserver {
         SideNavItem teamLink = new SideNavItem("Team", TeamsSite.class, VaadinIcon.MALE.create());
         SideNavItem userLink = new SideNavItem("User", UserSite.class, VaadinIcon.USER_CARD.create());
 
-        for (Team team : TeamDAO.getUserTeams(User.getLoggedInUser())){
-            teamLink.addItem(new SideNavItem(team.getName(), "teams/team_id/" + team.getId(), VaadinIcon.ANGLE_RIGHT.create()));
+
+        if (SessionVaadin.getUser() != null) {
+            for (Team team : TeamDAO.getUserTeams(User.getLoggedInUser())) {
+                teamLink.addItem(new SideNavItem(team.getName(), "teams/team_id/" + team.getId(), VaadinIcon.ANGLE_RIGHT.create()));
+            }
         }
 
-        nav.addItem(mainSiteLink,taskLink, messengerLink, teamLink, userLink);
+        nav.addItem(mainSiteLink, taskLink, messengerLink, teamLink, userLink);
 
         return nav;
     }
 
-    private Button logOutButton(){
+    private Button logOutButton() {
         Button logOut = new Button();
 
         logOut.addClassName("signOutButton");
@@ -77,17 +80,10 @@ public class Navigation extends AppLayout  implements BeforeEnterObserver {
         });
         return logOut;
     }
-    @Deprecated
-    private Paragraph loggedInUser(){
-        Paragraph paragraph = new Paragraph(User.getLoggedInUser().getDisplayName());
-        paragraph.addClassName("loggedInUser");
-        paragraph.getElement().getStyle().set("font-size", LumoUtility.FontSize.LARGE);
-        return paragraph;
-    }
-    protected Button addTopNavButton(Button button){
+
+    protected void addTopNavButton(Button button) {
         button.addClassName("customNavButton");
         addToNavbar(button);
-        return button;
     }
 
     /**
@@ -96,7 +92,7 @@ public class Navigation extends AppLayout  implements BeforeEnterObserver {
      */
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-        if(User.getLoggedInUser().getDisplayName() == null) {
+        if (User.getLoggedInUser() == null) {
             beforeEnterEvent.rerouteTo(LoginView.class);
         }
     }
