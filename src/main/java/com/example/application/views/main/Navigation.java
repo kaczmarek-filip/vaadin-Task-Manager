@@ -1,7 +1,11 @@
 package com.example.application.views.main;
 
+import com.example.application.components.contents.MainViewContent;
+import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
+import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.services.LoginService;
+import com.example.application.services.session.SessionVaadin;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -54,9 +58,11 @@ public class Navigation extends AppLayout implements BeforeEnterObserver {
         SideNavItem userLink = new SideNavItem("User", UserSite.class, VaadinIcon.USER_CARD.create());
 
 
-//        for (Team team : TeamDAO.getUserTeams(User.getLoggedInUser())) {
-//            teamLink.addItem(new SideNavItem(team.getName(), "teams/team_id/" + team.getId(), VaadinIcon.ANGLE_RIGHT.create()));
-//        }
+        if (SessionVaadin.getUser() != null) {
+            for (Team team : TeamDAO.getUserTeams(User.getLoggedInUser())) {
+                teamLink.addItem(new SideNavItem(team.getName(), "teams/team_id/" + team.getId(), VaadinIcon.ANGLE_RIGHT.create()));
+            }
+        }
 
         nav.addItem(mainSiteLink, taskLink, messengerLink, teamLink, userLink);
 
