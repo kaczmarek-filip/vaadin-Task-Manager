@@ -19,7 +19,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Theme(value = "mytodo")
 @EnableScheduling
 public class Application implements AppShellConfigurator {
-//TODO: https://vaadin.com/docs/latest/advanced/custom-error-handler
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
         Encrypter.generateKey();
