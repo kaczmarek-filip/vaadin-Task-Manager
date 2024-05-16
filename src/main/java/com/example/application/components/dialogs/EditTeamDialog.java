@@ -3,14 +3,12 @@ package com.example.application.components.dialogs;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamMember;
 import com.example.application.components.data.TeamRoles;
-import com.example.application.components.data.database.hibernate.HibernateConnection;
 import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.components.elements.components.CancelButton;
-import com.example.application.components.elements.components.MyNotification;
+import com.example.application.components.elements.components.notifications.SimpleNotification;
 import com.example.application.components.elements.components.OnSaveReload;
 import com.example.application.components.elements.components.TextAreaCounter;
 import com.example.application.views.main.SingleTeamSite;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -100,7 +98,7 @@ public class EditTeamDialog extends Dialog implements OnSaveReload {
         saveButton.addClickListener(e -> {
             beforeEdit();
 //            UI.getCurrent().getPage().reload();
-            MyNotification.show("Saved", NotificationVariant.LUMO_SUCCESS, false);
+            SimpleNotification.show("Saved", NotificationVariant.LUMO_SUCCESS, false);
         });
 
         return saveButton;

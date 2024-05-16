@@ -4,7 +4,7 @@ import com.example.application.components.data.Chat;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.ChatDAO;
 import com.example.application.components.dialogs.DeleteConfirmDialog;
-import com.example.application.components.elements.ActiveDot;
+import com.example.application.components.elements.components.ActiveDot;
 import com.example.application.components.elements.Element;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.server.VaadinSession;

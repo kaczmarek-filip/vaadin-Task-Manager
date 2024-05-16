@@ -1,4 +1,4 @@
-package com.example.application.components.elements;
+package com.example.application.components.elements.components;
 
 import com.example.application.components.data.User;
 import com.example.application.components.elements.components.colors.ChatActiveColors;

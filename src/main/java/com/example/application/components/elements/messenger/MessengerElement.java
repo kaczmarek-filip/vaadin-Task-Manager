@@ -4,6 +4,7 @@ import com.example.application.components.data.Chat;
 import com.example.application.components.data.Message;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.MessageDAO;
+import com.example.application.components.elements.components.notifications.NewMessageNotification;
 import com.vaadin.flow.component.messages.MessageInput;
 import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
@@ -69,6 +70,7 @@ public class MessengerElement extends VerticalLayout {
             messageList.setItems(items);
 
             MessageDAO.sendMessage(message);
+            new NewMessageNotification(message);
         });
 
         return messageInput;
@@ -82,5 +84,4 @@ public class MessengerElement extends VerticalLayout {
             }
         }
     }
-    //TODO: Wysłać do bazy danych ID sesji i potem z tego korzystać
 }

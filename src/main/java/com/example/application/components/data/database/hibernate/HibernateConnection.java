@@ -1,6 +1,6 @@
 package com.example.application.components.data.database.hibernate;
 
-import com.example.application.components.elements.components.MyNotification;
+import com.example.application.components.elements.components.notifications.SimpleNotification;
 import com.example.application.services.session.SessionAttributes;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.server.VaadinSession;
@@ -17,7 +17,7 @@ public abstract class HibernateConnection {
             session = sessionFactory.openSession();
             session.beginTransaction();
         } catch (Exception e) {
-            MyNotification.show("Database connection error", NotificationVariant.LUMO_ERROR, false);
+            SimpleNotification.show("Database connection error", NotificationVariant.LUMO_ERROR, false);
         }
 
     }

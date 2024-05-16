@@ -2,7 +2,7 @@ package com.example.application.components.dialogs.makeTask;
 
 import com.example.application.components.data.Task;
 import com.example.application.components.data.database.hibernate.TaskDAO;
-import com.example.application.components.elements.components.MyNotification;
+import com.example.application.components.elements.components.notifications.SimpleNotification;
 import com.example.application.views.main.TasksSite;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import lombok.Setter;
@@ -19,7 +19,7 @@ public class MakeOwnTaskDialog extends AbstractMakeTask {
         TaskDAO.createTask(task);
 
         parent.OnChangeReload();
-        MyNotification.show("Created successfully", NotificationVariant.LUMO_SUCCESS, false);
+        SimpleNotification.show("Created successfully", NotificationVariant.LUMO_SUCCESS, false);
         close();
     }
 }
