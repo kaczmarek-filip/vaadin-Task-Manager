@@ -4,7 +4,9 @@ package com.example.application.views.main;
 import com.example.application.components.dialogs.RegisterDialog;
 import com.example.application.components.elements.ForgotPassword;
 import com.example.application.services.LoginService;
+import com.example.application.services.session.SessionAttributes;
 import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H1;
@@ -60,7 +62,7 @@ public class LoginView extends VerticalLayout {
         add(new ForgotPassword().display());
 
         // Tworzenie sesji hibernate dla użytkownika
-        VaadinSession.getCurrent().setAttribute("hibernateSession", new Configuration().configure().buildSessionFactory());
+        VaadinSession.getCurrent().setAttribute(SessionAttributes.HIBERNATE_SESSION, new Configuration().configure().buildSessionFactory());
         System.err.println(VaadinSession.getCurrent());
     }
 

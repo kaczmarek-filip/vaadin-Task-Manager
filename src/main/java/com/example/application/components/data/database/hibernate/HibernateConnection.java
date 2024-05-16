@@ -1,6 +1,7 @@
 package com.example.application.components.data.database.hibernate;
 
 import com.example.application.components.elements.components.MyNotification;
+import com.example.application.services.session.SessionAttributes;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.server.VaadinSession;
 import org.hibernate.Session;
@@ -12,7 +13,7 @@ public abstract class HibernateConnection {
 
     protected static void start() {
         try {
-            sessionFactory = (SessionFactory) VaadinSession.getCurrent().getAttribute("hibernateSession");
+            sessionFactory = (SessionFactory) VaadinSession.getCurrent().getAttribute(SessionAttributes.HIBERNATE_SESSION);
             session = sessionFactory.openSession();
             session.beginTransaction();
         } catch (Exception e) {

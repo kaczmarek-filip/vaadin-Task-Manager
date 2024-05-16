@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 public class SessionConfig {
 
     @Bean
-    public ServletListenerRegistrationBean<SessionListener> servletListenerRegistrationBean() {
-        ServletListenerRegistrationBean<SessionListener> servletListenerRegistrationBean = new ServletListenerRegistrationBean<>(new SessionListener());
+    public ServletListenerRegistrationBean<HttpSessionListener> servletListenerRegistrationBean() {
+        ServletListenerRegistrationBean<HttpSessionListener> servletListenerRegistrationBean = new ServletListenerRegistrationBean<>(new HttpSessionListener());
         return servletListenerRegistrationBean;
     }
 }

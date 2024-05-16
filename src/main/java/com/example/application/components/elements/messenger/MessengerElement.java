@@ -82,4 +82,5 @@ public class MessengerElement extends VerticalLayout {
             }
         }
     }
+    //TODO: Wysłać do bazy danych ID sesji i potem z tego korzystać
 }
