@@ -13,8 +13,6 @@ public class ChatPersonElement extends Element {
     private final Chat chat;
     private final MessengerElement messengerElement;
 
-    //TODO: Pozycjonowanie po ostatnich wiadomościach
-
     public ChatPersonElement(MessengerElement messengerElement, Chat chat) {
         super("chatScrollerElement");
         this.chat = chat;
