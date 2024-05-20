@@ -11,12 +11,11 @@
     padding: 1% 2%;
 }
 .currentChat{
-    /*background-color: #3e986b !important;*/
     background-color: var(--green) !important;
     color: white;
 }
 .notRead{
-    background-color: #ef1414ad !important;
+    background-color: var(--secondary) !important;
 }
 .chatScrollerElement{
     /*font-size: 1.2rem;*/

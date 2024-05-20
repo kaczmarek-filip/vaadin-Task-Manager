@@ -9,7 +9,21 @@ import java.util.List;
 import static com.example.application.services.session.SessionAttributes.LOGGED_IN_USER;
 
 public class AllSessions {
-    public static List<VaadinSession> vaadinSessionList = new ArrayList<>();
+    static List<VaadinSession> vaadinSessionList = new ArrayList<>();
+
+    public static List<VaadinSession> getVaadinSessionList() {
+        List<VaadinSession> sessionList = new ArrayList<>();
+
+        for (VaadinSession session : vaadinSessionList) {
+            session.lock();
+            if (session.getAttribute(LOGGED_IN_USER) != null) {
+                sessionList.add(session);
+            }
+            session.unlock();
+        }
+
+        return sessionList;
+    }
 
     public static VaadinSession getUserSession(User user) {
         VaadinSession resultSession = null;

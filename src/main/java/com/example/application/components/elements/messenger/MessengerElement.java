@@ -5,10 +5,13 @@ import com.example.application.components.data.Message;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.MessageDAO;
 import com.example.application.components.elements.components.notifications.NewMessageNotification;
+import com.example.application.services.session.AllSessions;
+import com.example.application.services.session.SessionAttributes;
 import com.vaadin.flow.component.messages.MessageInput;
 import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.server.VaadinSession;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -32,12 +35,19 @@ public class MessengerElement extends VerticalLayout {
     public void setView(Chat chat) {
         this.chat = chat;
         messageVerticalLayout();
+
+        AllSessions.getUserSession(User.getLoggedInUser()).setAttribute(SessionAttributes.MESSENGER_ELEMENT, this);
     }
 
     private void messageVerticalLayout() {
         setHeightFull();
         getStyle().set("padding", "0");
         add(messageList(), messageInput());
+    }
+
+    public void replaceMessageList(){
+        removeView();
+        setView(chat);
     }
 
     private MessageList messageList() {
@@ -71,6 +81,7 @@ public class MessengerElement extends VerticalLayout {
 
             MessageDAO.sendMessage(message);
             new NewMessageNotification(message);
+            MessageRealtime.sent(message.getChat().getUserTo());
         });
 
         return messageInput;

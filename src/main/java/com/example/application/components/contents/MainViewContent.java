@@ -79,7 +79,7 @@ public class MainViewContent extends HorizontalLayout {
         button.addClickListener(e -> {
 //            Notification.show(User.getLoggedInUser().getDisplayName());
 //            new OneTimeMessageEncryption().startupEncrypt();
-            for (VaadinSession vaadinSession : AllSessions.vaadinSessionList){
+            for (VaadinSession vaadinSession : AllSessions.getVaadinSessionList()){
                 vaadinSession.lock();
                 User user = (User) vaadinSession.getAttribute(SessionAttributes.LOGGED_IN_USER);
                 SimpleNotification.test(user.getDisplayName());

@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Table(name = "messages")
 @Setter
 @Getter
-//TODO: Odświeżanie wiadomości zaraz po tym jak przyjdą
 public final class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
