@@ -10,7 +10,7 @@ import java.util.List;
 public class ChatDAO extends HibernateConnection {
     public static List<Chat> getChats(User user) {
         start();
-        Query<Chat> query = session.createQuery("FROM Chat WHERE user1.id = :id OR user2.id = :id");
+        Query<Chat> query = session.createQuery("SELECT m.chat FROM Message m WHERE m.chat.user1.id = :id OR m.chat.user2.id = :id ORDER BY m.localDateTime DESC ", Chat.class);
         query.setParameter("id", user.getId());
         List<Chat> chatList = query.getResultList();
         close();
