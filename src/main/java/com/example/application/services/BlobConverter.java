@@ -30,8 +30,6 @@ public class BlobConverter {
         StreamResource streamResource = null;
         if (bytes != null && bytes.length > 0) {
             streamResource = new StreamResource("avatar.jpg", () -> new ByteArrayInputStream(bytes));
-        } else {
-            System.err.println("Brak zdjęcia");
         }
 
         return streamResource;
