@@ -6,6 +6,8 @@ import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.HibernateConnection;
 import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.components.elements.components.CancelButton;
+import com.example.application.components.elements.components.notifications.RemoveFromTeamNotification;
+import com.example.application.components.elements.components.notifications.SimpleNotification;
 import com.example.application.views.main.TeamsSite;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -45,9 +47,13 @@ public class DeleteConfirmDialog extends Dialog {
 
             UI.getCurrent().navigate(TeamsSite.class);
 
-            Notification notification = new Notification("The team has been deleted", 5000, Notification.Position.BOTTOM_CENTER);
-            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            notification.open();
+            SimpleNotification.show("Team has been deleted", NotificationVariant.LUMO_ERROR, false);
+
+            for (TeamMember teamMember : team.getTeamMembers()){
+                new RemoveFromTeamNotification(team, teamMember.getUser());
+            }
+
+
             close();
         });
         return this;
@@ -61,10 +67,10 @@ public class DeleteConfirmDialog extends Dialog {
 
             TeamDAO.deleteUser(team, user);
 
-            Notification notification = new Notification(user.getDisplayName() + " has been deleted", 5000, Notification.Position.BOTTOM_CENTER);
-            notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-            notification.open();
+            SimpleNotification.show(user.getDisplayName() + " has been deleted", NotificationVariant.LUMO_ERROR, false);
             close();
+
+            new RemoveFromTeamNotification(team, user);
 
 
             HibernateConnection.refresh(team);

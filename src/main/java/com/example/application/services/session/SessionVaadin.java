@@ -13,7 +13,6 @@ public class SessionVaadin {
             VaadinSession.getCurrent().setAttribute(SessionAttributes.LOGGED_IN_USER, user);
             VaadinSession.getCurrent().unlock();
             VaadinSession.getCurrent().setAttribute(SessionAttributes.SESSION_EXPIRED_FLAG, false);
-            VaadinSession.getCurrent().setAttribute("ui", new UI());
         }
     }
 

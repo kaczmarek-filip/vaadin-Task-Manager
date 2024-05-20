@@ -7,6 +7,7 @@ import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.components.data.database.hibernate.UserDAO;
 import com.example.application.components.elements.components.CancelButton;
+import com.example.application.components.elements.components.notifications.AddToTeamNotification;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
@@ -81,6 +82,7 @@ public class AddUserToTeamDialog extends Dialog {
                 teamMember.setRole(TeamRoles.MEMBER);
                 team.getTeamMembers().add(teamMember);
                 TeamDAO.addUsers(teamMember);
+                new AddToTeamNotification(team, user);
             }
 
             parent.OnChangeReload();

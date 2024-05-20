@@ -1,10 +1,13 @@
 package com.example.application.components.dialogs;
 
+import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.components.data.database.hibernate.UserDAO;
 import com.example.application.components.elements.components.CancelButton;
 import com.example.application.components.elements.components.TextAreaCounter;
+import com.example.application.components.elements.components.notifications.AddToTeamNotification;
+import com.example.application.components.elements.components.notifications.SimpleNotification;
 import com.example.application.views.main.TeamsSite;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -55,12 +58,18 @@ public class CreateTeamDialog extends Dialog {
         String teamMotto = teamMottoField.getValue();
         Set<User> userComboBox = userComboBoxField.getSelectedItems();
 
-        TeamDAO.createTeam(teamName, teamMotto, User.getLoggedInUser(), userComboBox);
+        Team team = new Team();
+        team.setName(teamName);
+        team.setMotto(teamMotto);
+
+        TeamDAO.createTeam(team, User.getLoggedInUser(), userComboBox);
         close();
 
-        Notification notification = new Notification("The team has been created", 5000, Notification.Position.BOTTOM_CENTER);
-        notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-        notification.open();
+        for (User user : userComboBox) {
+            new AddToTeamNotification(team, user);
+        }
+
+        SimpleNotification.show("New team has been created", NotificationVariant.LUMO_SUCCESS, false);
 
         parent.OnChangeReload();
     }

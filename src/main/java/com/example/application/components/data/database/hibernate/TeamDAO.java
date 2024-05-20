@@ -45,11 +45,8 @@ public class TeamDAO extends HibernateConnection {
         return team;
     }
 
-    public static void createTeam(String teamName, String teamMotto, User owner, Set<User> teamMembers) {
+    public static void createTeam(Team team, User owner, Set<User> teamMembers) {
         start();
-        Team team = new Team();
-        team.setName(teamName);
-        team.setMotto(teamMotto);
 
         TeamMember teamOwner = new TeamMember();
         teamOwner.setUser(session.get(User.class, owner.getId()));
