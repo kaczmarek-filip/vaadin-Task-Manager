@@ -6,6 +6,7 @@ import com.example.application.components.data.TeamMember;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.TaskDAO;
 import com.example.application.components.data.database.hibernate.TaskHolderDAO;
+import com.example.application.components.elements.components.notifications.NewTeamTaskNotification;
 import com.example.application.components.elements.components.notifications.SimpleNotification;
 import com.example.application.views.main.SingleTeamSite;
 import com.vaadin.flow.component.grid.Grid;
@@ -43,6 +44,11 @@ public class MakeTeamTaskDialog extends AbstractMakeTask {
             SimpleNotification.show("Created successfully", NotificationVariant.LUMO_SUCCESS, false);
             parent.OnChangeReload();
             close();
+
+            for (User user : selectedUsers) {
+                new NewTeamTaskNotification(team, user);
+            }
+
         } else {
             SimpleNotification.show("You must choose at least one person", NotificationVariant.LUMO_ERROR, false);
         }
