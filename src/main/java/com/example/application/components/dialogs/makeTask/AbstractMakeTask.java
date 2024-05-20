@@ -2,7 +2,7 @@ package com.example.application.components.dialogs.makeTask;
 
 import com.example.application.components.data.Task;
 import com.example.application.components.elements.components.CancelButton;
-import com.example.application.components.elements.components.MyNotification;
+import com.example.application.components.elements.components.notifications.SimpleNotification;
 import com.example.application.components.elements.components.TextAreaCounter;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -74,9 +74,9 @@ public abstract class AbstractMakeTask extends Dialog {
         deadline = deadlineDatePicker.getValue();
 
         if (title.isEmpty()) {
-            MyNotification.show("The title field must not be empty", NotificationVariant.LUMO_ERROR, false);
+            SimpleNotification.show("The title field must not be empty", NotificationVariant.LUMO_ERROR, false);
         } else if (deadline == null) {
-            MyNotification.show("The deadline field must not be empty", NotificationVariant.LUMO_ERROR, false);
+            SimpleNotification.show("The deadline field must not be empty", NotificationVariant.LUMO_ERROR, false);
         } else {
             onCreate();
         }

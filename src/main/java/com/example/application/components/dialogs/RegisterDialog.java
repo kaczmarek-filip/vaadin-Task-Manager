@@ -3,7 +3,7 @@ package com.example.application.components.dialogs;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.UserDAO;
 import com.example.application.components.elements.components.CancelButton;
-import com.example.application.components.elements.components.MyNotification;
+import com.example.application.components.elements.components.notifications.SimpleNotification;
 import com.example.application.services.LoginService;
 import com.example.application.views.main.MainView;
 import com.vaadin.flow.component.Key;
@@ -63,23 +63,23 @@ public class RegisterDialog extends Dialog {
         User user = new User(0, displayNameValue, emailValue);
 
         if (!password.getValue().equals(confirmPassword.getValue())) {
-            MyNotification.show("Passwords are not the same", NotificationVariant.LUMO_ERROR, false);
+            SimpleNotification.show("Passwords are not the same", NotificationVariant.LUMO_ERROR, false);
 
         } else if (email.getValue().isEmpty() || displayName.getValue().isEmpty() || password.getValue().isEmpty()) {
-            MyNotification.show("Some fields are empty", NotificationVariant.LUMO_ERROR, false);
+            SimpleNotification.show("Some fields are empty", NotificationVariant.LUMO_ERROR, false);
 
         } else if (password.getValue().length() < 8) {
-            MyNotification.show("The password must contain at least 8 characters", NotificationVariant.LUMO_ERROR, false);
+            SimpleNotification.show("The password must contain at least 8 characters", NotificationVariant.LUMO_ERROR, false);
 
         } else if (UserDAO.isEmailExists(emailValue)) {
-            MyNotification.show("There is already a user with the specified email", NotificationVariant.LUMO_ERROR, false);
+            SimpleNotification.show("There is already a user with the specified email", NotificationVariant.LUMO_ERROR, false);
 
         } else {
             UserDAO.registerUser(user, passwordValue);
             LoginService.login(emailValue, passwordValue);
             getUI().ifPresent(ui -> ui.navigate(MainView.class));
 
-            MyNotification.show("Successfully registered", NotificationVariant.LUMO_SUCCESS, false);
+            SimpleNotification.show("Successfully registered", NotificationVariant.LUMO_SUCCESS, false);
             close();
         }
 

@@ -3,7 +3,7 @@ package com.example.application.components.elements.teams;
 import com.example.application.components.data.TeamMember;
 import com.example.application.components.data.TeamRoles;
 import com.example.application.components.data.User;
-import com.example.application.components.elements.ActiveDot;
+import com.example.application.components.elements.components.ActiveDot;
 import com.example.application.components.elements.Element;
 import com.example.application.components.elements.components.ElementOrdering;
 import com.vaadin.flow.component.html.Div;
