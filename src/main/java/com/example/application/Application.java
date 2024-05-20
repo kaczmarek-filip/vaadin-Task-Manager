@@ -19,7 +19,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Theme(value = "mytodo")
 @EnableScheduling
 public class Application implements AppShellConfigurator {
-
+//TODO: AppConfiguration
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
         Encrypter.generateKey();

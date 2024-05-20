@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Tag(Tag.DIV)
-public class PermissionErrorHandler extends Component implements HasErrorParameter<BeanCreationException> {
+public class PermissionError403 extends Component implements HasErrorParameter<BeanCreationException> {
     @Override
     public int setErrorParameter(BeforeEnterEvent beforeEnterEvent, ErrorParameter<BeanCreationException> errorParameter) {
 
