@@ -23,9 +23,9 @@ public class TeamsElement extends Element {
 
         H1 title = new H1(team.getName());
         title.addClassName("teamsTitle");
+        add(new UnDoneTasksCounter(team));
         add(new TeamsUserRoleElement(TeamDAO.getUserRole(team, User.getLoggedInUser())));
         add(title);
-        //TODO: Dodać ikonkę informującą o tym, czy są jakieś taski do zrobienia
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.example.application.views.main;
 
-import com.example.application.components.contents.UserSiteContent;
+import com.example.application.views.main.contents.UserSiteContent;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 

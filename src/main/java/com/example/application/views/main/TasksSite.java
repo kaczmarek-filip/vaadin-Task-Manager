@@ -2,7 +2,7 @@ package com.example.application.views.main;
 
 
 import com.example.application.components.dialogs.makeTask.MakeOwnTaskDialog;
-import com.example.application.components.contents.TaskSiteContent;
+import com.example.application.views.main.contents.TaskSiteContent;
 import com.example.application.components.elements.components.OnSaveReload;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.router.Route;

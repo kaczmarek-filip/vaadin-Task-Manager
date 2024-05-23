@@ -7,4 +7,5 @@ public final class CssColors {
     public static final String BLUE = "var(--blue)";
     public static final String GREEN = "var(--green)";
     public static final String AMBER = "var(--amber)";
+    public static final String WHITE = "#fff";
 }

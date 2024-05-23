@@ -1,6 +1,5 @@
 package com.example.application.views.main;
 
-import com.example.application.components.contents.MainViewContent;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.TeamDAO;

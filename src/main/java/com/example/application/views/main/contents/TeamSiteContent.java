@@ -1,4 +1,4 @@
-package com.example.application.components.contents;
+package com.example.application.views.main.contents;
 
 import com.example.application.components.data.Team;
 import com.example.application.components.data.User;

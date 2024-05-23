@@ -1,6 +1,6 @@
 package com.example.application.views.main;
 
-import com.example.application.components.contents.MainViewContent;
+import com.example.application.views.main.contents.MainViewContent;
 import com.example.application.services.session.SessionVaadin;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.UI;

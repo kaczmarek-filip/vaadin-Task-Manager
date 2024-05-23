@@ -1,7 +1,7 @@
 package com.example.application.views.main;
 
 
-import com.example.application.components.contents.MessengerSiteContent;
+import com.example.application.views.main.contents.MessengerSiteContent;
 import com.example.application.components.dialogs.AddChatDialog;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.router.Route;

@@ -1,4 +1,4 @@
-package com.example.application.components.contents;
+package com.example.application.views.main.contents;
 
 import com.example.application.components.data.User;
 import com.example.application.components.data.database.hibernate.UserDAO;
