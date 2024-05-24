@@ -60,4 +60,16 @@
     /*font-weight: bold;*/
     line-height: 1.5vw;
     text-align: center;
+    margin: 1%;
+}
+.dotsMenu{
+    position: absolute;
+    top: 1%;
+    right: 1%;
+    padding: 1% 3%;
+    scale: 0.7;
+    transition: 0.1s;
+}
+.dotsMenu:hover{
+    color: var(--primary);
 }

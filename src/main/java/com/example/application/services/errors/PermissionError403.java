@@ -9,6 +9,8 @@ import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.ErrorParameter;
 import com.vaadin.flow.router.HasErrorParameter;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Tag(Tag.DIV)
 public class PermissionError403 extends Component implements HasErrorParameter<BeanCreationException> {
+    private static final Logger logger = LoggerFactory.getLogger(PermissionError403.class);
     @Override
     public int setErrorParameter(BeforeEnterEvent beforeEnterEvent, ErrorParameter<BeanCreationException> errorParameter) {
 
@@ -24,6 +27,7 @@ public class PermissionError403 extends Component implements HasErrorParameter<B
         UI.getCurrent().access(() -> {
             SimpleNotification.show("You don't have access to this path (403 ERROR)", NotificationVariant.LUMO_ERROR, false);
         });
+        logger.error(errorParameter.getException().getMessage());
 
         return HttpServletResponse.SC_FORBIDDEN;
     }

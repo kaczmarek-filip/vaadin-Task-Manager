@@ -3,17 +3,18 @@ package com.example.application.components.elements.teams;
 import com.example.application.components.data.*;
 import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.components.elements.Element;
-import com.vaadin.flow.component.html.Div;
+import com.example.application.views.main.TeamsSite;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.orderedlayout.Scroller;
 
 public class TeamsElement extends Element {
 
     private final Team team;
-    //TODO: dodać trzy kropki jako interakcję
-    public TeamsElement(Team team) {
+    private final TeamsSite teamsSite;
+
+    public TeamsElement(Team team, TeamsSite teamsSite) {
         super("teamsElement");
         this.team = team;
+        this.teamsSite = teamsSite;
         layout();
         listenerAction();
     }
@@ -26,6 +27,10 @@ public class TeamsElement extends Element {
         add(new UnDoneTasksCounter(team));
         add(new TeamsUserRoleElement(TeamDAO.getUserRole(team, User.getLoggedInUser())));
         add(title);
+
+        if (!TeamDAO.getUserRole(team, User.getLoggedInUser()).equals(TeamRoles.OWNER)){
+            add(new DotsMenu(team, teamsSite));
+        }
     }
 
     @Override

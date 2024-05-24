@@ -3,12 +3,18 @@ package com.example.application.components.dialogs;
 import com.example.application.components.data.Team;
 import com.example.application.components.data.TeamMember;
 import com.example.application.components.data.TeamRoles;
+import com.example.application.components.data.User;
+import com.example.application.components.data.database.hibernate.HibernateConnection;
 import com.example.application.components.data.database.hibernate.TeamDAO;
 import com.example.application.components.elements.components.CancelButton;
-import com.example.application.components.elements.components.notifications.SimpleNotification;
 import com.example.application.components.elements.components.OnSaveReload;
 import com.example.application.components.elements.components.TextAreaCounter;
+import com.example.application.components.elements.components.notifications.RemoveFromTeamNotification;
+import com.example.application.components.elements.components.notifications.SimpleNotification;
 import com.example.application.views.main.SingleTeamSite;
+import com.example.application.views.main.TeamsSite;
+import com.vaadin.flow.component.ClickEvent;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -22,7 +28,9 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import lombok.Setter;
 
-import java.util.*;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 
 import static com.example.application.components.data.Team.mottoCharLimit;
 
@@ -63,7 +71,7 @@ public class EditTeamDialog extends Dialog implements OnSaveReload {
 
         CancelButton cancelButton = new CancelButton(this);
         cancelButton.addClickListener(e -> {
-           parent.OnChangeReload();
+            parent.OnChangeReload();
         });
 
         add(verticalLayout);
@@ -97,7 +105,6 @@ public class EditTeamDialog extends Dialog implements OnSaveReload {
 
         saveButton.addClickListener(e -> {
             beforeEdit();
-//            UI.getCurrent().getPage().reload();
             SimpleNotification.show("Saved", NotificationVariant.LUMO_SUCCESS, false);
         });
 
@@ -108,22 +115,33 @@ public class EditTeamDialog extends Dialog implements OnSaveReload {
         deleteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
         deleteButton.getStyle().set("margin-right", "auto");
 
-        deleteButton.addClickListener(e -> {
-            new DeleteConfirmDialog().deleteTeam(team).open();
-            close();
-        });
+        DeleteConfirmDialog dialog = new DeleteConfirmDialog("Confirm deletion", "Are you sure to remove " + team.getName() + "?");
+        dialog.setAction(this::setDeleteTeamAction);
+        deleteButton.addClickListener(buttonClickEvent -> dialog.open());
 
         return deleteButton;
     }
 
+    private void setDeleteTeamAction(ClickEvent<Button> buttonClickEvent) {
+        TeamDAO.deleteTeam(team);
+
+        UI.getCurrent().navigate(TeamsSite.class);
+
+        SimpleNotification.show("Team has been deleted", NotificationVariant.LUMO_ERROR, false);
+
+        for (TeamMember teamMember : team.getTeamMembers()) {
+            new RemoveFromTeamNotification(team, teamMember.getUser());
+        }
+        close();
+    }
+
     private Grid<TeamMember> setGridContextMenu() {
 
-//        Grid<TeamMember> grid = new Grid<>();
         List<TeamMember> list = team.getTeamMembers();
         grid.setItems(list);
 
         grid.addColumn(teamMember -> teamMember.getUser().getDisplayName())
-                        .setHeader("Display name");
+                .setHeader("Display name");
         grid.addColumn(teamMember -> teamMember.getUser().getEmail())
                 .setHeader("Email");
 
@@ -158,11 +176,7 @@ public class EditTeamDialog extends Dialog implements OnSaveReload {
                 button.setEnabled(false);
             }
 
-            button.addClickListener(e -> {
-                DeleteConfirmDialog deleteConfirmDialog = new DeleteConfirmDialog();
-                deleteConfirmDialog.setParent(this);
-                deleteConfirmDialog.deleteUser(team, teamMember.getUser()).open();
-            });
+            setDeleteButtonListener(button, teamMember.getUser());
 
             return button;
         }).setFlexGrow(0);
@@ -175,5 +189,26 @@ public class EditTeamDialog extends Dialog implements OnSaveReload {
         verticalLayout.removeAll();
         grid.removeAllColumns();
         verticalLayout.add(teamNameField, teamMottoField, horizontalLayout, setGridContextMenu());
+    }
+
+    private void setDeleteButtonListener(Button button, User user) {
+        button.addClickListener(e -> {
+            DeleteConfirmDialog dialog = new DeleteConfirmDialog("Confirm deletion", "Are you sure to remove " + user.getDisplayName() + "?");
+
+            dialog.setAction(buttonClickEvent -> {
+                TeamDAO.deleteUser(team, user);
+
+                SimpleNotification.show(user.getDisplayName() + " has been deleted", NotificationVariant.LUMO_ERROR, false);
+                dialog.close();
+
+                new RemoveFromTeamNotification(team, user);
+
+
+                HibernateConnection.refresh(team);
+
+                OnChangeReload();
+            });
+            dialog.open();
+        });
     }
 }

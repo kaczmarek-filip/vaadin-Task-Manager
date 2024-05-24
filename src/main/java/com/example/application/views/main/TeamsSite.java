@@ -16,7 +16,7 @@ import com.vaadin.flow.router.Route;
 public class TeamsSite extends Navigation implements OnSaveReload {
 
     private Button createTeamButton = new Button("Create team");
-    private TeamSiteContent teamSiteContent = new TeamSiteContent();
+    private TeamSiteContent teamSiteContent = new TeamSiteContent(this);
 
     public TeamsSite() {
         super("Teams");
@@ -36,6 +36,6 @@ public class TeamsSite extends Navigation implements OnSaveReload {
     @Override
     public void OnChangeReload() {
         remove(teamSiteContent);
-        setContent(new TeamSiteContent());
+        setContent(new TeamSiteContent(this));
     }
 }
