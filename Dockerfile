@@ -16,7 +16,7 @@ ENV MYSQL_DATABASE=taskmanagergenerated
 ENV MYSQL_PASSWORD=mysql
 
 EXPOSE 3306
-COPY taskmanagergenerated.sql.sql /docker-entrypoint-initdb.d/
+COPY taskmanagergenerated.sql /docker-entrypoint-initdb.d/
 
 # Użyj obrazu MySQL jako serwera bazy danych
 #FROM mysql:latest
