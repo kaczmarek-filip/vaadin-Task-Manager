@@ -1,6 +1,7 @@
 package com.example.application.services;
 
 import com.example.application.components.data.User;
+import com.example.application.components.data.database.hibernate.LoggerDAO;
 import com.example.application.components.data.database.hibernate.UserDAO;
 import com.example.application.components.elements.components.notifications.SimpleNotification;
 import com.example.application.services.session.SessionAttributes;
@@ -22,7 +23,7 @@ public class LoginService {
             SessionVaadin.loginUser(UserDAO.getUserById(loggedInUser.getId()));
 
             UserDAO.setOnline(true);
-            System.err.println("Zalogowano: " + SessionVaadin.getUser().getDisplayName());
+            LoggerDAO.log("Logged in");
 
             return true;
 
@@ -33,6 +34,7 @@ public class LoginService {
     }
 
     public static void logout() {
+        LoggerDAO.log("Logged out");
         VaadinSession.getCurrent().setAttribute(SessionAttributes.SESSION_EXPIRED_FLAG, true);
         User.logOut();
         UI.getCurrent().navigate("/login");

@@ -1,11 +1,13 @@
 package com.example.application.components.data.database.hibernate;
 
+import com.example.application.components.data.Logger;
 import com.example.application.components.data.User;
 import com.example.application.services.encryption.Encrypter;
 import com.example.application.services.session.SessionVaadin;
 import lombok.SneakyThrows;
 import org.hibernate.query.Query;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class UserDAO extends HibernateConnection {
@@ -14,6 +16,11 @@ public class UserDAO extends HibernateConnection {
 
         user.setPassword(Encrypter.encrypt(password));
         session.persist(user);
+
+        Logger logger = new Logger();
+        logger.setTime(LocalDateTime.now());
+        logger.setEvent("Registered user: " + user.getId());
+        session.persist(logger);
 
         close();
     }
@@ -77,6 +84,7 @@ public class UserDAO extends HibernateConnection {
 
         commit();
         close();
+        LoggerDAO.log("Changed avatar: " + user.getEmail());
     }
 
     public static byte[] getAvatar(User user) {

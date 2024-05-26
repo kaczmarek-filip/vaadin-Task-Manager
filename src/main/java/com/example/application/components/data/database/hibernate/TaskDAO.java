@@ -16,6 +16,7 @@ public class TaskDAO extends HibernateConnection {
         session.persist(task);
         session.flush();
         close();
+        LoggerDAO.log("Create task: " + task.getId());
     }
 
     public static List<Task> getTasks(User user) {
@@ -33,6 +34,7 @@ public class TaskDAO extends HibernateConnection {
         session.update(task);
         commit();
         close();
+        LoggerDAO.log("Change task isDone : " + task.getId() + " | " + task.isDone());
     }
 
     public static void delete(Task task) {
@@ -40,6 +42,7 @@ public class TaskDAO extends HibernateConnection {
         session.delete(task);
         commit();
         close();
+        LoggerDAO.log("Delete task: " + task.getId());
     }
 
 }

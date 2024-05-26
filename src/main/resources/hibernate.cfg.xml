@@ -38,6 +38,7 @@
         <mapping class="com.example.application.components.data.Chat" />
         <mapping class="com.example.application.components.data.Task" />
         <mapping class="com.example.application.components.data.TaskHolder" />
+        <mapping class="com.example.application.components.data.Logger" />
 
 
     </session-factory>

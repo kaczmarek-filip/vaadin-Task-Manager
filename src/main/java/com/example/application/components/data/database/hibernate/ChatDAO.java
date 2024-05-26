@@ -25,6 +25,7 @@ public class ChatDAO extends HibernateConnection {
         chat.setUser2(user2);
         session.persist(chat);
         close();
+        LoggerDAO.log("Create chat: " + chat.getId());
         return chat;
     }
 
@@ -46,5 +47,6 @@ public class ChatDAO extends HibernateConnection {
         session.delete(chat);
         commit();
         close();
+        LoggerDAO.log("Delete chat: " + chat.getId());
     }
 }

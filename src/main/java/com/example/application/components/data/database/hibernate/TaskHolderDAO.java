@@ -15,6 +15,7 @@ public class TaskHolderDAO extends HibernateConnection {
         session.update(taskHolder);
         commit();
         close();
+        LoggerDAO.log("Change taskPart isDone: " + taskHolder.getId() + " | " + taskHolder.isPartDone());
     }
 
     public static List<Task> getTasks(User user, Team team) {
@@ -36,6 +37,9 @@ public class TaskHolderDAO extends HibernateConnection {
         }
         commit();
         close();
+        for (User user : users) {
+            LoggerDAO.log("Create holders | Task: " + task.getId() + " | User: " + user.getEmail());
+        }
     }
 
     public static void deleteTask(TaskHolder taskHolder) {
@@ -43,5 +47,6 @@ public class TaskHolderDAO extends HibernateConnection {
         session.delete(taskHolder);
         commit();
         close();
+        LoggerDAO.log("Delete TaskPart: " + taskHolder.getId());
     }
 }

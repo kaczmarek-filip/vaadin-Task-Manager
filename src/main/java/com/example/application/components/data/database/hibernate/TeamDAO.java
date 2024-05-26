@@ -65,6 +65,7 @@ public class TeamDAO extends HibernateConnection {
         }
         commit();
         close();
+        LoggerDAO.log("Create team: " + team.getId());
     }
 
 //    public static void addUsers(Team team, Set<User> userSet) {
@@ -73,6 +74,7 @@ public class TeamDAO extends HibernateConnection {
         session.save(teamMember);
         commit();
         close();
+        LoggerDAO.log("Add teamMember | Team: " + teamMember.getTeam().getId() + " | Member: " + teamMember.getUser().getEmail());
     }
 
     public static void deleteTeam(Team team) {
@@ -82,6 +84,7 @@ public class TeamDAO extends HibernateConnection {
         query.executeUpdate();
         commit();
         close();
+        LoggerDAO.log("Delete team: " + team.getId());
     }
     public static void updateInfo(int teamId, String teamName, String teamMotto){
         start();
@@ -89,6 +92,7 @@ public class TeamDAO extends HibernateConnection {
         query.setParameter("name", teamName).setParameter("motto", teamMotto).setParameter("id", teamId);
         query.executeUpdate();
         close();
+        LoggerDAO.log("Change team info: " + teamId);
     }
     public static void deleteUser(Team team, User user){
         start();
@@ -97,6 +101,7 @@ public class TeamDAO extends HibernateConnection {
         query.executeUpdate();
         commit();
         close();
+        LoggerDAO.log("Remove user from team | Team: " + team.getId() + " | Member: " + user.getEmail());
     }
     public static void updateRole(Team team, User user, TeamRoles teamRoles){
         start();
@@ -105,5 +110,6 @@ public class TeamDAO extends HibernateConnection {
         query.executeUpdate();
         commit();
         close();
+        LoggerDAO.log("Change role | Team: " + team.getId() + " | Member: " + user.getEmail() + " | Role: " + teamRoles);
     }
 }

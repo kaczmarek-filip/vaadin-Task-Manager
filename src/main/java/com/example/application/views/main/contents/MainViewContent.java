@@ -2,6 +2,7 @@ package com.example.application.views.main.contents;
 
 import com.example.application.components.data.Task;
 import com.example.application.components.data.User;
+import com.example.application.components.data.database.hibernate.LoggerDAO;
 import com.example.application.components.data.database.hibernate.TaskDAO;
 import com.example.application.components.elements.components.notifications.SimpleNotification;
 import com.example.application.components.elements.tasks.OwnTaskBlockElement;
@@ -85,6 +86,7 @@ public class MainViewContent extends HorizontalLayout {
                 SimpleNotification.test(user.getDisplayName());
                 vaadinSession.unlock();
             }
+            LoggerDAO.log("Test");
         });
         verticalLayout.add(button);
         return verticalLayout;

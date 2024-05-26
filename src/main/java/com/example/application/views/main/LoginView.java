@@ -63,7 +63,7 @@ public class LoginView extends VerticalLayout {
 
         // Tworzenie sesji hibernate dla użytkownika
         VaadinSession.getCurrent().setAttribute(SessionAttributes.HIBERNATE_SESSION, new Configuration().configure().buildSessionFactory());
-        System.err.println(VaadinSession.getCurrent());
+//        System.err.println(VaadinSession.getCurrent());
     }
 
     private VerticalLayout setLayout() {
