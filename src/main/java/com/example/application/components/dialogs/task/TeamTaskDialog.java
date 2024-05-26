@@ -19,10 +19,12 @@ public class TeamTaskDialog extends AbstractTaskDialog {
         this.taskHolder = taskHolder;
 
 
-        //TODO: Zabronić edytowania tego samego tasku, ale innemu holderowi
-        if (task.getCreator().equals(User.getLoggedInUser()) || task.isUserInHolders(User.getLoggedInUser()) != null) {
-            canEdit(taskHolder.isPartDone());
+        if (task.isUserInHolders(User.getLoggedInUser()) != null){
+            if (task.isUserInHolders(User.getLoggedInUser()).equals(taskHolder) || task.getCreator().equals(User.getLoggedInUser())){
+                canEdit(taskHolder.isPartDone());
+            }
         }
+
     }
 
     @Override
