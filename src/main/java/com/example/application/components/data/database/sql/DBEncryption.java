@@ -24,14 +24,14 @@ public class DBEncryption extends DatabaseConnection implements ApplicationListe
      */
     @Override
     public void onApplicationEvent(ContextClosedEvent event) {
-        try {
-            Map<Integer, String> map = getAllPass();
-            map.replaceAll((integer, s) -> Encrypter.decrypt(s));
-            sendToDatabase(map);
-            logger.info("Passwords decrypted properly".toUpperCase());
-        } catch (Exception e) {
-            logger.error(error);
-        }
+//        try {
+////            Map<Integer, String> map = getAllPass();
+////            map.replaceAll((integer, s) -> Encrypter.decrypt(s));
+////            sendToDatabase(map);
+//            logger.info("Passwords decrypted properly".toUpperCase());
+//        } catch (Exception e) {
+//            logger.error(error);
+//        }
 
 
     }
@@ -75,6 +75,18 @@ public class DBEncryption extends DatabaseConnection implements ApplicationListe
             throw e;
         }
 
+    }
+
+    public void startupDecrypt() {
+        try {
+            Map<Integer, String> map = getAllPass();
+            map.replaceAll((integer, s) -> Encrypter.decrypt(s));
+            sendToDatabase(map);
+            logger.info("Passwords decrypted properly".toUpperCase());
+        } catch (Exception e) {
+            logger.error(e.toString());
+            throw e;
+        }
     }
 
 }

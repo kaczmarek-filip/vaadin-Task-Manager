@@ -24,14 +24,19 @@ public class Application implements AppShellConfigurator {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        Encrypter.generateKey();
 
+        Encrypter.keyRecovery();
+        DBEncryption dbEncryption = new DBEncryption();
         try {
-            new DBEncryption().startupEncrypt();
+            dbEncryption.startupDecrypt();
+            Encrypter.generateKey();
+            dbEncryption.startupEncrypt();
+            Encrypter.saveKey();
         } catch (Exception e) {
-            Encrypter.keyRecovery();
+            e.printStackTrace();
         }
-        Encrypter.saveKey();
+
+
     }
 
 }
