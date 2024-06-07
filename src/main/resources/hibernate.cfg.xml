@@ -22,7 +22,7 @@
         </property>
 
         <property name = "hibernate.connection.password">
-            AVNS_fleYHV9Km-huDyti7EB
+            ${env.DATABASE_PASSWORD}
         </property>
         <property name="hibernate.current_session_context_class">
             org.springframework.orm.hibernate5.SpringSessionContext
