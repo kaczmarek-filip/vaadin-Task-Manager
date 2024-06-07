@@ -1,7 +1,7 @@
 FROM maven:latest AS build
 WORKDIR /app
 COPY . .
-RUN mvn clean package
+RUN mvn clean package vaadin:build-frontend
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY --from=build /app/target/vaadin-1.0-SNAPSHOT.jar ./app.jar
