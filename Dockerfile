@@ -15,7 +15,13 @@
 #ENV DATABASE_PASSWORD=AVNS_fleYHV9Km-huDyti7EB
 #
 #ENTRYPOINT ["java", "-jar", "app.jar"]
-FROM maven:latest
+#FROM maven:latest
+#RUN mvn clean package -Pproduction
+FROM maven:3.8.4-openjdk-17-slim AS build
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline
+COPY src src
 RUN mvn clean package -Pproduction
 
 FROM openjdk:17-jdk-slim
