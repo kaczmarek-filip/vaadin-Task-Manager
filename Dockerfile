@@ -9,7 +9,7 @@ COPY src/main/resources/encryptionKeys.json src/main/resources/encryptionKeys.js
 #COPY frontend/ frontend/
 #COPY --from=build /app/src/main/resources/ /app/src/main/resources/
 #COPY --from=build /app/target/ ./app/src/main/resources/
-COPY --from=build /app/frontend/ /app/frontend
+COPY frontend/ /app/frontend
 EXPOSE 8080
 
 ENV DATABASE_PASSWORD=AVNS_fleYHV9Km-huDyti7EB
