@@ -20,6 +20,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Theme(value = "mytodo")
 @EnableScheduling
 @Push
+
+//TODO: Zdjęcia/załaczniki w taskach i zaproszenia do zespołów
 public class Application implements AppShellConfigurator {
 
     public static void main(String[] args) {
