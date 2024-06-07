@@ -1,0 +1,10 @@
+@media (max-width: 1600px) {
+    .singleTeamMemberElement .TeamsUserRole {
+        display: none;
+    }
+}
+@media (max-width: 1200px) {
+    .active-dot {
+        display: none;
+    }
+}

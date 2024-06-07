@@ -1,0 +1,51 @@
+.myMessage{
+    margin-left: auto !important;
+    /*background-color: #a5daff;*/
+    background-color: var(--lumo-secondary-color-10pct);
+}
+.message{
+    margin: 0.5vh 1%;
+    border-radius: 25px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.08), 0 1px 5px 0 rgba(0, 0, 0, 0.1);
+    width: fit-content;
+    padding: 1% 2%;
+}
+.currentChat{
+    background-color: var(--green) !important;
+    color: white;
+}
+.notRead{
+    background-color: var(--secondary) !important;
+}
+.chatScrollerElement{
+    /*font-size: 1.2rem;*/
+    font-size: 1.1vw;
+    /*box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);*/
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.08), 0 1px 5px 0 rgba(0, 0, 0, 0.1);
+    border: none;
+    margin-bottom: 0 !important;
+    border-radius: 5px !important;
+    padding: 8px 16px;
+    cursor: pointer;
+    box-sizing: border-box;
+    position: relative;
+    transition: all 0.5s ease-in-out;
+}
+.chatScrollerElement:hover {
+    /*background-color: #4c62ba;*/
+    background-color: var(--blue);
+    color: white;
+}
+.active-dot{
+    border-radius: 50%;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    /*border: 2px solid #ccc;*/
+    border: 2px solid white;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.08), 0 1px 5px 0 rgba(0, 0, 0, 0.1);
+}

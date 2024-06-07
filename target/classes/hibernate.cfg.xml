@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <property name = "hibernate.dialect">
+            org.hibernate.dialect.MySQLDialect
+        </property>
+
+        <property name = "hibernate.connection.driver_class">
+            com.mysql.cj.jdbc.Driver
+        </property>
+
+        <property name = "hibernate.connection.url">
+            jdbc:mysql://mysql-14603959-fkaczmarekf-5b6d.c.aivencloud.com:13255/defaultdb
+        </property>
+
+        <property name = "hibernate.connection.username">
+            avnadmin
+        </property>
+
+        <property name = "hibernate.connection.password">
+<!--            ${env.DATABASE_PASSWORD}-->
+            AVNS_fleYHV9Km-huDyti7EB
+        </property>
+        <property name="hibernate.current_session_context_class">
+            org.springframework.orm.hibernate5.SpringSessionContext
+        </property>
+        <property name="hibernate.connection.autocommit">
+            true
+        </property>
+
+        <mapping class="com.example.application.components.data.Message" />
+        <mapping class="com.example.application.components.data.User" />
+        <mapping class="com.example.application.components.data.Team" />
+        <mapping class="com.example.application.components.data.TeamMember" />
+        <mapping class="com.example.application.components.data.Chat" />
+        <mapping class="com.example.application.components.data.Task" />
+        <mapping class="com.example.application.components.data.TaskHolder" />
+        <mapping class="com.example.application.components.data.Logger" />
+
+
+    </session-factory>
+</hibernate-configuration>
