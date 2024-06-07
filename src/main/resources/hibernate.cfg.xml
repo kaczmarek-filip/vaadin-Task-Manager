@@ -14,15 +14,15 @@
         </property>
 
         <property name = "hibernate.connection.url">
-            jdbc:mysql://localhost/taskmanagergenerated
+            jdbc:mysql://mysql-14603959-fkaczmarekf-5b6d.c.aivencloud.com:13255/defaultdb
         </property>
 
         <property name = "hibernate.connection.username">
-            root
+            avnadmin
         </property>
 
         <property name = "hibernate.connection.password">
-            mysql
+            AVNS_fleYHV9Km-huDyti7EB
         </property>
         <property name="hibernate.current_session_context_class">
             org.springframework.orm.hibernate5.SpringSessionContext
