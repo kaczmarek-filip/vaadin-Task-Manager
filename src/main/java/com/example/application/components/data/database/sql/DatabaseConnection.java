@@ -10,7 +10,6 @@ abstract class DatabaseConnection {
     private final static String DbUrl = "jdbc:mysql://mysql-14603959-fkaczmarekf-5b6d.c.aivencloud.com:13255/defaultdb";
     private final static String DbUser = "avnadmin";
     private final static String DbPassword = System.getenv("DATABASE_PASSWORD");
-//    private final static String DbPassword = "AVNS_fleYHV9Km-huDyti7EB";
     private final static String DbDriver = "com.mysql.cj.jdbc.Driver";
 
     protected Connection connection;
