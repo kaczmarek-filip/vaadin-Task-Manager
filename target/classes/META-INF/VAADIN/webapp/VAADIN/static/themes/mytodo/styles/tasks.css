@@ -1,0 +1,54 @@
+.taskSiteContent {
+    padding: 2%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+.taskElement{
+    padding: 2%;
+    border-radius: 5px;
+    /*color: #072140;*/
+    color: var(--blue);
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease-in-out;
+    border: 2px solid transparent;
+}
+:root {
+    --hover-color: var(--primary);
+}
+.taskElement:hover{
+    border-color: var(--hover-color);
+    box-shadow: 0 1px 20px 0 var(--hover-color);
+}
+.taskElementTitle{
+    text-align: center;
+    font-weight: bold;
+}
+.taskElementDeadline{
+    margin-top: 2vh;
+    margin-right: 2vh;
+}
+.taskDialogTime{
+    font-size: 1.5rem;
+    align-items: center;
+    margin: auto;
+    background-color: #7e0007;
+    color: white;
+    padding: 1% 2%;
+    border-radius: 5px;
+}
+.task-late {
+    /*border-color: rgb(170, 7, 17);*/
+    border-color: var(--red);
+}
+.task-almost-late {
+    /*border-color: #253b73;*/
+    border-color: var(--secondary);
+}
+.task-done {
+    /*border-color: #509837;*/
+    border-color: var(--green);
+}

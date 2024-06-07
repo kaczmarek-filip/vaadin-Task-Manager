@@ -1,0 +1,16 @@
+.signOutButton{
+    position: absolute;
+    right: 1%;
+}
+.loggedInUser{
+    margin: 0 0 0 2%;
+    padding: 0.2% 1%;
+    font-weight: bold;
+    /*background-image: linear-gradient(0deg, rgba(4, 223, 34, 0.15) 0%,rgba(167, 179, 214, 0.15) 100%),linear-gradient(90deg, rgb(210, 94, 235),rgb(219, 158, 203));*/
+    border-radius: 5px;
+    background-color: #88B04B;
+    /*color: whitesmoke;*/
+}
+.customNavButton{
+    margin-left: 2%;
+}

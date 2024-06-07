@@ -1,0 +1,17 @@
+{
+  "frontendFolder": "D:/Informatyka/Java/vaadin/frontend",
+  "themeFolder": "themes",
+  "themeResourceFolder": "D:/Informatyka/Java/vaadin/frontend/generated/jar-resources",
+  "staticOutput": "D:/Informatyka/Java/vaadin/target/classes/META-INF/VAADIN/webapp/VAADIN/static",
+  "generatedFolder": "generated",
+  "statsOutput": "D:\\Informatyka\\Java\\vaadin\\target\\classes\\META-INF\\VAADIN\\config",
+  "frontendBundleOutput": "D:\\Informatyka\\Java\\vaadin\\target\\classes\\META-INF\\VAADIN\\webapp",
+  "devBundleOutput": "D:/Informatyka/Java/vaadin/target/dev-bundle/webapp",
+  "devBundleStatsOutput": "D:/Informatyka/Java/vaadin/target/dev-bundle/config",
+  "jarResourcesFolder": "D:/Informatyka/Java/vaadin/frontend/generated/jar-resources",
+  "themeName": "mytodo",
+  "clientServiceWorkerSource": "D:\\Informatyka\\Java\\vaadin\\target\\sw.ts",
+  "pwaEnabled": false,
+  "offlineEnabled": false,
+  "offlinePath": "'offline.html'"
+}
