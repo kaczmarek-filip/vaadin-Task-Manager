@@ -1,8 +1,21 @@
 ### Java backend
 # Task Manager in Vaadin
  
-Przykładowe dane logowania:
+Demo: https://vaadin-task-manager.onrender.com/
 
-E-mail: **john_doe@example.com**
+---
 
-Hasło: **password123**
+**Użyte technologie:**
+ - Hibernate
+ - Maven
+ - Docker
+ - Spring boot
+ - Vaadin
+ - Szyfrowanie:
+   1. Statyczne - szyfrowanie według stałego klucza AES
+   2. Dynamiczne - przy każdym uruchomieniu aplikacji następuje deszyfracja i ponowna szyfracja nowym kluczem
+ - Obsługa JSON
+ - Obsługa sesji - VaadinSession
+ - Obsługa powiadomień w czasie rzeczywistym
+ - Obsługa błedów HTTP
+ - Konwersja BLOB
