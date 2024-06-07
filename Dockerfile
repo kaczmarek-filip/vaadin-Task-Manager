@@ -15,8 +15,8 @@
 #ENV DATABASE_PASSWORD=AVNS_fleYHV9Km-huDyti7EB
 #
 #ENTRYPOINT ["java", "-jar", "app.jar"]
-
-#RUN mvn clean package -Pproduction
+FROM maven:latest
+RUN mvn clean package -Pproduction
 
 FROM openjdk:17-jdk-slim
 COPY target/*.jar app.jar
